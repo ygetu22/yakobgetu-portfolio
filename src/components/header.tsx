@@ -4,25 +4,24 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 
 function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  const isDark = theme === "dark";
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   return (
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="rounded-full border px-3 py-1 text-sm"
+      className="rounded-full border border-black/20 px-3 py-1 text-sm dark:border-white/20"
       aria-label="Toggle theme"
-      suppressHydrationWarning
     >
-      {isDark ? "Light" : "Dark"}
+      <span suppressHydrationWarning>{isDark ? "Light" : "Dark"}</span>
     </button>
   );
 }
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b bg-white/90 text-black backdrop-blur dark:bg-black/90 dark:text-white">
+    <header className="sticky top-0 z-50 bg-background text-foreground">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <Link href="/" className="text-base font-semibold">
           Yakob
