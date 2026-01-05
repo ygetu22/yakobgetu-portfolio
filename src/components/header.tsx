@@ -29,16 +29,16 @@ export default function Header() {
 
         <nav className="flex items-center gap-4 text-sm">
           <Link href="/posts" className="hover:underline">
-            Posts
+            posts
           </Link>
           <Link href="/projects" className="hover:underline">
-            Projects
+            projects
           </Link>
           <Link href="/hobbies" className="hover:underline">
-            Hobbies
+            hobbies
           </Link>
           <Link href="/contact" className="hover:underline">
-            Contact
+            contact
           </Link>
 
           <ThemeToggle />
