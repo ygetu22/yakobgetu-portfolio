@@ -84,8 +84,7 @@ export default function Home() {
 
 
             <p>
-              I like building clean projects, shipping real features, and writing
-              down what I learn.
+              I focus on clean builds and real progress. I post my work and updates here.
             </p>
           </div>
 

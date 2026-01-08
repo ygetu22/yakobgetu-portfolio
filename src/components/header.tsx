@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import * as React from "react";
 
 function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -73,7 +74,9 @@ function MoonIcon(props: React.SVGProps<SVGSVGElement>) {
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+  const isDark = mounted && resolvedTheme === "dark";
 
   return (
     <button
@@ -82,60 +85,155 @@ function ThemeToggle() {
       className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/20 hover:opacity-80 dark:border-white/20"
       aria-label="Toggle theme"
     >
-      <span className="sr-only" suppressHydrationWarning>
-        {isDark ? "Switch to light mode" : "Switch to dark mode"}
-      </span>
-      <span suppressHydrationWarning>
-        {isDark ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
-      </span>
+      <span className="sr-only">Toggle theme</span>
+      {isDark ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
     </button>
   );
 }
 
-export default function Header() {
+function IconButton(props: {
+  href: string;
+  label: string;
+  children: React.ReactNode;
+}) {
+  const { href, label, children } = props;
   return (
-    <header className="sticky top-0 z-50 bg-background text-foreground">
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={label}
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/20 hover:opacity-80 dark:border-white/20"
+    >
+      {children}
+    </a>
+  );
+}
+
+function MenuIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M4 6h16" />
+      <path d="M4 12h16" />
+      <path d="M4 18h16" />
+    </svg>
+  );
+}
+
+function MobileMenu(props: { onNavigate: () => void }) {
+  const { onNavigate } = props;
+
+  return (
+    <div className="flex flex-col gap-1 p-2 text-sm">
+      <Link href="/posts" className="rounded-lg px-3 py-2 hover:opacity-80" onClick={onNavigate}>
+        posts
+      </Link>
+      <Link href="/projects" className="rounded-lg px-3 py-2 hover:opacity-80" onClick={onNavigate}>
+        projects
+      </Link>
+      <Link href="/hobbies" className="rounded-lg px-3 py-2 hover:opacity-80" onClick={onNavigate}>
+        hobbies
+      </Link>
+      <Link href="/contact" className="rounded-lg px-3 py-2 hover:opacity-80" onClick={onNavigate}>
+        contact
+      </Link>
+    </div>
+  );
+}
+
+export default function Header() {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const menuAreaRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    if (!menuOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+
+    const onClickOutside = (e: MouseEvent) => {
+      const el = menuAreaRef.current;
+      if (!el) return;
+      if (e.target instanceof Node && !el.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("mousedown", onClickOutside);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("mousedown", onClickOutside);
+    };
+  }, [menuOpen]);
+
+  return (
+    <header className="sticky top-0 z-50 bg-transparent text-foreground">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <Link href="/" className="text-base font-semibold">
           Yakob
         </Link>
 
-        <nav className="flex items-center gap-4 text-sm">
-          <Link href="/posts" className="hover:underline">
-            posts
-          </Link>
-          <Link href="/projects" className="hover:underline">
-            projects
-          </Link>
-          <Link href="/hobbies" className="hover:underline">
-            hobbies
-          </Link>
-          <Link href="/contact" className="hover:underline">
-            contact
-          </Link>
+        <nav className="flex items-center gap-2">
+          {/* Desktop links */}
+          <div className="hidden items-center gap-4 text-sm md:flex">
+            <Link href="/posts" className="hover:underline">
+              posts
+            </Link>
+            <Link href="/projects" className="hover:underline">
+              projects
+            </Link>
+            <Link href="/hobbies" className="hover:underline">
+              hobbies
+            </Link>
+            <Link href="/contact" className="hover:underline">
+              contact
+            </Link>
+          </div>
 
-          <div className="flex items-center gap-1">
-            <a
-              href="https://www.linkedin.com/in/ygetu/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/20 hover:opacity-80 dark:border-white/20"
-              aria-label="LinkedIn"
-            >
+          {/* Icons always visible */}
+          <div ref={menuAreaRef} className="relative flex items-center gap-2">
+            <IconButton href="https://www.linkedin.com/in/ygetu/" label="LinkedIn">
               <LinkedInIcon className="h-4 w-4" />
-            </a>
-
-            <a
-              href="https://github.com/ygetu22"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/20 hover:opacity-80 dark:border-white/20"
-              aria-label="GitHub"
-            >
+            </IconButton>
+            <IconButton href="https://github.com/ygetu22" label="GitHub">
               <GitHubIcon className="h-4 w-4" />
-            </a>
-
+            </IconButton>
             <ThemeToggle />
+
+            {/* Mobile menu button */}
+            <button
+              type="button"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/20 hover:opacity-80 dark:border-white/20 md:hidden"
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              <MenuIcon className="h-4 w-4" />
+            </button>
+
+            {/* Mobile dropdown (overlay) */}
+            {menuOpen ? (
+              <div
+                id="mobile-menu"
+                className="absolute right-0 top-full z-50 mt-2 w-56 max-w-[calc(100vw-2rem)] md:hidden"
+              >
+                <div className="overflow-hidden rounded-xl border border-black/10 bg-background dark:border-white/10">
+                  <MobileMenu onNavigate={() => setMenuOpen(false)} />
+                </div>
+              </div>
+            ) : null}
           </div>
         </nav>
       </div>
