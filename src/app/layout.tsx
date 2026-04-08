@@ -1,3 +1,4 @@
+import BackToTop from "@/components/back-to-top";
 import DarkModeSpotlight from "@/components/dark-mode-spotlight";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
@@ -26,6 +27,7 @@ export default function RootLayout({
               <Header />
               <main className="flex-1">{children}</main>
               <Footer />
+              <BackToTop />
             </div>
           </div>
         </ThemeProvider>

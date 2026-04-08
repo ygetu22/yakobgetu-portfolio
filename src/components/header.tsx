@@ -1,8 +1,17 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import * as React from "react";
+
+const navLinks = [
+  { href: "/resume", label: "resume" },
+  { href: "/posts", label: "posts" },
+  { href: "/projects", label: "projects" },
+  { href: "/hobbies", label: "hobbies" },
+  { href: "/contact", label: "contact" },
+];
 
 function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -82,7 +91,7 @@ function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/20 hover:opacity-80 dark:border-white/20"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground/80 transition hover:bg-black/[0.06] hover:text-foreground dark:hover:bg-white/[0.08]"
       aria-label="Toggle theme"
     >
       <span className="sr-only">Toggle theme</span>
@@ -103,7 +112,7 @@ function IconButton(props: {
       target="_blank"
       rel="noreferrer"
       aria-label={label}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/20 hover:opacity-80 dark:border-white/20"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground/80 transition hover:bg-black/[0.06] hover:text-foreground dark:hover:bg-white/[0.08]"
     >
       {children}
     </a>
@@ -129,28 +138,36 @@ function MenuIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function MobileMenu(props: { onNavigate: () => void }) {
-  const { onNavigate } = props;
+function MobileMenu(props: { onNavigate: () => void; pathname: string }) {
+  const { onNavigate, pathname } = props;
 
   return (
     <div className="flex flex-col gap-1 p-2 text-sm">
-      <Link href="/posts" className="rounded-lg px-3 py-2 hover:opacity-80" onClick={onNavigate}>
-        posts
-      </Link>
-      <Link href="/projects" className="rounded-lg px-3 py-2 hover:opacity-80" onClick={onNavigate}>
-        projects
-      </Link>
-      <Link href="/hobbies" className="rounded-lg px-3 py-2 hover:opacity-80" onClick={onNavigate}>
-        hobbies
-      </Link>
-      <Link href="/contact" className="rounded-lg px-3 py-2 hover:opacity-80" onClick={onNavigate}>
-        contact
-      </Link>
+      {navLinks.map((link) => {
+        const isActive = pathname === link.href;
+
+        return (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={[
+              "rounded-xl px-3 py-2 transition",
+              isActive
+                ? "bg-foreground text-background"
+                : "text-foreground/80 hover:bg-black/[0.05] hover:text-foreground dark:hover:bg-white/[0.06]",
+            ].join(" ")}
+            onClick={onNavigate}
+          >
+            {link.label}
+          </Link>
+        );
+      })}
     </div>
   );
 }
 
 export default function Header() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = React.useState(false);
   const menuAreaRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -178,31 +195,41 @@ export default function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 bg-transparent text-foreground">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <Link href="/" className="text-base font-semibold">
+    <header className="sticky top-0 z-50 px-4 py-4 text-foreground">
+      <div className="mx-auto flex max-w-5xl items-center justify-between rounded-full border border-black/10 bg-background/78 px-3 py-2 shadow-[0_14px_36px_rgba(0,0,0,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-black/45 dark:shadow-[0_14px_36px_rgba(0,0,0,0.34)]">
+        <Link
+          href="/"
+          className="rounded-full px-3 py-2 text-sm font-semibold tracking-[0.02em] transition hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+        >
           Yakob
         </Link>
 
         <nav className="flex items-center gap-2">
-          {/* Desktop links */}
-          <div className="hidden items-center gap-4 text-sm md:flex">
-            <Link href="/posts" className="hover:underline">
-              posts
-            </Link>
-            <Link href="/projects" className="hover:underline">
-              projects
-            </Link>
-            <Link href="/hobbies" className="hover:underline">
-              hobbies
-            </Link>
-            <Link href="/contact" className="hover:underline">
-              contact
-            </Link>
+          <div className="hidden items-center rounded-full border border-black/10 bg-black/[0.03] p-1 text-sm dark:border-white/10 dark:bg-white/[0.04] md:flex">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={[
+                    "rounded-full px-4 py-2 transition",
+                    isActive
+                      ? "bg-foreground text-background shadow-sm"
+                      : "text-foreground/78 hover:bg-black/[0.05] hover:text-foreground dark:hover:bg-white/[0.06]",
+                  ].join(" ")}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
 
-          {/* Icons always visible */}
-          <div ref={menuAreaRef} className="relative flex items-center gap-2">
+          <div
+            ref={menuAreaRef}
+            className="relative flex items-center rounded-full border border-black/10 bg-black/[0.03] p-1 dark:border-white/10 dark:bg-white/[0.04]"
+          >
             <IconButton href="https://www.linkedin.com/in/ygetu/" label="LinkedIn">
               <LinkedInIcon className="h-4 w-4" />
             </IconButton>
@@ -214,7 +241,7 @@ export default function Header() {
             {/* Mobile menu button */}
             <button
               type="button"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/20 hover:opacity-80 dark:border-white/20 md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground/80 transition hover:bg-black/[0.06] hover:text-foreground dark:hover:bg-white/[0.08] md:hidden"
               aria-label="Open menu"
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -223,14 +250,13 @@ export default function Header() {
               <MenuIcon className="h-4 w-4" />
             </button>
 
-            {/* Mobile dropdown (overlay) */}
             {menuOpen ? (
               <div
                 id="mobile-menu"
-                className="absolute right-0 top-full z-50 mt-2 w-56 max-w-[calc(100vw-2rem)] md:hidden"
+                className="absolute right-0 top-full z-50 mt-3 w-56 max-w-[calc(100vw-2rem)] md:hidden"
               >
-                <div className="overflow-hidden rounded-xl border border-black/10 bg-background dark:border-white/10">
-                  <MobileMenu onNavigate={() => setMenuOpen(false)} />
+                <div className="overflow-hidden rounded-3xl border border-black/10 bg-background/95 p-1 shadow-[0_16px_40px_rgba(0,0,0,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-black/85 dark:shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+                  <MobileMenu pathname={pathname} onNavigate={() => setMenuOpen(false)} />
                 </div>
               </div>
             ) : null}
