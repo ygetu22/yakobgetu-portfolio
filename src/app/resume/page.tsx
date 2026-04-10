@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+type LogoKind = "osu" | "jpmc" | "amazon" | "codepath";
+
 const sectionLinks = [
   { href: "#education", label: "Education" },
   { href: "#experience", label: "Experience" },
@@ -8,7 +10,7 @@ const sectionLinks = [
   { href: "#leadership", label: "Leadership" },
 ];
 
-const logoStrip = [
+const logoStrip: { kind: LogoKind; label: string }[] = [
   { kind: "osu", label: "Ohio State" },
   { kind: "jpmc", label: "JPMorgan Chase" },
   { kind: "amazon", label: "Amazon Devices" },
@@ -136,7 +138,7 @@ function ArrowDownIcon() {
   );
 }
 
-function LogoBadge(props: { kind: "osu" | "jpmc" | "amazon" | "codepath"; label: string }) {
+function LogoBadge(props: { kind: LogoKind; label: string }) {
   const { kind, label } = props;
 
   if (kind === "jpmc") {
