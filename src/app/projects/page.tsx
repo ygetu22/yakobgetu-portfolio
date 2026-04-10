@@ -1,3 +1,11 @@
+import PagePlaceholder from "@/components/page-placeholder";
+
 export default function ProjectsPage() {
-  return <main className="mx-auto max-w-5xl px-4 py-10">Projects</main>;
+  return (
+    <PagePlaceholder
+      eyebrow="Projects"
+      title="Projects are being updated."
+      description="Project writeups and demos will be added here."
+    />
+  );
 }
