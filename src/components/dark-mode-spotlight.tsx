@@ -1,18 +1,11 @@
 "use client";
 
-import * as React from "react";
+import { useRef, useEffect } from "react";
 
-type DarkModeSpotlightProps = {
-  /** Optional extra classes for positioning/stacking. */
-  className?: string;
-};
+export default function DarkModeSpotlight({ className }: { className?: string }) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
-export default function DarkModeSpotlight({
-  className,
-}: DarkModeSpotlightProps) {
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
-
-  React.useEffect(() => {
+  useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
@@ -20,10 +13,8 @@ export default function DarkModeSpotlight({
 
     const setVars = (clientX: number, clientY: number) => {
       const rect = el.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-      el.style.setProperty("--spotlight-x", `${x}px`);
-      el.style.setProperty("--spotlight-y", `${y}px`);
+      el.style.setProperty("--spotlight-x", `${clientX - rect.left}px`);
+      el.style.setProperty("--spotlight-y", `${clientY - rect.top}px`);
     };
 
     const onMove = (e: MouseEvent) => {
@@ -31,7 +22,7 @@ export default function DarkModeSpotlight({
       rafId = requestAnimationFrame(() => setVars(e.clientX, e.clientY));
     };
 
-    // Initialize somewhere pleasant before the first move.
+    // Initialize to a pleasant position before the first mouse move.
     const rect = el.getBoundingClientRect();
     el.style.setProperty("--spotlight-x", `${rect.width / 2}px`);
     el.style.setProperty("--spotlight-y", `${rect.height / 3}px`);

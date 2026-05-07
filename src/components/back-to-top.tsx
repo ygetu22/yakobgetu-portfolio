@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState, useEffect } from "react";
 
 function ArrowUpIcon() {
   return (
@@ -20,9 +20,9 @@ function ArrowUpIcon() {
 }
 
 export default function BackToTop() {
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateVisibility = () => {
       setVisible(window.scrollY > 260);
     };

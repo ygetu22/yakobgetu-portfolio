@@ -35,27 +35,24 @@ export default function Home() {
               focused on full stack development.
             </p>
 
-        <p>
-          This summer I will be a Software Engineering Intern at{" "}
-          <a
-            href="https://www.jpmorganchase.com/"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 align-middle hover:opacity-80"
-            aria-label="Open JPMorgan Chase website"
-          >
-            <span className="sr-only">JPMorgan Chase</span>
-            <Image
-              src="/chaseLogo.png"
-              alt="JPMorgan Chase"
-              width={120}
-              height={28}
-              className="h-7 w-auto object-contain"
-              priority={false}
-            />
-          </a>
-        </p>
-
+            <p>
+              This summer I will be a Software Engineering Intern at{" "}
+              <a
+                href="https://www.jpmorganchase.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 align-middle hover:opacity-80"
+                aria-label="Open JPMorgan Chase website"
+              >
+                <Image
+                  src="/chaseLogo.png"
+                  alt="JPMorgan Chase"
+                  width={120}
+                  height={28}
+                  className="h-7 w-auto object-contain"
+                />
+              </a>
+            </p>
 
             <p>
               I focus on clean builds and real progress. I post my work and updates here.
@@ -74,13 +71,13 @@ export default function Home() {
         <div className="flex justify-center md:justify-center">
           <div className="relative h-[340px] w-[260px] overflow-hidden rounded-3xl">
             <Image
-            src="/me.JPG"
-            alt="Yakob"
-            fill
-            priority
-            className="object-cover object-[50%_35%] scale-125"
-            sizes="(max-width: 768px) 260px, 340px"
-          />
+              src="/me.JPG"
+              alt="Yakob"
+              fill
+              priority
+              className="object-cover object-[50%_35%] scale-125"
+              sizes="(max-width: 768px) 260px, 340px"
+            />
           </div>
         </div>
       </div>

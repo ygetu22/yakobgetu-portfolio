@@ -138,9 +138,10 @@ function ArrowDownIcon() {
   );
 }
 
-function LogoBadge(props: { kind: LogoKind; label: string }) {
-  const { kind, label } = props;
+const badgeClass =
+  "inline-flex items-center gap-2 rounded-full border border-black/10 bg-background/90 px-3 py-2 text-sm font-medium dark:border-white/10 dark:bg-black/40";
 
+function LogoBadge({ kind, label }: { kind: LogoKind; label: string }) {
   if (kind === "jpmc") {
     return (
       <div className="inline-flex items-center rounded-full border border-black/10 bg-background/90 px-3 py-2 dark:border-white/10 dark:bg-black/40">
@@ -157,7 +158,7 @@ function LogoBadge(props: { kind: LogoKind; label: string }) {
 
   if (kind === "amazon") {
     return (
-      <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-background/90 px-3 py-2 text-sm font-medium dark:border-white/10 dark:bg-black/40">
+      <div className={badgeClass}>
         <span className="text-base font-semibold lowercase">amazon</span>
         <span className="h-1.5 w-8 rounded-full bg-[#ff9900]" />
       </div>
@@ -166,7 +167,7 @@ function LogoBadge(props: { kind: LogoKind; label: string }) {
 
   if (kind === "osu") {
     return (
-      <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-background/90 px-3 py-2 text-sm font-medium dark:border-white/10 dark:bg-black/40">
+      <div className={badgeClass}>
         <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#bb0000] text-xs font-semibold text-white">
           O
         </span>
@@ -176,7 +177,7 @@ function LogoBadge(props: { kind: LogoKind; label: string }) {
   }
 
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-background/90 px-3 py-2 text-sm font-medium dark:border-white/10 dark:bg-black/40">
+    <div className={badgeClass}>
       <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#12b886] text-xs font-semibold text-white">
         C
       </span>
@@ -185,22 +186,17 @@ function LogoBadge(props: { kind: LogoKind; label: string }) {
   );
 }
 
-function SectionHeading(props: { eyebrow: string; title: string; description: string }) {
-  const { eyebrow, title, description } = props;
-
+function SectionHeading({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
   return (
     <div className="space-y-3">
       <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-60">{eyebrow}</p>
-      <div className="space-y-3">
-        <h2 className="text-2xl font-semibold tracking-tight md:text-4xl">{title}</h2>
-        <p className="max-w-2xl text-sm leading-7 opacity-75 md:text-base">{description}</p>
-      </div>
+      <h2 className="text-2xl font-semibold tracking-tight md:text-4xl">{title}</h2>
+      <p className="max-w-2xl text-sm leading-7 opacity-75 md:text-base">{description}</p>
     </div>
   );
 }
 
-function StatusPill(props: { status: string }) {
-  const { status } = props;
+function StatusPill({ status }: { status: string }) {
   const classes =
     status === "Incoming"
       ? "border-[#0f766e]/20 bg-[#0f766e]/10 text-[#0f766e] dark:border-[#5eead4]/20 dark:bg-[#134e4a]/40 dark:text-[#99f6e4]"

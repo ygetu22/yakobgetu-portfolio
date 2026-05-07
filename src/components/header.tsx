@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import * as React from "react";
+import { useState, useEffect, useRef, type SVGProps, type ReactNode } from "react";
 
 const navLinks = [
   { href: "/resume", label: "resume" },
@@ -13,7 +13,7 @@ const navLinks = [
   { href: "/contact", label: "contact" },
 ];
 
-function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
+function GitHubIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -26,7 +26,7 @@ function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function LinkedInIcon(props: React.SVGProps<SVGSVGElement>) {
+function LinkedInIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -39,7 +39,7 @@ function LinkedInIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function SunIcon(props: React.SVGProps<SVGSVGElement>) {
+function SunIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -64,7 +64,7 @@ function SunIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function MoonIcon(props: React.SVGProps<SVGSVGElement>) {
+function MoonIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -83,8 +83,8 @@ function MoonIcon(props: React.SVGProps<SVGSVGElement>) {
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const isDark = mounted && resolvedTheme === "dark";
 
   return (
@@ -103,7 +103,7 @@ function ThemeToggle() {
 function IconButton(props: {
   href: string;
   label: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const { href, label, children } = props;
   return (
@@ -119,7 +119,7 @@ function IconButton(props: {
   );
 }
 
-function MenuIcon(props: React.SVGProps<SVGSVGElement>) {
+function MenuIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -168,10 +168,10 @@ function MobileMenu(props: { onNavigate: () => void; pathname: string }) {
 
 export default function Header() {
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = React.useState(false);
-  const menuAreaRef = React.useRef<HTMLDivElement | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuAreaRef = useRef<HTMLDivElement | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!menuOpen) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
