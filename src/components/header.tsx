@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useState, useEffect, useRef, type SVGProps, type ReactNode } from "react";
+import CommandPalette from "@/components/command-palette";
 
 const navLinks = [
   { href: "/resume", label: "resume" },
@@ -225,6 +226,8 @@ export default function Header() {
               );
             })}
           </div>
+
+          <CommandPalette />
 
           <div
             ref={menuAreaRef}
