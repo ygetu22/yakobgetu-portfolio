@@ -1,64 +1,64 @@
-import Image from "next/image";
-import Link from "next/link";
+import type { ReactNode } from "react";
 
-type LogoKind = "osu" | "jpmc" | "amazon" | "codepath";
+// ─── Data ────────────────────────────────────────────────────────────────────
 
-const sectionLinks = [
-  { href: "#education", label: "Education" },
-  { href: "#experience", label: "Experience" },
-  { href: "#skills", label: "Skills" },
-  { href: "#leadership", label: "Leadership" },
+const contactLinks = [
+  { label: "ygetu21@gmail.com", href: "mailto:ygetu21@gmail.com", external: false },
+  { label: "linkedin.com/in/ygetu", href: "https://linkedin.com/in/ygetu/", external: true },
+  { label: "github.com/ygetu22", href: "https://github.com/ygetu22", external: true },
 ];
 
-const logoStrip: { kind: LogoKind; label: string }[] = [
-  { kind: "osu", label: "Ohio State" },
-  { kind: "jpmc", label: "JPMorgan Chase" },
-  { kind: "amazon", label: "Amazon Devices" },
-  { kind: "codepath", label: "CodePath" },
-];
+const education = {
+  institution: "The Ohio State University",
+  degree: "B.S. Computer Science and Engineering",
+  concentration: "Software Engineering",
+  location: "Columbus, OH",
+  date: "Expected May 2027",
+  coursework:
+    "Software Development and Design, Data Structures and Algorithms, Algorithm Design and Analysis",
+  honors: [
+    "Amazon Future Engineer Scholar — one of 400 recipients in the U.S.",
+    "Choose Ohio First Scholar",
+    "Dean's List (3×)",
+  ],
+};
 
-const experienceEntries = [
+const experience: ExperienceEntry[] = [
   {
-    kind: "jpmc" as const,
-    status: "Incoming",
-    title: "Software Engineering Intern",
-    company: "JPMorgan Chase & Co.",
-    location: "Summer 2026",
-    date: "Upcoming",
-    stack: ["Returning intern", "Enterprise systems", "Full-stack engineering"],
+    name: "JPMorgan Chase & Co.",
+    role: "Software Engineering Intern",
+    location: "Columbus, OH",
+    date: "Summer 2026",
+    badge: "Returning",
+    stack: [],
     bullets: [
-      "Returning to JPMorgan Chase & Co. for another summer of software engineering work.",
+      "Returning for a second summer of software engineering at JPMorgan Chase.",
       "Building on previous experience shipping internal tools, backend services, and test-backed product improvements.",
     ],
   },
   {
-    kind: "jpmc" as const,
-    status: "Completed",
-    title: "Software Engineering Intern",
-    company: "JPMorgan Chase & Co.",
+    name: "JPMorgan Chase & Co.",
+    role: "Software Engineering Intern",
     location: "Columbus, OH",
-    date: "June 2025 - July 2025",
+    date: "Jun 2025 – Jul 2025",
     stack: ["React", "TypeScript", "Spring Boot", "Java", "JUnit", "Jest"],
     bullets: [
-      "Modernized an internal employee directory app with React and TypeScript, refactoring key UI components to reduce average page load time.",
+      "Modernized an internal employee directory app with React and TypeScript, cutting average page load time.",
       "Implemented backend services with Spring Boot and Java, adding REST endpoints for phonebook search and updates.",
       "Built JUnit and Jest test suites that pushed line coverage above 90% and improved release confidence.",
-      "Delivered cleaner components, more predictable APIs, and smoother employee lookup workflows across the organization.",
     ],
   },
   {
-    kind: "amazon" as const,
-    status: "Completed",
-    title: "Software Development Engineer Intern",
-    company: "Amazon Devices",
+    name: "Amazon Devices",
+    role: "Software Development Engineer Intern",
     location: "Seattle, WA",
-    date: "May 2024 - Aug 2024",
-    stack: ["Java", "AWS", "Microservices", "Deployments", "Dashboards"],
+    date: "May 2024 – Aug 2024",
+    stack: ["Java", "AWS", "Microservices"],
     bullets: [
       "Migrated Amazon's Devices Sales Page toward a microservice architecture, improving performance by 80%.",
       "Developed three core service packages with Java and AWS, increasing backend efficiency by 50%.",
-      "Built an independent deployment pipeline that enabled zero-downtime releases.",
-      "Created dashboards and alerts for real-time visibility, helping the team debug faster and track performance more clearly.",
+      "Built an independent deployment pipeline enabling zero-downtime releases.",
+      "Created dashboards and alerts for real-time visibility into performance metrics.",
     ],
   },
 ];
@@ -66,65 +66,153 @@ const experienceEntries = [
 const skillGroups = [
   {
     label: "Languages",
-    items: ["Python", "Java", "JavaScript", "TypeScript", "HTML/CSS", "SQL", "Bash", "LaTeX"],
+    items: ["Python", "Java", "JavaScript", "TypeScript", "SQL", "HTML/CSS", "Bash", "LaTeX"],
   },
-  {
-    label: "Web",
-    items: ["React", "Next.js", "Node.js", "Express", "Spring Boot", "Tailwind CSS", "MERN Stack"],
-  },
-  {
-    label: "Cloud + DevOps",
-    items: ["AWS", "Azure", "Docker", "Git", "Linux", "SSH", "APIs", "CDK"],
-  },
-  {
-    label: "Testing + Workflow",
-    items: ["MySQL", "Excel", "Vim", "Jest", "JUnit"],
-  },
+  { label: "Frontend", items: ["React", "Next.js", "Tailwind CSS"] },
+  { label: "Backend", items: ["Node.js", "Express", "Spring Boot"] },
+  { label: "Cloud & DevOps", items: ["AWS", "Azure", "Docker", "CDK", "Git", "Linux"] },
+  { label: "Testing & Data", items: ["Jest", "JUnit", "MySQL"] },
 ];
 
-const leadershipEntries = [
+const leadership: LeadershipEntry[] = [
   {
-    mark: "CP",
-    title: "Career Preparation Fellow",
-    organization: "CodePath Technical Interview Prep",
-    location: "Washington, DC",
-    date: "Feb 2025 - Present",
+    name: "CodePath Technical Interview Prep",
+    role: "Career Preparation Fellow",
+    location: "Remote",
+    date: "Feb 2025 – Present",
     bullets: [
       "Selected for a competitive national course focused on Python-based technical interviews.",
-      "Solve data structures and algorithms problems weekly while sharpening debugging, whiteboarding, and peer review skills.",
+      "Solve data structures and algorithms problems weekly, sharpening debugging and peer review skills.",
     ],
   },
   {
-    mark: "MLT",
-    title: "Career Preparation Fellow",
-    organization: "Management Leadership for Tomorrow",
+    name: "Management Leadership for Tomorrow (MLT)",
+    role: "Career Preparation Fellow",
     location: "Washington, DC",
-    date: "Nov 2024 - Present",
+    date: "Nov 2024 – Present",
     bullets: [
-      "Selected from thousands for an 18-month career preparation program led by Deloitte, LinkedIn, and Bloomberg.",
-      "Completed business case studies and cohort projects that strengthened leadership and professional communication.",
+      "Selected from thousands for an 18-month program led by Deloitte, LinkedIn, and Bloomberg.",
+      "Completed business case studies and cohort projects strengthening leadership and communication.",
     ],
   },
   {
-    mark: "DEV",
-    title: "Project Manager",
-    organization: "DEV at The Ohio State University",
+    name: "DEV at The Ohio State University",
+    role: "Project Manager",
     location: "Columbus, OH",
-    date: "Aug 2023 - May 2024",
+    date: "Aug 2023 – May 2024",
     bullets: [
       "Led a team of 6 engineers and designers building software for the Ohio State community.",
-      "Managed timelines, delegated work, and kept milestones moving while coordinating with stakeholders.",
-      "Helped shape solutions around real user needs for a community of more than 360 members.",
+      "Managed timelines, delegated work, and coordinated with stakeholders for 360+ members.",
     ],
   },
 ];
 
-function ArrowDownIcon() {
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+type ExperienceEntry = {
+  name: string;
+  role: string;
+  location: string;
+  date: string;
+  badge?: string;
+  stack: string[];
+  bullets: string[];
+};
+
+type LeadershipEntry = {
+  name: string;
+  role: string;
+  location: string;
+  date: string;
+  bullets: string[];
+};
+
+// ─── Components ──────────────────────────────────────────────────────────────
+
+function SectionHeader({ title }: { title: string }) {
+  return (
+    <div className="flex items-center gap-3 mb-5">
+      <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.26em] text-foreground/40">
+        {title}
+      </span>
+      <div className="h-px flex-1 bg-black/10 dark:bg-white/10" />
+    </div>
+  );
+}
+
+function BulletList({ items }: { items: string[] }) {
+  return (
+    <ul className="space-y-1.5">
+      {items.map((item) => (
+        <li key={item} className="flex gap-2.5 text-sm leading-relaxed text-foreground/68">
+          <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-foreground/25" />
+          {item}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function EntryHeader({
+  name,
+  role,
+  date,
+  location,
+  badge,
+  children,
+}: {
+  name: string;
+  role: string;
+  date?: string;
+  location?: string;
+  badge?: string;
+  children?: ReactNode;
+}) {
+  const meta = [date, location].filter(Boolean).join(" · ");
+
+  return (
+    <div className="mb-3">
+      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1 mb-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-sm font-semibold">{name}</span>
+          {badge && (
+            <span className="rounded-full border border-emerald-600/25 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-950/40 dark:text-emerald-400">
+              {badge}
+            </span>
+          )}
+        </div>
+        {meta && (
+          <span className="shrink-0 text-xs text-foreground/42">{meta}</span>
+        )}
+      </div>
+      <p className="text-sm text-foreground/52">{role}</p>
+      {children}
+    </div>
+  );
+}
+
+function StackTags({ items }: { items: string[] }) {
+  if (!items.length) return null;
+  return (
+    <div className="flex flex-wrap gap-1.5 mb-3">
+      {items.map((tag) => (
+        <span
+          key={tag}
+          className="rounded-full border border-black/10 dark:border-white/10 px-2.5 py-0.5 text-[11px] text-foreground/52"
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function DownloadIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
-      aria-hidden="true"
-      className="h-4 w-4"
+      aria-hidden
+      className="h-3.5 w-3.5"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -138,408 +226,117 @@ function ArrowDownIcon() {
   );
 }
 
-const badgeClass =
-  "inline-flex items-center gap-2 rounded-full border border-black/10 bg-background/90 px-3 py-2 text-sm font-medium dark:border-white/10 dark:bg-black/40";
-
-function LogoBadge({ kind, label }: { kind: LogoKind; label: string }) {
-  if (kind === "jpmc") {
-    return (
-      <div className="inline-flex items-center rounded-full border border-black/10 bg-background/90 px-3 py-2 dark:border-white/10 dark:bg-black/40">
-        <Image
-          src="/chaseLogo.png"
-          alt={label}
-          width={118}
-          height={28}
-          className="h-6 w-auto object-contain"
-        />
-      </div>
-    );
-  }
-
-  if (kind === "amazon") {
-    return (
-      <div className={badgeClass}>
-        <span className="text-base font-semibold lowercase">amazon</span>
-        <span className="h-1.5 w-8 rounded-full bg-[#ff9900]" />
-      </div>
-    );
-  }
-
-  if (kind === "osu") {
-    return (
-      <div className={badgeClass}>
-        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#bb0000] text-xs font-semibold text-white">
-          O
-        </span>
-        <span>{label}</span>
-      </div>
-    );
-  }
-
-  return (
-    <div className={badgeClass}>
-      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#12b886] text-xs font-semibold text-white">
-        C
-      </span>
-      <span>{label}</span>
-    </div>
-  );
-}
-
-function SectionHeading({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
-  return (
-    <div className="space-y-3">
-      <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-60">{eyebrow}</p>
-      <h2 className="text-2xl font-semibold tracking-tight md:text-4xl">{title}</h2>
-      <p className="max-w-2xl text-sm leading-7 opacity-75 md:text-base">{description}</p>
-    </div>
-  );
-}
-
-function StatusPill({ status }: { status: string }) {
-  const classes =
-    status === "Incoming"
-      ? "border-[#0f766e]/20 bg-[#0f766e]/10 text-[#0f766e] dark:border-[#5eead4]/20 dark:bg-[#134e4a]/40 dark:text-[#99f6e4]"
-      : "border-black/10 bg-black/[0.04] text-foreground/80 dark:border-white/10 dark:bg-white/[0.05] dark:text-white/80";
-
-  return (
-    <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${classes}`}>
-      {status}
-    </span>
-  );
-}
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function ResumePage() {
   return (
-    <main className="mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-12">
-      <section className="relative overflow-hidden rounded-[2.25rem] border border-black/10 bg-background/80 shadow-[0_24px_80px_rgba(0,0,0,0.08)] backdrop-blur dark:border-white/10 dark:shadow-[0_24px_80px_rgba(0,0,0,0.34)]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(15,118,110,0.13),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(251,191,36,0.14),transparent_28%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.12),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(245,158,11,0.12),transparent_28%)]" />
+    <main className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">
+      {/* Header */}
+      <header className="mb-12">
+        <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
+          <h1 className="text-4xl font-semibold tracking-tight">Yakob Getu</h1>
+          <a
+            href="/yakob_resume_cse.pdf"
+            download
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-black/15 dark:border-white/15 px-4 py-2 text-xs font-medium text-foreground/60 transition-colors hover:border-black/30 hover:text-foreground dark:hover:border-white/30 dark:hover:text-foreground"
+          >
+            <DownloadIcon />
+            Download PDF
+          </a>
+        </div>
+        <p className="mb-5 text-sm text-foreground/50">
+          Computer Science &amp; Engineering · The Ohio State University · Incoming SWE Intern @ JPMorgan Chase
+        </p>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+          {contactLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target={link.external ? "_blank" : undefined}
+              rel={link.external ? "noreferrer" : undefined}
+              className="text-foreground/52 underline underline-offset-4 decoration-foreground/20 transition-colors hover:text-foreground hover:decoration-foreground/50"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </header>
 
-        <div className="relative grid gap-10 px-6 py-8 md:px-10 md:py-10 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="space-y-6">
-            <div className="inline-flex w-fit rounded-full border border-black/10 bg-background/90 px-3 py-1 text-xs font-medium uppercase tracking-[0.24em] opacity-75 dark:border-white/10 dark:bg-black/40">
-              Resume
-            </div>
-
-            <div className="space-y-4">
-              <h1 className="max-w-3xl text-4xl font-semibold tracking-tight md:text-6xl">
-                Yakob Getu
-              </h1>
-              <p className="max-w-3xl text-lg leading-8 opacity-82 md:text-xl">
-                Computer Science and Engineering student at The Ohio State University focused on
-                full-stack development and software engineering.
+      <div className="space-y-11">
+        {/* Education */}
+        <section>
+          <SectionHeader title="Education" />
+          <EntryHeader
+            name={education.institution}
+            role={education.degree}
+            date={education.date}
+            location={education.location}
+          >
+            <div className="mt-3 space-y-3">
+              <BulletList items={education.honors} />
+              <p className="text-xs text-foreground/40 leading-relaxed">
+                <span className="font-medium">Concentration:</span> {education.concentration}
+                &ensp;·&ensp;
+                <span className="font-medium">Relevant coursework:</span> {education.coursework}
               </p>
             </div>
+          </EntryHeader>
+        </section>
 
-            <div className="flex flex-wrap gap-3 text-sm">
-              <a
-                href="mailto:ygetu21@gmail.com"
-                className="rounded-full border border-black/10 bg-background/90 px-4 py-2 font-medium transition hover:-translate-y-0.5 hover:opacity-90 dark:border-white/10 dark:bg-black/35"
-              >
-                ygetu21@gmail.com
-              </a>
-              <a
-                href="https://github.com/ygetu22"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full border border-black/10 bg-background/90 px-4 py-2 font-medium transition hover:-translate-y-0.5 hover:opacity-90 dark:border-white/10 dark:bg-black/35"
-              >
-                github.com/ygetu22
-              </a>
-              <a
-                href="https://linkedin.com/in/ygetu/"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full border border-black/10 bg-background/90 px-4 py-2 font-medium transition hover:-translate-y-0.5 hover:opacity-90 dark:border-white/10 dark:bg-black/35"
-              >
-                linkedin.com/in/ygetu
-              </a>
-            </div>
-
-            <div className="rounded-[1.75rem] border border-black/10 bg-background/75 p-5 dark:border-white/10 dark:bg-black/30">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] opacity-60">
-                Selected experience
-              </p>
-              <div className="mt-4 flex flex-wrap gap-3">
-                {logoStrip.map((logo) => (
-                  <LogoBadge key={logo.label} kind={logo.kind} label={logo.label} />
-                ))}
+        {/* Experience */}
+        <section>
+          <SectionHeader title="Experience" />
+          <div className="space-y-8">
+            {experience.map((exp, i) => (
+              <div key={`${exp.name}-${i}`}>
+                <EntryHeader
+                  name={exp.name}
+                  role={exp.role}
+                  date={exp.date}
+                  location={exp.location}
+                  badge={exp.badge}
+                />
+                <StackTags items={exp.stack} />
+                <BulletList items={exp.bullets} />
               </div>
-            </div>
+            ))}
           </div>
+        </section>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-            <div className="rounded-[1.75rem] border border-black/10 bg-background/80 p-5 dark:border-white/10 dark:bg-black/30">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] opacity-60">Highlights</p>
-              <div className="mt-4 space-y-4">
-                <div className="rounded-2xl bg-black/[0.04] p-4 dark:bg-white/[0.04]">
-                  <p className="text-3xl font-semibold">Summer 2026</p>
-                  <p className="mt-1 text-sm opacity-72">Incoming Software Engineering Intern at JPMorgan Chase</p>
-                </div>
-                <div className="rounded-2xl bg-black/[0.04] p-4 dark:bg-white/[0.04]">
-                  <p className="text-3xl font-semibold">May 2027</p>
-                  <p className="mt-1 text-sm opacity-72">Expected Ohio State graduation in Computer Science and Engineering</p>
-                </div>
-                <div className="rounded-2xl bg-black/[0.04] p-4 dark:bg-white/[0.04]">
-                  <p className="text-3xl font-semibold">2x JPMC</p>
-                  <p className="mt-1 text-sm opacity-72">Returning after a previous software engineering internship</p>
-                </div>
+        {/* Skills */}
+        <section>
+          <SectionHeader title="Skills" />
+          <div className="space-y-2.5">
+            {skillGroups.map((group) => (
+              <div
+                key={group.label}
+                className="grid grid-cols-[6.5rem_1fr] gap-x-4 text-sm"
+              >
+                <span className="text-foreground/42 font-medium">{group.label}</span>
+                <span className="text-foreground/72">{group.items.join(", ")}</span>
               </div>
-            </div>
-
-            <div className="rounded-[1.75rem] border border-black/10 bg-background/80 p-5 dark:border-white/10 dark:bg-black/30">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] opacity-60">Actions</p>
-              <div className="mt-4 flex flex-col gap-3 text-sm">
-                <a
-                  href="/yakob_resume_cse.pdf"
-                  download
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-4 py-3 font-medium text-background transition hover:-translate-y-0.5 hover:opacity-90"
-                >
-                  <ArrowDownIcon />
-                  Download PDF
-                </a>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-full border border-black/10 px-4 py-3 font-medium transition hover:-translate-y-0.5 hover:opacity-90 dark:border-white/10"
-                >
-                  Reach out
-                </Link>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="mt-8 grid gap-8 lg:grid-cols-[240px_minmax(0,1fr)]">
-        <aside className="lg:sticky lg:top-28 lg:self-start">
-          <div className="rounded-[1.75rem] border border-black/10 bg-background/80 p-4 dark:border-white/10">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] opacity-60">
-              On this page
-            </p>
-            <nav className="flex flex-col gap-2 text-sm">
-              {sectionLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="rounded-xl px-3 py-2 transition hover:bg-black/[0.04] dark:hover:bg-white/[0.05]"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
+        {/* Leadership */}
+        <section>
+          <SectionHeader title="Leadership" />
+          <div className="space-y-8">
+            {leadership.map((entry, i) => (
+              <div key={`${entry.name}-${i}`}>
+                <EntryHeader
+                  name={entry.name}
+                  role={entry.role}
+                  date={entry.date}
+                  location={entry.location}
+                />
+                <BulletList items={entry.bullets} />
+              </div>
+            ))}
           </div>
-        </aside>
-
-        <div className="space-y-8">
-          <section
-            id="education"
-            className="rounded-[2rem] border border-black/10 bg-background/80 p-6 shadow-[0_12px_36px_rgba(0,0,0,0.04)] dark:border-white/10 dark:shadow-[0_12px_36px_rgba(0,0,0,0.2)] md:p-8"
-          >
-            <SectionHeading
-              eyebrow="Education"
-              title="A foundation built at Ohio State"
-              description="Education, coursework, and honors."
-            />
-
-            <div className="mt-8 grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
-              <div className="rounded-[1.75rem] border border-black/10 p-5 dark:border-white/10">
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div className="space-y-3">
-                    <LogoBadge kind="osu" label="The Ohio State University" />
-                    <div>
-                      <h3 className="text-2xl font-semibold">The Ohio State University</h3>
-                      <p className="mt-1 text-sm opacity-72">B.S. in Computer Science and Engineering</p>
-                    </div>
-                  </div>
-
-                  <div className="text-sm opacity-72">
-                    <p>Columbus, OH</p>
-                    <p>Expected May 2027</p>
-                  </div>
-                </div>
-
-                <div className="mt-6 grid gap-4 text-sm sm:grid-cols-2">
-                  <div className="rounded-2xl bg-black/[0.04] p-4 dark:bg-white/[0.04]">
-                    <p className="text-xs uppercase tracking-[0.2em] opacity-60">Concentration</p>
-                    <p className="mt-2 font-medium">Software Engineering</p>
-                  </div>
-                  <div className="rounded-2xl bg-black/[0.04] p-4 dark:bg-white/[0.04]">
-                    <p className="text-xs uppercase tracking-[0.2em] opacity-60">Relevant coursework</p>
-                    <p className="mt-2 font-medium">
-                      Software Development and Design, Data Structures and Algorithms, Algorithm
-                      Design and Analysis
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-[1.75rem] border border-black/10 p-5 dark:border-white/10">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] opacity-60">Recognition</p>
-                <div className="mt-4 space-y-3">
-                  {[
-                    "Amazon Future Engineer Scholar, one of 400 recipients in the U.S.",
-                    "Choose Ohio First Scholar",
-                    "Dean's List, 3 times",
-                  ].map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-2xl border border-black/10 px-4 py-3 text-sm leading-7 dark:border-white/10"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section
-            id="experience"
-            className="rounded-[2rem] border border-black/10 bg-background/80 p-6 shadow-[0_12px_36px_rgba(0,0,0,0.04)] dark:border-white/10 dark:shadow-[0_12px_36px_rgba(0,0,0,0.2)] md:p-8"
-          >
-            <SectionHeading
-              eyebrow="Experience"
-              title="Internship experience"
-              description="Product, platform, and full-stack engineering work across enterprise teams."
-            />
-
-            <div className="mt-8 space-y-5">
-              {experienceEntries.map((entry) => (
-                <article
-                  key={`${entry.company}-${entry.date}`}
-                  className="rounded-[1.85rem] border border-black/10 p-5 transition hover:-translate-y-1 hover:shadow-[0_14px_36px_rgba(0,0,0,0.06)] dark:border-white/10 dark:hover:shadow-[0_14px_36px_rgba(0,0,0,0.22)]"
-                >
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div className="space-y-4">
-                      <div className="flex flex-wrap items-center gap-3">
-                        <LogoBadge kind={entry.kind} label={entry.company} />
-                        <StatusPill status={entry.status} />
-                      </div>
-
-                      <div>
-                        <h3 className="text-2xl font-semibold">{entry.title}</h3>
-                        <p className="mt-1 text-sm opacity-72">{entry.company}</p>
-                      </div>
-                    </div>
-
-                    <div className="text-sm opacity-72">
-                      <p>{entry.location}</p>
-                      <p>{entry.date}</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {entry.stack.map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-full border border-black/10 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.16em] dark:border-white/10"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="mt-5 grid gap-3">
-                    {entry.bullets.map((bullet) => (
-                      <div
-                        key={bullet}
-                        className="rounded-2xl bg-black/[0.04] px-4 py-3 text-sm leading-7 dark:bg-white/[0.04]"
-                      >
-                        {bullet}
-                      </div>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section
-            id="skills"
-            className="rounded-[2rem] border border-black/10 bg-background/80 p-6 shadow-[0_12px_36px_rgba(0,0,0,0.04)] dark:border-white/10 dark:shadow-[0_12px_36px_rgba(0,0,0,0.2)] md:p-8"
-          >
-            <SectionHeading
-              eyebrow="Skills"
-              title="Technical skills"
-              description="Languages, frameworks, and tools."
-            />
-
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
-              {skillGroups.map((group) => (
-                <div
-                  key={group.label}
-                  className="rounded-[1.75rem] border border-black/10 p-5 transition hover:-translate-y-1 dark:border-white/10"
-                >
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] opacity-60">
-                    {group.label}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {group.items.map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-full border border-black/10 px-3 py-1.5 text-sm dark:border-white/10"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section
-            id="leadership"
-            className="rounded-[2rem] border border-black/10 bg-background/80 p-6 shadow-[0_12px_36px_rgba(0,0,0,0.04)] dark:border-white/10 dark:shadow-[0_12px_36px_rgba(0,0,0,0.2)] md:p-8"
-          >
-            <SectionHeading
-              eyebrow="Leadership"
-              title="Leadership and development"
-              description="Programs and roles focused on leadership, communication, and execution."
-            />
-
-            <div className="mt-8 grid gap-5">
-              {leadershipEntries.map((entry) => (
-                <article
-                  key={`${entry.organization}-${entry.date}`}
-                  className="rounded-[1.75rem] border border-black/10 p-5 dark:border-white/10"
-                >
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div className="flex items-start gap-4">
-                      <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-black text-sm font-semibold text-white dark:bg-white dark:text-black">
-                        {entry.mark}
-                      </div>
-
-                      <div>
-                        <p className="text-sm uppercase tracking-[0.18em] opacity-55">
-                          {entry.organization}
-                        </p>
-                        <h3 className="mt-2 text-xl font-semibold">{entry.title}</h3>
-                      </div>
-                    </div>
-
-                    <div className="text-sm opacity-72">
-                      <p>{entry.location}</p>
-                      <p>{entry.date}</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-5 grid gap-3">
-                    {entry.bullets.map((bullet) => (
-                      <div
-                        key={bullet}
-                        className="rounded-2xl bg-black/[0.04] px-4 py-3 text-sm leading-7 dark:bg-white/[0.04]"
-                      >
-                        {bullet}
-                      </div>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   );
 }
