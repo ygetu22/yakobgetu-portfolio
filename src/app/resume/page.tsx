@@ -1,7 +1,5 @@
 import type { ReactNode } from "react";
 
-// ─── Data ────────────────────────────────────────────────────────────────────
-
 const contactLinks = [
   { label: "ygetu21@gmail.com", href: "mailto:ygetu21@gmail.com", external: false },
   { label: "linkedin.com/in/ygetu", href: "https://linkedin.com/in/ygetu/", external: true },
@@ -107,8 +105,6 @@ const leadership: LeadershipEntry[] = [
   },
 ];
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 type ExperienceEntry = {
   name: string;
   role: string;
@@ -126,8 +122,6 @@ type LeadershipEntry = {
   date: string;
   bullets: string[];
 };
-
-// ─── Components ──────────────────────────────────────────────────────────────
 
 function SectionHeader({ title }: { title: string }) {
   return (
@@ -226,12 +220,9 @@ function DownloadIcon() {
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
 export default function ResumePage() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">
-      {/* Header */}
       <header className="mb-12">
         <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
           <h1 className="text-4xl font-semibold tracking-tight">Yakob Getu</h1>
@@ -263,7 +254,6 @@ export default function ResumePage() {
       </header>
 
       <div className="space-y-11">
-        {/* Education */}
         <section>
           <SectionHeader title="Education" />
           <EntryHeader
@@ -283,7 +273,6 @@ export default function ResumePage() {
           </EntryHeader>
         </section>
 
-        {/* Experience */}
         <section>
           <SectionHeader title="Experience" />
           <div className="space-y-8">
@@ -303,7 +292,6 @@ export default function ResumePage() {
           </div>
         </section>
 
-        {/* Skills */}
         <section>
           <SectionHeader title="Skills" />
           <div className="space-y-2.5">
@@ -319,7 +307,6 @@ export default function ResumePage() {
           </div>
         </section>
 
-        {/* Leadership */}
         <section>
           <SectionHeader title="Leadership" />
           <div className="space-y-8">

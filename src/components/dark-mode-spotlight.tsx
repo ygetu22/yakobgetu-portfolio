@@ -22,7 +22,6 @@ export default function DarkModeSpotlight({ className }: { className?: string })
       rafId = requestAnimationFrame(() => setVars(e.clientX, e.clientY));
     };
 
-    // Initialize to a pleasant position before the first mouse move.
     const rect = el.getBoundingClientRect();
     el.style.setProperty("--spotlight-x", `${rect.width / 2}px`);
     el.style.setProperty("--spotlight-y", `${rect.height / 3}px`);

@@ -10,12 +10,12 @@ type Page = {
 };
 
 const pages: Page[] = [
-  { label: "Home",     href: "/",        description: "Back to the start" },
-  { label: "Resume",   href: "/resume",  description: "Experience, skills, and education" },
-  { label: "Projects", href: "/projects",description: "Things I've built" },
-  { label: "Posts",    href: "/posts",   description: "Writing and updates" },
-  { label: "Hobbies",  href: "/hobbies", description: "Outside of work" },
-  { label: "Contact",  href: "/contact", description: "Get in touch" },
+  { label: "Home", href: "/", description: "Back to the start" },
+  { label: "Resume", href: "/resume", description: "Experience, skills, and education" },
+  { label: "Projects", href: "/projects", description: "Things I've built" },
+  { label: "Posts", href: "/posts", description: "Writing and updates" },
+  { label: "Hobbies", href: "/hobbies", description: "Outside of work" },
+  { label: "Contact", href: "/contact", description: "Get in touch" },
 ];
 
 function SearchIcon(props: SVGProps<SVGSVGElement>) {
@@ -38,11 +38,11 @@ function SearchIcon(props: SVGProps<SVGSVGElement>) {
 
 export default function CommandPalette() {
   const router = useRouter();
-  const [open, setOpen]           = useState(false);
-  const [query, setQuery]         = useState("");
-  const [activeIndex, setActive]  = useState(0);
-  const inputRef                  = useRef<HTMLInputElement>(null);
-  const activeItemRef             = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [activeIndex, setActive] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const activeItemRef = useRef<HTMLButtonElement>(null);
 
   const filtered = pages.filter(
     (p) =>
@@ -64,7 +64,6 @@ export default function CommandPalette() {
     [close, router]
   );
 
-  // Cmd+K / Ctrl+K global shortcut
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -76,17 +75,14 @@ export default function CommandPalette() {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
-  // Focus input when palette opens
   useEffect(() => {
     if (open) requestAnimationFrame(() => inputRef.current?.focus());
   }, [open]);
 
-  // Reset selection when query changes
   useEffect(() => {
     setActive(0);
   }, [query]);
 
-  // Keep active item in view
   useEffect(() => {
     activeItemRef.current?.scrollIntoView({ block: "nearest" });
   }, [activeIndex]);
@@ -108,7 +104,6 @@ export default function CommandPalette() {
 
   return (
     <>
-      {/* ── Trigger button ── */}
       <button
         type="button"
         onClick={() => setOpen(true)}
@@ -119,7 +114,6 @@ export default function CommandPalette() {
         <span className="hidden sm:block">⌘K</span>
       </button>
 
-      {/* ── Modal ── */}
       {open && (
         <div
           className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[18vh]"
@@ -127,15 +121,12 @@ export default function CommandPalette() {
             if (e.target === e.currentTarget) close();
           }}
         >
-          {/* Backdrop */}
           <div className="absolute inset-0 bg-black/20 backdrop-blur-sm dark:bg-black/50" />
 
-          {/* Palette card */}
           <div
             className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-black/10 bg-background shadow-[0_24px_80px_rgba(0,0,0,0.14)] dark:border-white/10 dark:bg-[#111] dark:shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
             onKeyDown={onKeyDown}
           >
-            {/* Input row */}
             <div className="flex items-center gap-3 border-b border-black/10 px-4 py-3 dark:border-white/10">
               <SearchIcon className="h-4 w-4 shrink-0 text-foreground/35" />
               <input
@@ -153,7 +144,6 @@ export default function CommandPalette() {
               </kbd>
             </div>
 
-            {/* Results */}
             <ul
               className="max-h-72 overflow-y-auto py-1.5"
               role="listbox"
@@ -196,7 +186,6 @@ export default function CommandPalette() {
               )}
             </ul>
 
-            {/* Footer hints */}
             <div className="border-t border-black/10 px-4 py-2 dark:border-white/10">
               <span className="text-[10px] text-foreground/30">
                 <kbd className="font-sans">↑↓</kbd> navigate &nbsp;·&nbsp;

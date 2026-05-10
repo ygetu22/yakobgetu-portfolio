@@ -241,7 +241,6 @@ export default function Header() {
             </IconButton>
             <ThemeToggle />
 
-            {/* Mobile menu button */}
             <button
               type="button"
               className="inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground/80 transition hover:bg-black/[0.06] hover:text-foreground dark:hover:bg-white/[0.08] md:hidden"
