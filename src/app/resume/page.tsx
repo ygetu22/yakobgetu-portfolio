@@ -227,7 +227,7 @@ export default function ResumePage() {
         <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
           <h1 className="text-4xl font-semibold tracking-tight">Yakob Getu</h1>
           <a
-            href="/yakob_resume_cse.pdf"
+            href="/yakob_getu_resume.pdf"
             download
             className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-black/15 dark:border-white/15 px-4 py-2 text-xs font-medium text-foreground/60 transition-colors hover:border-black/30 hover:text-foreground dark:hover:border-white/30 dark:hover:text-foreground"
           >
