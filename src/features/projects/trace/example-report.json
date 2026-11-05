@@ -1,0 +1,211 @@
+{
+  "id": "7d1253d8-583d-47f1-9832-f7be147eb8bb",
+  "requestedUrl": "https://osucoursesearch.org/",
+  "finalUrl": "https://osucoursesearch.org/",
+  "title": "OSU Course Instructor Search",
+  "status": 200,
+  "capturedAt": "2026-10-07T00:34:27.632Z",
+  "durationMs": 3802,
+  "viewport": {
+    "width": 1440,
+    "height": 960
+  },
+  "screenshotUrl": "/projects/trace/example/screenshot.png",
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "finalUrl": "https://osucoursesearch.org/",
+    "status": 200,
+    "screenshotUrl": "/projects/trace/example/mobile.png"
+  },
+  "findings": [
+    {
+      "kind": "security",
+      "classification": "recommendation",
+      "summary": "Response has no content-security-policy header",
+      "pageUrl": "https://osucoursesearch.org/",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "evidence": {
+        "header": "content-security-policy",
+        "value": null
+      },
+      "explanation": "A Content Security Policy can restrict script and resource execution. Missing this header is a hardening opportunity, not proof of an exploitable vulnerability.",
+      "reproduce": [
+        "Open https://osucoursesearch.org/ at 1440 \u00d7 960.",
+        "Inspect the element or response shown in the evidence after the page loads."
+      ]
+    },
+    {
+      "kind": "form-label",
+      "classification": "review",
+      "summary": "Form fields have no detected accessible label",
+      "pageUrl": "https://osucoursesearch.org/",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "evidence": {
+        "fields": [
+          {
+            "tag": "select",
+            "type": null,
+            "name": "term",
+            "id": "id_term"
+          },
+          {
+            "tag": "select",
+            "type": null,
+            "name": "subject",
+            "id": "id_subject"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "name": "number",
+            "id": "id_number",
+            "placeholder": "e.g. 2421"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "name": "instructor",
+            "id": "id_instructor",
+            "placeholder": "e.g. Rob LaTour"
+          }
+        ]
+      },
+      "explanation": "Add associated labels or accessible names. Placeholders alone do not label fields. This is a focused DOM check, not a full accessibility audit.",
+      "reproduce": [
+        "Open https://osucoursesearch.org/ at 1440 \u00d7 960.",
+        "Inspect the element or response shown in the evidence after the page loads."
+      ]
+    },
+    {
+      "kind": "security",
+      "classification": "recommendation",
+      "summary": "Response has no content-security-policy header",
+      "pageUrl": "https://osucoursesearch.org/about/",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "evidence": {
+        "header": "content-security-policy",
+        "value": null
+      },
+      "explanation": "A Content Security Policy can restrict script and resource execution. Missing this header is a hardening opportunity, not proof of an exploitable vulnerability.",
+      "reproduce": [
+        "Open https://osucoursesearch.org/about/ at 1440 \u00d7 960.",
+        "Inspect the element or response shown in the evidence after the page loads."
+      ]
+    },
+    {
+      "kind": "security",
+      "classification": "recommendation",
+      "summary": "Response has no content-security-policy header",
+      "pageUrl": "https://osucoursesearch.org/news/",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "evidence": {
+        "header": "content-security-policy",
+        "value": null
+      },
+      "explanation": "A Content Security Policy can restrict script and resource execution. Missing this header is a hardening opportunity, not proof of an exploitable vulnerability.",
+      "reproduce": [
+        "Open https://osucoursesearch.org/news/ at 1440 \u00d7 960.",
+        "Inspect the element or response shown in the evidence after the page loads."
+      ]
+    },
+    {
+      "kind": "form-label",
+      "classification": "review",
+      "summary": "Form fields have no detected accessible label",
+      "pageUrl": "https://osucoursesearch.org/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "evidence": {
+        "fields": [
+          {
+            "tag": "select",
+            "type": null,
+            "name": "term",
+            "id": "id_term"
+          },
+          {
+            "tag": "select",
+            "type": null,
+            "name": "subject",
+            "id": "id_subject"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "name": "number",
+            "id": "id_number",
+            "placeholder": "e.g. 2421"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "name": "instructor",
+            "id": "id_instructor",
+            "placeholder": "e.g. Rob LaTour"
+          }
+        ]
+      },
+      "explanation": "Add associated labels or accessible names. Placeholders alone do not label fields. This is a focused DOM check, not a full accessibility audit.",
+      "reproduce": [
+        "Open https://osucoursesearch.org/ at 390 \u00d7 844.",
+        "Inspect the element or response shown in the evidence after the page loads."
+      ]
+    }
+  ],
+  "omittedFindings": 0,
+  "actions": [
+    {
+      "kind": "navigation",
+      "label": "Learn More",
+      "beforeUrl": "https://osucoursesearch.org/",
+      "afterUrl": "https://osucoursesearch.org/about/",
+      "outcome": "passed",
+      "detail": "Clicked internal link; browser received HTTP 200 at https://osucoursesearch.org/about/.",
+      "durationMs": 305
+    },
+    {
+      "kind": "navigation",
+      "label": "News",
+      "beforeUrl": "https://osucoursesearch.org/",
+      "afterUrl": "https://osucoursesearch.org/news/",
+      "outcome": "passed",
+      "detail": "Clicked internal link; browser received HTTP 200 at https://osucoursesearch.org/news/.",
+      "durationMs": 817
+    }
+  ],
+  "coverage": {
+    "pagesVisited": 4,
+    "controlsTested": 0,
+    "linksTested": 2,
+    "featureTests": 0,
+    "accessBlocked": false,
+    "limited": false,
+    "skipped": [],
+    "blockedRequests": []
+  },
+  "security": {
+    "https": true,
+    "secureContext": true
+  },
+  "traceUrls": {
+    "desktop": "",
+    "mobile": ""
+  }
+}

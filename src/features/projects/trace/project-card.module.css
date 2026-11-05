@@ -1,0 +1,36 @@
+.preview {
+  position: relative;
+  display: grid;
+  aspect-ratio: 16 / 9;
+  place-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  background: color-mix(in srgb, var(--foreground) 3%, var(--background));
+}
+
+.previewSheet { width: 66%; }
+
+.previewInner {
+  padding: 13px 16px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);
+  border-radius: 8px;
+  background: var(--background);
+  box-shadow: 0 12px 28px #0000000d;
+  transform: rotate(-5deg);
+  transition: transform 300ms ease;
+}
+
+.preview:hover .previewInner { transform: rotate(-2deg); }
+.previewBar { display: flex; gap: 4px; margin-bottom: 10px; }
+.previewBar span { width: 4px; height: 4px; border-radius: 50%; background: color-mix(in srgb, var(--foreground) 25%, transparent); }
+.previewHeading { margin-bottom: 9px; font-family: var(--font-display), Georgia, serif; font-size: 26px; line-height: 1; }
+.previewLine { width: 80%; height: 3px; margin-top: 5px; background: color-mix(in srgb, var(--foreground) 10%, transparent); }
+.previewLine + .previewLine { width: 60%; }
+.previewObservation { display: flex; align-items: center; gap: 5px; margin-top: 11px; font-size: 8px; white-space: nowrap; color: color-mix(in srgb, var(--foreground) 60%, transparent); }
+.previewObservation > span:last-child { margin-left: auto; }
+.dot { width: 4px; height: 4px; border-radius: 50%; background: #a8664d; }
+.previewBadge { position: absolute; right: 10%; bottom: 13%; padding: 5px 9px; border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent); border-radius: 5px; background: var(--background); color: #a8664d; font-size: 10px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .previewInner { transition: none; }
+}
