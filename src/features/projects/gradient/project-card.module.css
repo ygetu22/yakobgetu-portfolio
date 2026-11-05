@@ -1,0 +1,44 @@
+.preview {
+  position: relative;
+  display: grid;
+  aspect-ratio: 16 / 9;
+  place-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  background: radial-gradient(ellipse at 30% 25%, #d7cee9, #a698c2 85%);
+}
+.caption { position: absolute; top: 10%; left: 7%; font-size: 7px; letter-spacing: .18em; color: #493764b3; }
+.paperMotion { width: 63%; }
+.paper {
+  padding: 15px;
+  border: 1px solid #ffffffb3;
+  border-radius: 5px;
+  background: #f9f5ec;
+  box-shadow: 0 12px 24px #46345c33;
+  transform: rotate(-5deg);
+  transition: transform 400ms ease;
+}
+:global(article):is(:hover, :focus-within) .paper { transform: rotate(-2deg); }
+.paperHeading { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #38303f; font-size: 16px; letter-spacing: -.06em; }
+.dot { color: #8c65b7; }
+.document { font-size: 5px; letter-spacing: .1em; color: #85768e; }
+.lines { position: relative; display: grid; gap: 7px; margin-top: 15px; padding: 4px 0; overflow: hidden; }
+.lines > span:not(.scan) { height: 3px; border-radius: 2px; background: #ddd5df; }
+.lines > span:nth-child(2) { width: 85%; }
+.lines > span:nth-child(4) { width: 92%; }
+.lines > span:nth-child(5) { width: 60%; }
+.scan { position: absolute; top: 0; right: 0; left: 0; height: 10px; border-bottom: 1px solid #9567b9; background: #b39ac530; animation: review 4s ease-in-out infinite; }
+.feedback { display: flex; align-items: center; gap: 6px; margin-top: 12px; color: #72508c; font-size: 7px; }
+.check { display: grid; width: 13px; height: 13px; place-items: center; border-radius: 50%; background: #e4d9ec; }
+.badge { position: absolute; right: 12%; bottom: 17%; display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid #cab7dd; border-radius: 50%; background: #674781; color: #f9f5ec; box-shadow: 0 5px 10px #46345c26; }
+.badge svg { width: 19px; height: 19px; }
+@keyframes review {
+  0%, 100% { top: 0; opacity: 0; }
+  12% { opacity: 1; }
+  78% { top: calc(100% - 10px); opacity: 1; }
+  90% { top: calc(100% - 10px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paper { transition: none; }
+  .scan { animation: none; }
+}

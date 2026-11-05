@@ -1,0 +1,67 @@
+.preview {
+  position: relative;
+  display: grid;
+  aspect-ratio: 16 / 9;
+  place-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  background: radial-gradient(ellipse at 60% 35%, #d69455, #a75930 85%);
+}
+
+.caption {
+  position: absolute;
+  top: 10%;
+  left: 7%;
+  color: #fff1d8b3;
+  font-size: 7px;
+  letter-spacing: .2em;
+}
+
+.motion { width: 82%; }
+.sequencer {
+  padding: 15px 13px 11px;
+  border: 1px solid #ffffff26;
+  border-radius: 8px;
+  background: #242925;
+  box-shadow: 0 12px 24px #492a294d;
+  transform: rotate(-4deg);
+  transition: transform 400ms ease;
+}
+:global(article):is(:hover, :focus-within) .sequencer { transform: rotate(-1deg); }
+.header, .footer { display: flex; align-items: center; justify-content: space-between; }
+.header { margin-bottom: 15px; }
+.name { color: #f7efdf; font-size: 19px; font-weight: 500; letter-spacing: -.05em; }
+.name span { color: #e99b53; }
+.tempo { color: #e5b07b; font-size: 7px; letter-spacing: .08em; }
+.pattern { position: relative; display: grid; gap: 6px; }
+.row { display: flex; align-items: center; gap: 6px; }
+.track { width: 25px; flex-shrink: 0; color: #acb4a5; font-size: 6px; letter-spacing: .08em; }
+.steps { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); flex: 1; gap: 2px; }
+.step { aspect-ratio: .7; border-radius: 2px; background: #42483e; }
+.step:nth-child(4n + 1) { background: #545b4d; }
+.step.active { background: #d98648; animation: beat 1.92s linear infinite; }
+.playhead {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: 31px;
+  width: 1px;
+  background: #ffe6a6;
+  box-shadow: 0 0 5px #ffe6a680;
+  animation: scan 1.92s linear infinite;
+}
+.footer { margin-top: 12px; color: #aeb5a7; font-size: 6px; letter-spacing: .1em; }
+.signal { width: 5px; height: 5px; border-radius: 50%; background: #adc88a; }
+
+@keyframes scan {
+  from { left: 31px; }
+  to { left: 100%; }
+}
+@keyframes beat {
+  0%, 8% { background: #ffe1a0; box-shadow: 0 0 5px #efa96066; }
+  16%, 100% { background: #d98648; box-shadow: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sequencer { transition: none; }
+  .playhead, .step.active { animation: none; }
+}
