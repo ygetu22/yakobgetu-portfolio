@@ -1,0 +1,33 @@
+.motion { transform-origin: center; }
+.drift { animation: drift 6s ease-in-out infinite; }
+.sway { animation: sway 5s ease-in-out infinite; }
+.breathe { animation: breathe 6s ease-in-out infinite; }
+
+@keyframes drift {
+  0%, 100% { transform: translateY(5px); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes sway {
+  0%, 100% { transform: translateY(9px) rotate(-4deg); }
+  50% { transform: translateY(-9px) rotate(4deg); }
+}
+@keyframes breathe {
+  0%, 100% { transform: translateY(7px) rotate(-1deg) scale(.98); }
+  50% { transform: translateY(-7px) rotate(1deg) scale(1.07); }
+}
+
+.woven { animation: woven 10s linear infinite; }
+.frame { animation: frame 6s ease-in-out infinite; }
+
+@keyframes woven {
+  from { background-position: 0 0, 14px 0, 0 0; }
+  to { background-position: 0 28px, 14px 28px, 0 0; }
+}
+@keyframes frame {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(.96); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion, .woven, .frame { animation: none; }
+}

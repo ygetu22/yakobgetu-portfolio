@@ -2,8 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
+import { useInterfaceSound } from "@/components/providers/interface-sounds";
 
-const glyphs = ["ሀ", "ለ", "መ", "ሰ", "ረ", "ቀ", "ገ", "ዐ", "ፀ", "አ", "ዘ", "የ", "ጠ", "ጰ"];
+const glyphs = [
+  "ሀ", "ለ", "ሐ", "መ", "ሠ", "ረ", "ሰ", "ሸ", "ቀ", "በ", "ተ",
+  "ቸ", "ኀ", "ነ", "ኘ", "አ", "ከ", "ኸ", "ወ", "ዐ", "ዘ", "ዠ",
+  "የ", "ደ", "ጀ", "ገ", "ጠ", "ጨ", "ጰ", "ጸ", "ፀ", "ፈ", "ፐ",
+];
 
 type Character = {
   id: number;
@@ -44,6 +50,8 @@ function nextPosition(index: number, characters: Character[]) {
 
 export default function CulturalBackdrop() {
   const { resolvedTheme, setTheme } = useTheme();
+  const playSound = useInterfaceSound();
+  const isJournal = usePathname() === "/projects/elsewhere";
   const [enabled, setEnabled] = useState(true);
   const [characters, setCharacters] = useState(initialCharacters);
 
@@ -74,13 +82,21 @@ export default function CulturalBackdrop() {
     return () => window.clearInterval(interval);
   }, [enabled]);
 
+  const visibleCharacters = isJournal ? characters.filter((character) => character.id % 2 === 0) : characters;
+  const controlPosition = isJournal
+    ? "left-1/2 top-4 -translate-x-1/2 flex-row"
+    : "left-1/2 top-6 -translate-x-1/2 flex-row sm:top-9";
+  const controlColors = isJournal
+    ? "border-[#211b14]/25 bg-[#e9d6ae]/85 text-[#211b14]/70 dark:border-[#e8d4aa]/25 dark:bg-[#211b14]/85 dark:text-[#e8d4aa]/75"
+    : "border-foreground/15 bg-background/75 text-foreground/70";
+
   return (
     <>
-      <div aria-hidden="true" className={`pointer-events-none fixed inset-0 z-0 overflow-hidden transition-opacity duration-500 ${enabled ? "opacity-100" : "opacity-0"}`}>
-        {characters.map((character) => (
+      <div aria-hidden="true" className={`pointer-events-none fixed inset-0 overflow-hidden transition-opacity duration-500 ${isJournal ? "z-[31]" : "z-0"} ${enabled ? "opacity-100" : "opacity-0"}`}>
+        {visibleCharacters.map((character) => (
           <span
             key={character.id}
-            className={`absolute font-serif text-4xl text-foreground/[0.14] transition-[left,top,opacity] duration-[650ms] ease-in-out sm:text-5xl ${character.visible ? "opacity-100" : "opacity-0"}`}
+            className={`absolute font-serif transition-[left,top,opacity] duration-[650ms] ease-in-out ${isJournal ? "text-base text-[#8f281d]/[0.09] dark:text-[#d0a04b]/[0.10] sm:text-lg" : "text-xl text-foreground/[0.22] dark:text-foreground/[0.20] sm:text-2xl"} ${character.visible ? "opacity-100" : "opacity-0"}`}
             style={{ left: character.left, top: character.top }}
           >
             {character.glyph}
@@ -88,21 +104,29 @@ export default function CulturalBackdrop() {
         ))}
       </div>
 
-      <div className="fixed left-4 top-1/2 z-20 flex -translate-y-1/2 flex-col gap-2 sm:left-7">
+      <div className={`fixed z-50 flex gap-2 ${controlPosition}`}>
         <button
           type="button"
-          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-          className="grid h-10 w-10 place-items-center rounded-full border border-foreground/15 bg-background/75 text-foreground/70 backdrop-blur transition hover:border-foreground/35 hover:text-foreground"
+          onClick={() => {
+            const theme = resolvedTheme === "dark" ? "light" : "dark";
+            playSound(theme === "dark" ? "theme-dark" : "theme-light");
+            setTheme(theme);
+          }}
+          className={`grid h-10 w-10 place-items-center rounded-full border backdrop-blur transition hover:scale-105 ${controlColors}`}
           aria-label="Toggle color theme"
           title="Toggle color theme"
         >
-          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M20 15.2A8.2 8.2 0 018.8 4 8.2 8.2 0 1020 15.2z" /><path d="M12 2.5v2M21.5 12h-2M18.7 5.3l-1.4 1.4" /></svg>
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 dark:hidden" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M20 15.2A8.2 8.2 0 018.8 4 8.2 8.2 0 1020 15.2z" /></svg>
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="hidden h-4 w-4 dark:block" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4L19 5" /></svg>
         </button>
 
         <button
           type="button"
-          onClick={() => setEnabled((current) => !current)}
-          className={`grid h-10 w-10 place-items-center rounded-full border bg-background/75 font-serif text-lg backdrop-blur transition hover:border-foreground/35 ${enabled ? "border-foreground/15 text-foreground/70 hover:text-foreground" : "border-foreground/10 text-foreground/30"}`}
+          onClick={() => {
+            playSound(enabled ? "background-off" : "background-on");
+            setEnabled((current) => !current);
+          }}
+          className={`grid h-10 w-10 place-items-center rounded-full border font-serif text-lg backdrop-blur transition hover:scale-105 ${controlColors} ${enabled ? "opacity-100" : "opacity-45"}`}
           aria-label={`${enabled ? "Hide" : "Show"} Ge'ez-script background`}
           aria-pressed={enabled}
           title={`${enabled ? "Hide" : "Show"} Ge'ez-script background`}

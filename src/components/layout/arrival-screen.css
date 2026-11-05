@@ -1,0 +1,16 @@
+.arrival-screen {
+  transition: opacity 1300ms ease;
+}
+.arrival-palette-0 { background: radial-gradient(circle at 20% 22%, #7de0dc 0 3%, transparent 24%), linear-gradient(135deg, #102c5d, #176f88 50%, #0d3b4b); }
+.arrival-palette-1 { background: radial-gradient(circle at 80% 18%, #e6a7ff 0 2%, transparent 22%), linear-gradient(135deg, #2d174d, #70419b 50%, #b04b87); }
+.arrival-palette-2 { background: radial-gradient(circle at 22% 78%, #d7ed7a 0 3%, transparent 25%), linear-gradient(135deg, #153e36, #277d58 50%, #75a84a); }
+.arrival-palette-3 { background: radial-gradient(circle at 75% 76%, #ffd06b 0 2%, transparent 23%), linear-gradient(135deg, #581d35, #a8323e 50%, #e07131); }
+.arrival-palette-4 { background: radial-gradient(circle at 18% 75%, #98f5f0 0 3%, transparent 24%), linear-gradient(135deg, #082f49, #2563eb 50%, #22c1c3); }
+.arrival-palette-5 { background: radial-gradient(circle at 78% 20%, #ffd6e7 0 2%, transparent 22%), linear-gradient(135deg, #4a163e, #d44c8b 50%, #f29c78); }
+.arrival-palette-6 { background: radial-gradient(circle at 22% 20%, #fff2a6 0 3%, transparent 24%), linear-gradient(135deg, #53400c, #bb8a21 50%, #f0ce58); }
+.arrival-palette-7 { background: radial-gradient(circle at 80% 78%, #b7b1ff 0 2%, transparent 23%), linear-gradient(135deg, #182451, #4654a5 50%, #8b6ed6); }
+.arrival-screen-leaving { opacity: 0; pointer-events: none; }
+.arrival-name { font-family: var(--font-display), Georgia, serif; color: #fff3d9; font-weight: 400; }
+.arrival-name span { color: #f5c85e; font-style: italic; font-weight: 400; }
+
+@media (prefers-reduced-motion: reduce) { .arrival-screen { transition-duration: 1ms; } }

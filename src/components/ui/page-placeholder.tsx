@@ -10,7 +10,7 @@ export default function PagePlaceholder(props: PagePlaceholderProps) {
   const { eyebrow, title, description } = props;
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-10 md:py-16">
+    <main className="mx-auto max-w-5xl px-6 pb-16 pt-24 sm:pt-28">
       <section className="relative overflow-hidden rounded-[2.25rem] border border-black/10 bg-background/80 px-6 py-10 shadow-[0_20px_60px_rgba(0,0,0,0.06)] backdrop-blur dark:border-white/10 dark:shadow-[0_20px_60px_rgba(0,0,0,0.28)] md:px-10 md:py-14">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(15,118,110,0.11),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(251,191,36,0.12),transparent_26%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.1),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(245,158,11,0.1),transparent_26%)]" />
 
@@ -18,7 +18,7 @@ export default function PagePlaceholder(props: PagePlaceholderProps) {
           <div className="space-y-5">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-60">{eyebrow}</p>
             <div className="space-y-3">
-              <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">{title}</h1>
+              <h1 className="display-heading text-4xl md:text-5xl">{title}</h1>
               <p className="max-w-2xl text-base leading-8 opacity-75 md:text-lg">{description}</p>
             </div>
           </div>

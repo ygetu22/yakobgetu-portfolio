@@ -1,0 +1,13 @@
+.photo-placeholder {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--foreground) 7%, var(--background)), var(--background) 75%);
+}
+
+.photo-placeholder-orbit {
+  position: absolute;
+  width: 130%;
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  border-radius: 43% 57% 65% 35%;
+  transform: rotate(-28deg);
+  box-shadow: 0 0 0 32px color-mix(in srgb, var(--foreground) 3%, transparent), 0 0 0 80px color-mix(in srgb, var(--foreground) 2%, transparent);
+}

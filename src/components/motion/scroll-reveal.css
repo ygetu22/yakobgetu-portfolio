@@ -1,0 +1,83 @@
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition-property: opacity, transform, clip-path;
+  transition-duration: 750ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-title {
+  transform: translateY(1.8rem);
+  transition-duration: 950ms;
+}
+
+.reveal-portrait {
+  transform: translateY(1rem) rotate(3deg) scale(0.94);
+  transition-duration: 1100ms;
+}
+
+.reveal-wipe {
+  transform: none;
+  transition-duration: 1000ms;
+}
+
+.reveal-from-left {
+  transform: translateX(-1.75rem);
+}
+
+.reveal-from-right {
+  transform: translateX(1.75rem);
+}
+
+.reveal-unfold {
+  transform: none;
+  transition-duration: 800ms;
+}
+
+.reveal-settle {
+  transform: perspective(900px) rotateX(8deg) translateY(1rem);
+  transform-origin: center top;
+  transition-duration: 900ms;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Animate the mask only after intersection: a fully clipped observer target
+   has no intersection area and can otherwise remain hidden forever. */
+.reveal-title.is-visible,
+.reveal-unfold.is-visible {
+  animation: reveal-down 900ms both;
+  animation-delay: inherit;
+}
+
+.reveal-wipe.is-visible {
+  animation: reveal-across 1000ms both;
+  animation-delay: inherit;
+}
+
+@keyframes reveal-down {
+  from { clip-path: inset(0 0 100%); }
+  to { clip-path: inset(-0.2em); }
+}
+
+@keyframes reveal-across {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(-0.2em); }
+}
+
+/* Keep portrait shadows and keyboard focus rings outside reveal bounds. */
+.reveal-portrait.is-visible,
+.reveal-rise.is-visible,
+.reveal-from-left.is-visible,
+.reveal-from-right.is-visible,
+.reveal-settle.is-visible {
+  clip-path: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal { opacity: 1; transform: none; clip-path: none; transition: none; }
+  .scroll-reveal.is-visible { animation: none; }
+}
