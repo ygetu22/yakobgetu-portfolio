@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yakob Getu’s portfolio
 
-## Getting Started
+Next.js App Router, React, TypeScript, and Tailwind CSS. Includes Home, Resume, placeholder writing pages, and three projects: Elsewhere, Zempled, and Trace.
 
-First, run the development server:
+## Development
 
-```bash
+```sh
+nvm use 22
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://127.0.0.1:3000. `npm run dev` also starts the sibling Trace checker on loopback port 3120; see [Trace setup](docs/TRACE_SETUP.md). The arrival screen sends a fresh browser load to Home; use the site navigation or project cards to explore other pages.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run lint
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The production build downloads DM Sans and Cormorant Garamond from Google Fonts and needs network access.
 
-## Learn More
+## Structure
 
-To learn more about Next.js, take a look at the following resources:
+```text
+src/
+  app/                         Routes, route metadata, root layout, API entry points
+  features/
+    home/                      Homepage, portrait data, home styles, optional photo rotator
+    resume/                    Resume presentation and content
+    projects/
+      elsewhere/               Journal, project card, content, manuscript styles
+      zempled/                 Collection, project card, sample data, styles, preview handler
+  components/
+    layout/                    Site navigation, cultural backdrop, arrival screen
+    motion/                    Scroll reveals and reusable project idle animations
+    providers/                 Theme provider
+    ui/                        Shared page and photo placeholders
+  styles/
+    globals.css                Global theme, Tailwind, base styles, feature CSS imports
+public/
+  projects/zempled/             Album artwork and sleeve texture
+  images/portraits/             Personal photo library
+  images/resume/               Company marks
+  documents/                   Downloadable resume
+  icons/starter/               Preserved, currently unused starter icons
+  images/me.JPG                Preserved personal image
+  # favicon lives in src/app/favicon.ico
+docs/
+  PROJECT_STRUCTURE.md         File ownership and conventions for new projects
+  PROJECT_HANDOFF.md           Project history, preferences, and pending work
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See [the structure guide](docs/PROJECT_STRUCTURE.md) for where to make changes, and [the handoff](docs/PROJECT_HANDOFF.md) for design decisions and outstanding work.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Compatibility
 
-## Deploy on Vercel
+`/projects/ethiotunes` redirects to `/projects/zempled`. Both `/api/zempled/preview` and the previous `/api/ethiotunes/preview` use the same preview handler. The previous `/yakob_getu_resume.pdf` download address redirects to `/documents/yakob_getu_resume.pdf`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Work stays local until Yakob explicitly approves a commit, push, PR, or deployment.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Trace is now included alongside the existing projects with a recorded investigation at `/projects/trace`. Live investigations remain off pending isolated worker hosting. See [Trace setup and security boundaries](docs/TRACE_SETUP.md) for server-only configuration, evidence access, and future release requirements. Run `npm run test:trace` for its security-policy checks. HTML now uses per-request script nonces and dynamic rendering; production runtime dependencies were patched and audited.

@@ -1,7 +1,7 @@
 export default function ContactPage() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-12">
-      <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
+      <h1 className="display-heading text-4xl md:text-5xl">
         contact me
       </h1>
 

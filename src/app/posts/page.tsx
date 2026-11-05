@@ -1,4 +1,4 @@
-import PagePlaceholder from "@/components/page-placeholder";
+import PagePlaceholder from "@/components/ui/page-placeholder";
 
 export default function PostsPage() {
   return (
