@@ -23,7 +23,7 @@
 .preview:hover .previewInner { transform: rotate(-2deg); }
 .previewBar { display: flex; gap: 4px; margin-bottom: 10px; }
 .previewBar span { width: 4px; height: 4px; border-radius: 50%; background: color-mix(in srgb, var(--foreground) 25%, transparent); }
-.previewHeading { margin-bottom: 9px; font-family: var(--font-display), Georgia, serif; font-size: 26px; line-height: 1; }
+.previewHeading { margin-bottom: 9px; font-family: var(--font-display), Helvetica, Arial, sans-serif; font-size: 26px; line-height: 1; }
 .previewLine { width: 80%; height: 3px; margin-top: 5px; background: color-mix(in srgb, var(--foreground) 10%, transparent); }
 .previewLine + .previewLine { width: 60%; }
 .previewObservation { display: flex; align-items: center; gap: 5px; margin-top: 11px; font-size: 8px; white-space: nowrap; color: color-mix(in srgb, var(--foreground) 60%, transparent); }

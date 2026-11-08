@@ -10,7 +10,7 @@
 .arrival-palette-6 { background: radial-gradient(circle at 22% 20%, #fff2a6 0 3%, transparent 24%), linear-gradient(135deg, #53400c, #bb8a21 50%, #f0ce58); }
 .arrival-palette-7 { background: radial-gradient(circle at 80% 78%, #b7b1ff 0 2%, transparent 23%), linear-gradient(135deg, #182451, #4654a5 50%, #8b6ed6); }
 .arrival-screen-leaving { opacity: 0; pointer-events: none; }
-.arrival-name { font-family: var(--font-display), Georgia, serif; color: #fff3d9; font-weight: 400; }
+.arrival-name { font-family: var(--font-display), Helvetica, Arial, sans-serif; color: #fff3d9; font-weight: 400; }
 .arrival-name span { color: #f5c85e; font-style: italic; font-weight: 400; }
 
 @media (prefers-reduced-motion: reduce) { .arrival-screen { transition-duration: 1ms; } }

@@ -103,8 +103,8 @@
 .journal-title-lockup { display: flex; align-items: baseline; gap: 20px; }
 .journal-title-alt { display: flex; align-items: baseline; gap: 8px; color: var(--journal-red); font-family: Georgia, "Times New Roman", serif; }
 .journal-title-alt > span { font-size: 15px; }
-.journal-title-alt small { color: var(--journal-ink); font-family: var(--font-dm-sans), sans-serif; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
-.journal-header h1 { font-family: var(--font-display), Georgia, serif; font-weight: 500; font-size: 26px; line-height: 1; letter-spacing: -0.03em; }
+.journal-title-alt small { color: var(--journal-ink); font-family: var(--font-body), ui-monospace, monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
+.journal-header h1 { font-family: var(--font-display), Helvetica, Arial, sans-serif; font-weight: 500; font-size: 26px; line-height: 1; letter-spacing: -0.03em; }
 
 .journal-rail { width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; overscroll-behavior: contain; scrollbar-width: none; cursor: grab; user-select: none; touch-action: pan-x pinch-zoom; }
 .journal-rail::-webkit-scrollbar { display: none; }
@@ -142,9 +142,9 @@ figure.journal-piece { display: flex; flex-direction: column; gap: 9px; }
 .journal-photo-placeholder::before { width: 18px; height: 18px; margin-bottom: 5px; border: 1px solid color-mix(in srgb, var(--journal-red) 45%, transparent); transform: rotate(45deg); content: ""; }
 .journal-photo-placeholder span { color: var(--journal-red); font-family: Georgia, serif; font-size: 12px; }
 .journal-photo-placeholder b { font-size: 8px; font-weight: 400; letter-spacing: 0.2em; opacity: 0.5; }
-.journal-note { align-self: center; padding: 0 0 0 18px; border-left: 1px solid var(--journal-red); font-family: var(--font-display), Georgia, serif; font-size: clamp(13px, 3cqh, 25px); line-height: 1.35; text-wrap: pretty; }
+.journal-note { align-self: center; padding: 0 0 0 18px; border-left: 1px solid var(--journal-red); font-family: var(--font-display), Helvetica, Arial, sans-serif; font-size: clamp(13px, 3cqh, 25px); line-height: 1.35; text-wrap: pretty; }
 .journal-note-signature { display: block; margin-top: 10px; color: var(--journal-red); font-family: Georgia, serif; font-size: 12px; font-style: italic; }
-.journal-note-message { font-family: var(--font-dm-sans), sans-serif; font-size: clamp(11px, 2cqh, 15px); line-height: 1.6; }
+.journal-note-message { font-family: var(--font-body), ui-monospace, monospace; font-size: clamp(11px, 2cqh, 15px); line-height: 1.6; }
 
 /* Shared grid keeps labels, photos, and notes in separate areas of each spread. */
 .journal-scene-1 .journal-slot-1 { grid-area: 2 / 1 / 4 / 3; }

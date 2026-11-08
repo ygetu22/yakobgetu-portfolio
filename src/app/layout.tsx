@@ -5,25 +5,26 @@ import ScrollProgress from "@/components/layout/scroll-progress";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { InterfaceSoundsProvider } from "@/components/providers/interface-sounds";
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Fragment_Mono, Hanken_Grotesk } from "next/font/google";
 import { headers } from "next/headers";
 import "@/styles/globals.css";
 
-const dmSans = DM_Sans({
+const bodyFont = Fragment_Mono({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-body",
 });
 
-const displayFont = Cormorant_Garamond({
+const displayFont = Hanken_Grotesk({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  weight: ["400", "500"],
   variable: "--font-display",
 });
 
 export const metadata: Metadata = {
   title: "Yakob Getu",
-  description: "Software engineer and founder in Columbus, Ohio.",
+  description: "Software engineer in Columbus, Ohio.",
 };
 
 export default async function RootLayout({
@@ -34,7 +35,7 @@ export default async function RootLayout({
   const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${dmSans.variable} ${displayFont.variable} min-h-screen bg-background text-foreground`}>
+      <body className={`${bodyFont.variable} ${displayFont.variable} min-h-screen bg-background text-foreground`}>
         <ThemeProvider nonce={nonce}>
           <InterfaceSoundsProvider>
             <div className="relative min-h-screen overflow-x-clip">

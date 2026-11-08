@@ -25,7 +25,6 @@ export default function Home() {
           <ScrollReveal variant="from-left" delay={280}>
           <div className="mt-10 flex flex-wrap gap-2 text-sm">
             <span className="rounded-full border border-foreground/15 bg-foreground/[0.045] px-3.5 py-2">software engineer</span>
-            <span className="rounded-full border border-foreground/15 bg-foreground/[0.045] px-3.5 py-2">founder</span>
             <span className="rounded-full border border-foreground/15 bg-foreground/[0.045] px-3.5 py-2">columbus, ohio</span>
           </div>
           </ScrollReveal>
