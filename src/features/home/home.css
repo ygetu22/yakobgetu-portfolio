@@ -35,3 +35,6 @@
 }
 
 .hero-name.display-heading { font-weight: 300; line-height: 1; letter-spacing: -.025em; }
+
+/* Keeps section headings clear of the fixed navigation when jumping to #about, #resume, etc. */
+.home-section { scroll-margin-top: 6rem; }
