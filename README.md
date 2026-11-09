@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-Open http://127.0.0.1:3000. `npm run dev` also starts the sibling Trace checker on loopback port 3120; see [Trace setup](docs/TRACE_SETUP.md). The arrival screen sends a fresh browser load to Home; use the site navigation or project cards to explore other pages.
+Open http://127.0.0.1:3000. `npm run dev` also starts the sibling Trace checker on loopback port 3120; see [Trace setup](docs/TRACE_SETUP.md). A short arrival screen plays on each fresh page load, then fades into the page that was opened.
 
 ```sh
 npm run lint

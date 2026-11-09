@@ -1,11 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 
 export default function ArrivalScreen() {
-  const pathname = usePathname();
-  const router = useRouter();
   const [visible, setVisible] = useState(true);
   const [leaving, setLeaving] = useState(false);
   const [palette, setPalette] = useState(0);
@@ -20,10 +17,6 @@ export default function ArrivalScreen() {
     });
     return () => window.cancelAnimationFrame(frame);
   }, []);
-
-  useEffect(() => {
-    if (visible && pathname !== "/") router.replace("/");
-  }, [pathname, router, visible]);
 
   const enterSite = useCallback(() => {
     if (leaving) return;
