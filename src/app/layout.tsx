@@ -34,7 +34,7 @@ export default async function RootLayout({
 }) {
   const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className={`${bodyFont.variable} ${displayFont.variable} min-h-screen bg-background text-foreground`}>
         <ThemeProvider nonce={nonce}>
           <InterfaceSoundsProvider>
