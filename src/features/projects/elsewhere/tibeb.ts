@@ -64,7 +64,7 @@ function weave(rows: string[], cell: number) {
   const width = rows[0].length * cell;
   const height = rows.length * cell;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" shape-rendering="crispEdges">${rects}</svg>`;
-  return { url: `url("data:image/svg+xml,${encodeURIComponent(svg)}")`, height };
+  return { url: `url("data:image/svg+xml,${encodeURIComponent(svg)}")`, width, height };
 }
 
 export const tibebBand = weave(bandRows(), 2);

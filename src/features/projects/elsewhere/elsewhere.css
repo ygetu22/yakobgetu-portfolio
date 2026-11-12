@@ -20,49 +20,50 @@
   --journal-green: #4f9a70;
 }
 
-.elsewhere-cover-lines {
-  position: absolute;
-  inset: 0;
-  width: auto;
-  aspect-ratio: auto;
-  border: 0;
-  border-radius: 0;
-  transform: none;
-  box-shadow: none;
-  background:
-    linear-gradient(135deg, transparent 40%, #1e1a14 41% 48%, transparent 49%) 0 0 / 28px 28px,
-    linear-gradient(45deg, transparent 40%, #9b2d20 41% 48%, transparent 49%) 14px 0 / 28px 28px,
-    #c69a39;
-  opacity: 0.28;
-  mask: linear-gradient(90deg, #000 0 12%, transparent 12% 88%, #000 88%);
-}
-
+/* Project card cover: cotton with two tibeb bands that drift slowly, like cloth moving */
 .elsewhere-cover {
   background:
-    radial-gradient(circle at 22% 30%, rgb(99 60 22 / 0.08) 0 1px, transparent 2px),
-    repeating-linear-gradient(2deg, rgb(72 48 22 / 0.025) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(0deg, var(--journal-thread) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, var(--journal-thread) 0 1px, transparent 1px 4px),
     var(--journal-paper);
   color: var(--journal-ink);
 }
 
-.elsewhere-cover-frame {
+/* The card is small, so its bands are woven at half the journal's size */
+.elsewhere-cover-band {
   position: absolute;
-  inset: 8%;
-  border: 1px solid var(--journal-ink);
-  box-shadow: inset 0 0 0 5px var(--journal-paper), inset 0 0 0 6px var(--journal-red);
+  left: 0;
+  right: 0;
+  height: calc(var(--tibeb-band-height) * 0.5);
+  background-image: var(--tibeb-band);
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+  animation: elsewhere-band-drift 9s linear infinite;
+}
+.elsewhere-cover-band-top { top: 4%; }
+.elsewhere-cover-band-bottom { bottom: 4%; animation-direction: reverse; }
+
+@keyframes elsewhere-band-drift {
+  from { background-position-x: 0; }
+  to { background-position-x: calc(var(--tibeb-band-width) * -0.5); }
 }
 
-.elsewhere-cover-lockup {
-  padding: 19px clamp(12px, 3vw, 34px) 24px;
-  background: color-mix(in srgb, var(--journal-paper) 93%, transparent);
+@media (prefers-reduced-motion: reduce) {
+  .elsewhere-cover-band { animation: none; }
 }
 
+.elsewhere-cover-lockup { padding: 4px clamp(12px, 3vw, 34px); }
+.elsewhere-cover-tizita,
+.elsewhere-cover-dot { color: var(--journal-red); }
+
+/* The same small woven cross used on the journal labels */
 .elsewhere-cover-emblem {
   display: block;
-  margin-bottom: 2px;
-  color: var(--journal-gold);
-  font-size: 23px;
-  line-height: 1;
+  width: 12px;
+  height: 12px;
+  margin: 0 auto 8px;
+  background: var(--journal-red);
+  clip-path: polygon(33% 0, 67% 0, 67% 33%, 100% 33%, 100% 67%, 67% 67%, 67% 100%, 33% 100%, 33% 67%, 0 67%, 0 33%, 33% 33%);
 }
 
 .journal-world {
