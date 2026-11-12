@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { JournalEntry, JournalPhoto, JournalQuote } from "./journal-data";
+import { usePhotoSet } from "./photo-sets";
 import PhotoViewer from "./photo-viewer";
-import SaveButton from "./save-button";
-import { useSavedPhotos } from "./saved-photos";
+import PostActions, { sharePhoto } from "./post-actions";
 import { tibebBand } from "./tibeb";
 
 // How far the mouse must move before a press counts as a drag instead of a click.
@@ -18,18 +18,20 @@ const bandStyle = {
 
 type PhotoPrintProps = {
   photo: JournalPhoto;
+  isLiked: boolean;
   isSaved: boolean;
   onOpen: () => void;
+  onToggleLike: () => void;
   onToggleSave: () => void;
+  onShare: () => void;
 };
 
-function PhotoPrint({ photo, isSaved, onOpen, onToggleSave }: PhotoPrintProps) {
+function PhotoPrint({ photo, isLiked, isSaved, onOpen, onToggleLike, onToggleSave, onShare }: PhotoPrintProps) {
   const shape = photo.height > photo.width ? "is-tall" : "is-wide";
   return (
     <figure className={`journal-print ${shape}`}>
       <figcaption className="journal-label">
         {photo.place} · {photo.date}
-        <SaveButton place={photo.place} isSaved={isSaved} onToggle={onToggleSave} />
       </figcaption>
       <button type="button" className="journal-mat" onClick={onOpen} aria-label={`Open photo: ${photo.place}, ${photo.date}`}>
         <Image
@@ -41,6 +43,14 @@ function PhotoPrint({ photo, isSaved, onOpen, onToggleSave }: PhotoPrintProps) {
           draggable={false}
         />
       </button>
+      <PostActions
+        photo={photo}
+        isLiked={isLiked}
+        isSaved={isSaved}
+        onToggleLike={onToggleLike}
+        onToggleSave={onToggleSave}
+        onShare={onShare}
+      />
     </figure>
   );
 }
@@ -55,7 +65,21 @@ function ProverbCard({ quote }: { quote: JournalQuote }) {
   );
 }
 
-export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
+type PhotoJournalProps = {
+  entries: JournalEntry[];
+  // From a shared link like /projects/elsewhere?photo=fuji-2025
+  initialPhotoId?: string;
+};
+
+// Keeps the address bar pointing at the open photo, so it can be copied or shared.
+function showPhotoInAddressBar(photoId: string | null) {
+  const url = new URL(window.location.href);
+  if (photoId) url.searchParams.set("photo", photoId);
+  else url.searchParams.delete("photo");
+  window.history.replaceState(null, "", url);
+}
+
+export default function PhotoJournal({ entries, initialPhotoId }: PhotoJournalProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ x: number; scroll: number; pointerId: number; moved: boolean } | null>(null);
@@ -64,11 +88,18 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
   const cancelMotion = useRef<() => void>(() => {});
   const [isDragging, setIsDragging] = useState(false);
   const [edges, setEdges] = useState({ start: true, end: false });
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [view, setView] = useState<"all" | "saved">("all");
-
   const allPhotos = entries.filter((entry): entry is JournalPhoto => entry.kind === "photo");
-  const { saved, toggle } = useSavedPhotos(allPhotos.map((photo) => photo.id));
+  const allPhotoIds = allPhotos.map((photo) => photo.id);
+  const [openIndex, setOpenIndex] = useState<number | null>(() => {
+    const index = allPhotoIds.indexOf(initialPhotoId ?? "");
+    return index === -1 ? null : index;
+  });
+  const [view, setView] = useState<"all" | "saved">("all");
+  const [shareNotice, setShareNotice] = useState("");
+  const shareNoticeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  const { ids: liked, toggle: toggleLike } = usePhotoSet("elsewhere:liked-photos", allPhotoIds);
+  const { ids: saved, toggle: toggleSave } = usePhotoSet("elsewhere:saved-photos", allPhotoIds);
   // The saved view shows only the visitor's saved photos, without the sayings.
   const visibleEntries = view === "all" ? entries : allPhotos.filter((photo) => saved.has(photo.id));
   const photos = visibleEntries.filter((entry): entry is JournalPhoto => entry.kind === "photo");
@@ -144,6 +175,24 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
     };
   }, []);
 
+  function openPhoto(index: number) {
+    setOpenIndex(index);
+    showPhotoInAddressBar(photos[index]?.id ?? null);
+  }
+
+  function closePhoto() {
+    setOpenIndex(null);
+    showPhotoInAddressBar(null);
+  }
+
+  async function share(photo: JournalPhoto) {
+    const result = await sharePhoto(photo);
+    if (result === "shared") return;
+    clearTimeout(shareNoticeTimer.current);
+    setShareNotice(result === "copied" ? "Link copied" : "Couldn't share this photo");
+    shareNoticeTimer.current = setTimeout(() => setShareNotice(""), 2400);
+  }
+
   function showView(next: "all" | "saved") {
     setView(next);
     railRef.current?.scrollTo({ left: 0, behavior: "instant" });
@@ -171,7 +220,7 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
             <div className="journal-views" role="group" aria-label="Show photos">
               <button type="button" aria-pressed={view === "all"} onClick={() => showView("all")}>All</button>
               <button type="button" aria-pressed={view === "saved"} onClick={() => showView("saved")}>
-                Saved <span aria-hidden="true">♥</span> {saved.size}
+                Saved {saved.size}
               </button>
             </div>
           </div>
@@ -226,9 +275,12 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
                 <PhotoPrint
                   key={entry.id}
                   photo={entry}
+                  isLiked={liked.has(entry.id)}
                   isSaved={saved.has(entry.id)}
-                  onOpen={() => setOpenIndex(photos.indexOf(entry))}
-                  onToggleSave={() => toggle(entry.id)}
+                  onOpen={() => openPhoto(photos.indexOf(entry))}
+                  onToggleLike={() => toggleLike(entry.id)}
+                  onToggleSave={() => toggleSave(entry.id)}
+                  onShare={() => share(entry)}
                 />
               ) : (
                 <ProverbCard key={entry.id} quote={entry} />
@@ -236,7 +288,7 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
             )}
             {visibleEntries.length === 0 && (
               <p className="journal-empty">
-                Nothing saved yet. Tap ♡ on a photo to keep it here. Saves stay in this browser on this device.
+                Nothing saved yet. Tap the bookmark under a photo to keep it here. Saves stay in this browser on this device.
               </p>
             )}
           </div>
@@ -253,11 +305,15 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
         photos={photos}
         sayings={sayings}
         index={openIndex}
+        liked={liked}
         saved={saved}
-        onToggleSave={toggle}
-        onChange={setOpenIndex}
-        onClose={() => setOpenIndex(null)}
+        onToggleLike={toggleLike}
+        onToggleSave={toggleSave}
+        onShare={share}
+        onChange={openPhoto}
+        onClose={closePhoto}
       />
+      <p className="journal-toast" role="status" aria-live="polite">{shareNotice}</p>
     </>
   );
 }

@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   description: "Places I've been, moments I've kept. A visual journal of life beyond the screen, one frame at a time.",
 };
 
-export default function ElsewherePage() {
-  return <PhotoJournal entries={journalEntries} />;
+type ElsewherePageProps = {
+  searchParams: Promise<{ photo?: string | string[] }>;
+};
+
+export default async function ElsewherePage({ searchParams }: ElsewherePageProps) {
+  const { photo } = await searchParams;
+  // Only a single plain value can name a photo; anything else is ignored.
+  const initialPhotoId = typeof photo === "string" ? photo : undefined;
+  return <PhotoJournal entries={journalEntries} initialPhotoId={initialPhotoId} />;
 }
