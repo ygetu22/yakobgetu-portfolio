@@ -9,7 +9,7 @@ This organization applies to `projects/yakobgetu-portfolio`. Other repositories 
 - `src/features/resume` owns the resume view and `resume-data.ts`; edit content here rather than in the route.
 - `src/features/projects/elsewhere` owns `photo-journal.tsx`, `project-card.tsx`, `journal-data.ts`, and `elsewhere.css`. Preserve the correspondence between journal item order and CSS scene slots.
 - `src/features/projects/zempled` owns `collection.tsx`, `project-card.tsx`, `sample-pairs.ts`, `collection.module.css`, and the server preview handler in `preview.ts`. Keep accurate sample notes and one source per pair in the sample data.
-- `src/features/projects/trace` owns the Trace card, basic URL/text-report view, local bridge handlers, and retained earlier implementation. Its browser checker belongs to the sibling Trace project and starts with `npm run dev`. See `TRACE_SETUP.md`; public checks remain disabled.
+- `src/features/projects/trace` owns the Trace card and the project page, which replays real terminal output stored in `recorded-runs.ts`. The tool itself lives in the sibling Trace repository; the portfolio has no Trace API routes.
 - `src/features/projects/othello` owns the Reversi–Othello card and its CSS board animation. The card links directly to the GitHub repository; it has no portfolio demo route.
 - `src/features/projects/fruitful` owns the Fruitful card and decorative CSS step sequencer. It links to the public GitHub repository, with no portfolio demo route.
 - `src/features/projects/gradient` owns the Gradient card and decorative paper-review animation. It includes contributor credits and links directly to the user-supplied GitHub repository, with no portfolio demo route.

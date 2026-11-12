@@ -10,10 +10,11 @@ npm install
 npm run dev
 ```
 
-Open http://127.0.0.1:3000. `npm run dev` also starts the sibling Trace checker on loopback port 3120; see [Trace setup](docs/TRACE_SETUP.md). A short arrival screen plays on each fresh page load, then fades into the page that was opened.
+Open http://127.0.0.1:3000. A short arrival screen plays on each fresh page load, then fades into the page that was opened.
 
 ```sh
 npm run lint
+npm test
 npm run build
 ```
 
@@ -58,4 +59,4 @@ See [the structure guide](docs/PROJECT_STRUCTURE.md) for where to make changes, 
 
 Work stays local until Yakob explicitly approves a commit, push, PR, or deployment.
 
-Trace is now included alongside the existing projects with a recorded investigation at `/projects/trace`. Live investigations remain off pending isolated worker hosting. See [Trace setup and security boundaries](docs/TRACE_SETUP.md) for server-only configuration, evidence access, and future release requirements. Run `npm run test:trace` for its security-policy checks. HTML now uses per-request script nonces and dynamic rendering; production runtime dependencies were patched and audited.
+`/projects/trace` replays real recorded output from the Trace terminal tool (`src/features/projects/trace/recorded-runs.ts`). The site doesn't run checks itself; Trace runs on each developer's own machine. To refresh the recording, run the same `webtrace` commands and regenerate that file. HTML now uses per-request script nonces and dynamic rendering; production runtime dependencies were patched and audited.
