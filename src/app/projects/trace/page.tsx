@@ -3,9 +3,9 @@ import TracePage from "@/features/projects/trace/trace-page";
 
 export const metadata: Metadata = {
   title: "Trace · Yakob Getu",
-  description: "Enter a URL and read a factual text report of HTTP, HTTPS, resource errors, and basic browser protections.",
+  description:
+    "A terminal tool that opens a website in a real browser, uses it like a visitor, and reports what stopped working between two versions.",
 };
-export const dynamic = "force-dynamic";
 
 export default function Page() {
   return <TracePage />;
