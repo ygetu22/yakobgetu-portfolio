@@ -1,21 +1,23 @@
 :root {
-  --journal-paper: #e9d6ae;
-  --journal-paper-light: #f2e4c5;
-  --journal-ink: #211b14;
-  --journal-red: #8f281d;
-  --journal-gold: #b77922;
-  --journal-green: #344b35;
-  --journal-blue: #263f54;
+  --journal-paper: #f5f0e4;
+  --journal-paper-light: #fffdf8;
+  --journal-thread: rgb(120 100 70 / 0.05);
+  --journal-ink: #1f1a14;
+  --journal-muted: #7a6f60;
+  --journal-red: #b3312a;
+  --journal-gold: #d6a21e;
+  --journal-green: #1f6b45;
 }
 
 .dark {
-  --journal-paper: #211b14;
-  --journal-paper-light: #2a2117;
-  --journal-ink: #e8d4aa;
-  --journal-red: #c95b46;
-  --journal-gold: #d0a04b;
-  --journal-green: #7c956f;
-  --journal-blue: #7993a4;
+  --journal-paper: #1c1813;
+  --journal-paper-light: #2a241c;
+  --journal-thread: rgb(240 225 195 / 0.035);
+  --journal-ink: #efe6d3;
+  --journal-muted: #a99c86;
+  --journal-red: #d0574a;
+  --journal-gold: #dcae3c;
+  --journal-green: #4f9a70;
 }
 
 .elsewhere-cover-lines {
@@ -64,18 +66,21 @@
 }
 
 .journal-world {
-  --journal-frame-top: 118px;
-  --journal-frame-bottom: 72px;
-  --journal-content-top: 174px;
-  --journal-content-bottom: 112px;
+  --journal-band-top: 118px;
+  --journal-band-bottom: 64px;
+  --journal-content-top: calc(var(--journal-band-top) + var(--tibeb-band-height) + 24px);
+  --journal-content-bottom: calc(var(--journal-band-bottom) + var(--tibeb-band-height) + 24px);
+  --journal-content-height: calc(100dvh - var(--journal-content-top) - var(--journal-content-bottom));
   position: fixed;
   inset: 0;
   z-index: 30;
   overflow: hidden;
-  background:
-    radial-gradient(circle, color-mix(in srgb, var(--journal-ink) 5%, transparent) 0.6px, transparent 1px) 0 0 / 43px 47px,
-    var(--journal-paper);
   color: var(--journal-ink);
+  /* Hand-woven cotton: faint warp and weft threads */
+  background:
+    repeating-linear-gradient(0deg, var(--journal-thread) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, var(--journal-thread) 0 1px, transparent 1px 4px),
+    var(--journal-paper);
 }
 
 .journal-header,
@@ -101,70 +106,85 @@
 .journal-wordmark span:first-child { font-style: normal; color: var(--journal-red); font-size: 23px; font-weight: 700; letter-spacing: 0.02em; }
 .journal-wordmark span:last-child { font-style: normal; margin-top: 4px; font-family: Arial, Helvetica, sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
 .journal-title-lockup { display: flex; align-items: baseline; gap: 20px; }
-.journal-title-alt { display: flex; align-items: baseline; gap: 8px; color: var(--journal-red); font-family: Georgia, "Times New Roman", serif; }
-.journal-title-alt > span { font-size: 15px; }
-.journal-title-alt small { color: var(--journal-ink); font-family: var(--font-body), ui-monospace, monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
+.journal-title-alt { display: flex; align-items: baseline; gap: 8px; color: var(--journal-red); font-family: "Kefa", "Noto Sans Ethiopic", Georgia, serif; }
+.journal-title-alt > span { font-size: 18px; }
+.journal-title-alt small { color: var(--journal-muted); font-family: var(--font-body), ui-monospace, monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; }
 .journal-header h1 { font-family: var(--font-display), Helvetica, Arial, sans-serif; font-weight: 500; font-size: 26px; line-height: 1; letter-spacing: -0.03em; }
+
+/* Woven tibeb bands above and below the photos (pattern built in tibeb.ts) */
+.journal-band {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  height: var(--tibeb-band-height);
+  background-image: var(--tibeb-band);
+  background-repeat: repeat-x;
+  pointer-events: none;
+}
+.journal-band-top { top: var(--journal-band-top); }
+.journal-band-bottom { bottom: var(--journal-band-bottom); }
 
 .journal-rail { width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; overscroll-behavior: contain; scrollbar-width: none; cursor: grab; user-select: none; touch-action: pan-x pinch-zoom; }
 .journal-rail::-webkit-scrollbar { display: none; }
 .journal-rail:focus-visible { outline: 1px solid var(--journal-red); outline-offset: -5px; }
 .journal-rail.is-dragging { cursor: grabbing; }
-.journal-canvas { display: flex; width: max-content; height: 100%; }
-.journal-scene { position: relative; flex: 0 0 auto; width: max(100vw, 960px); height: 100%; }
-.journal-composition {
-  position: absolute;
-  inset: var(--journal-content-top) 4% var(--journal-content-bottom);
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: repeat(8, minmax(0, 1fr));
-  gap: clamp(16px, 1.5vw, 28px);
-  container-type: size;
+
+.journal-canvas {
+  display: flex;
+  align-items: center;
+  gap: clamp(40px, 5vw, 80px);
+  width: max-content;
+  height: 100%;
+  padding: var(--journal-content-top) clamp(28px, 5vw, 72px) var(--journal-content-bottom);
 }
-.journal-frame { position: absolute; z-index: 1; inset: 0; pointer-events: none; }
-.journal-border { position: absolute; left: 24px; width: calc(100% - 48px); height: 18px; opacity: 0.65; overflow: hidden; }
-.journal-border-top { top: var(--journal-frame-top); }
-.journal-border-bottom { bottom: var(--journal-frame-bottom); }
-.journal-pattern-ink { fill: none; stroke: var(--journal-ink); stroke-width: 1; }
-.journal-pattern-red { fill: var(--journal-red); opacity: 0.7; }
-.journal-pattern-gold { fill: var(--journal-gold); }
-.journal-folio-mark { position: absolute; top: calc(var(--journal-frame-top) + 27px); right: 4%; display: flex; align-items: baseline; gap: 10px; color: var(--journal-red); pointer-events: none; }
-.journal-folio-mark span:first-child { font-family: Georgia, serif; font-size: 13px; }
-.journal-folio-mark span:last-child { color: var(--journal-ink); font-size: 8px; letter-spacing: 0.15em; opacity: 0.6; }
 
-.journal-piece { min-width: 0; min-height: 0; }
-figure.journal-piece { display: flex; flex-direction: column; gap: 9px; }
-.journal-label { flex: 0 0 auto; padding-bottom: 5px; border-bottom: 1px solid color-mix(in srgb, var(--journal-red) 30%, transparent); color: var(--journal-ink); font-size: 9px; line-height: 1.3; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; overflow-wrap: anywhere; }
-.journal-label::before { display: inline-block; margin-right: 7px; color: var(--journal-red); content: "◆"; font-size: 6px; vertical-align: 1px; }
-.journal-photo { position: relative; flex: 1; min-height: 0; width: 100%; overflow: hidden; border: 4px solid var(--journal-paper-light); border-radius: 2px; outline: 1px solid color-mix(in srgb, var(--journal-ink) 28%, transparent); box-shadow: 2px 3px 0 color-mix(in srgb, var(--journal-ink) 9%, transparent); }
-.journal-photo::after { position: absolute; inset: 7px; border: 1px solid color-mix(in srgb, var(--journal-ink) 9%, transparent); content: ""; pointer-events: none; }
-.journal-photo-placeholder { display: grid; width: 100%; height: 100%; place-content: center; justify-items: center; gap: 5px; background: color-mix(in srgb, var(--journal-gold) 8%, var(--journal-paper-light)); }
-.journal-photo-placeholder::before { width: 18px; height: 18px; margin-bottom: 5px; border: 1px solid color-mix(in srgb, var(--journal-red) 45%, transparent); transform: rotate(45deg); content: ""; }
-.journal-photo-placeholder span { color: var(--journal-red); font-family: Georgia, serif; font-size: 12px; }
-.journal-photo-placeholder b { font-size: 8px; font-weight: 400; letter-spacing: 0.2em; opacity: 0.5; }
-.journal-note { align-self: center; padding: 0 0 0 18px; border-left: 1px solid var(--journal-red); font-family: var(--font-display), Helvetica, Arial, sans-serif; font-size: clamp(13px, 3cqh, 25px); line-height: 1.35; text-wrap: pretty; }
-.journal-note-signature { display: block; margin-top: 10px; color: var(--journal-red); font-family: Georgia, serif; font-size: 12px; font-style: italic; }
-.journal-note-message { font-family: var(--font-body), ui-monospace, monospace; font-size: clamp(11px, 2cqh, 15px); line-height: 1.6; }
+/* Photos keep their own shape. Tall and wide prints get different heights so
+   both read well side by side, and alternate prints sit a little higher or lower. */
+.journal-print { flex: none; display: flex; flex-direction: column; gap: 10px; }
+.journal-print:nth-child(odd) { transform: translateY(calc(var(--journal-content-height) * -0.05)); }
+.journal-print:nth-child(even) { transform: translateY(calc(var(--journal-content-height) * 0.05)); }
+.journal-print.is-tall img { height: calc(var(--journal-content-height) * 0.8); }
+.journal-print.is-wide img { height: calc(var(--journal-content-height) * 0.58); }
+.journal-print img { display: block; width: auto; max-width: none; pointer-events: none; }
 
-/* Shared grid keeps labels, photos, and notes in separate areas of each spread. */
-.journal-scene-1 .journal-slot-1 { grid-area: 2 / 1 / 4 / 3; }
-.journal-scene-1 .journal-slot-2 { grid-area: 6 / 1 / 9 / 3; }
-.journal-scene-1 .journal-slot-3 { grid-area: 1 / 4 / 6 / 9; }
-.journal-scene-1 .journal-slot-4 { grid-area: 2 / 10 / 5 / 13; }
-.journal-scene-1 .journal-slot-5 { grid-area: 6 / 10 / 9 / 13; }
-.journal-scene-1 .journal-slot-6 { grid-area: 6 / 4 / 9 / 9; }
-.journal-scene-2 .journal-slot-1 { grid-area: 1 / 1 / 5 / 3; }
-.journal-scene-2 .journal-slot-2 { grid-area: 6 / 1 / 9 / 4; }
-.journal-scene-2 .journal-slot-3 { grid-area: 4 / 5 / 9 / 10; }
-.journal-scene-2 .journal-slot-4 { grid-area: 1 / 11 / 4 / 13; }
-.journal-scene-2 .journal-slot-5 { grid-area: 5 / 11 / 9 / 13; }
-.journal-scene-2 .journal-slot-6 { grid-area: 1 / 5 / 3 / 10; }
-.journal-scene-3 .journal-slot-1 { grid-area: 2 / 1 / 6 / 5; }
-.journal-scene-3 .journal-slot-2 { grid-area: 1 / 6 / 4 / 9; }
-.journal-scene-3 .journal-slot-3 { grid-area: 5 / 6 / 9 / 10; }
-.journal-scene-3 .journal-slot-4 { grid-area: 2 / 11 / 6 / 13; }
-.journal-scene-3 .journal-slot-5 { grid-area: 6 / 1 / 9 / 5; }
-.journal-scene-3 .journal-slot-6 { grid-area: 6 / 11 / 9 / 13; }
+.journal-mat {
+  padding: 10px;
+  background: var(--journal-paper-light);
+  box-shadow: 0 1px 2px rgb(60 40 20 / 0.18), 0 18px 40px -18px rgb(60 40 20 / 0.35);
+}
+
+.journal-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+/* A small woven cross before each place */
+.journal-label::before {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  background: var(--journal-red);
+  clip-path: polygon(33% 0, 67% 0, 67% 33%, 100% 33%, 100% 67%, 67% 67%, 67% 100%, 33% 100%, 33% 67%, 0 67%, 0 33%, 33% 33%);
+  content: "";
+}
+/* Three threads after the label, like the edge of a netela */
+.journal-label::after {
+  flex: 1;
+  min-width: 24px;
+  height: 6px;
+  background: linear-gradient(var(--journal-green) 0 2px, var(--journal-gold) 2px 4px, var(--journal-red) 4px 6px);
+  opacity: 0.85;
+  content: "";
+}
+
+.journal-proverb { flex: none; width: min(300px, 70vw); margin: 0; }
+.journal-proverb-amharic { color: var(--journal-red); font-family: "Kefa", "Noto Sans Ethiopic", Georgia, serif; font-size: 30px; line-height: 1.35; }
+.journal-proverb-english { margin-top: 12px; font-family: Georgia, "Times New Roman", serif; font-size: 15px; font-style: italic; line-height: 1.6; }
+.journal-proverb footer { margin-top: 10px; color: var(--journal-muted); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; }
 
 .journal-footer { bottom: max(18px, env(safe-area-inset-bottom)); font-size: 9px; }
 .journal-footer p { display: flex; gap: 14px; align-items: center; }
@@ -186,41 +206,24 @@ figure.journal-piece { display: flex; flex-direction: column; gap: 9px; }
 }
 @media (max-width: 480px) {
   .journal-header { top: 108px; left: 20px; right: auto; }
-  .journal-world { --journal-frame-top: 140px; --journal-content-top: 196px; --journal-frame-bottom: 76px; --journal-content-bottom: 110px; }
-  .journal-border { left: 20px; width: calc(100% - 40px); }
+  .journal-world { --journal-band-top: 140px; --journal-band-bottom: 76px; }
   .journal-footer { left: 20px; right: 20px; }
   .journal-footer p { flex-direction: column; align-items: flex-start; gap: 4px; }
   .journal-footer p > span[aria-hidden] { display: none; }
   .journal-wordmark span:first-child { font-size: 20px; }
+  .journal-print.is-wide img { height: auto; width: 82vw; }
+  .journal-proverb-amharic { font-size: 24px; }
 }
 @media (max-width: 360px) {
   .journal-wordmark span:first-child { font-size: 17px; }
   .journal-wordmark span:last-child { font-size: 8px; }
 }
 @media (max-height: 600px) and (min-width: 481px) {
-  .journal-world { --journal-frame-top: 104px; --journal-content-top: 150px; --journal-frame-bottom: 54px; --journal-content-bottom: 84px; }
+  .journal-world { --journal-band-top: 104px; --journal-band-bottom: 48px; }
   .journal-header { top: 73px; }
-  .journal-border { height: 14px; }
-  .journal-folio-mark { top: calc(var(--journal-frame-top) + 21px); }
-  .journal-composition { gap: 12px; }
-  figure.journal-piece { gap: 5px; }
-  .journal-label { font-size: 8px; padding-bottom: 3px; }
-  .journal-photo { border-width: 2px; }
-  .journal-photo-placeholder::before { width: 12px; height: 12px; margin-bottom: 0; }
-  .journal-photo-placeholder { gap: 2px; }
-  .journal-note { font-size: 12px; }
-  .journal-note-message { font-size: 11px; }
-  .journal-note-signature { margin-top: 6px; font-size: 10px; }
+  .journal-print { gap: 6px; }
+  .journal-label { font-size: 8px; }
+  .journal-mat { padding: 6px; }
+  .journal-proverb-amharic { font-size: 22px; }
   .journal-footer { bottom: max(10px, env(safe-area-inset-bottom)); }
-}
-
-@media (max-height: 450px) and (min-width: 481px) {
-  .journal-world { --journal-content-top: 142px; --journal-content-bottom: 80px; }
-  .journal-composition { gap: 8px; }
-  .journal-note { font-size: 11px; }
-  .journal-note-signature { margin-top: 4px; font-size: 9px; }
-  .journal-photo-placeholder::before { display: none; }
-  .journal-scene-1 .journal-slot-1 { grid-row: 2 / 5; }
-  .journal-scene-3 .journal-slot-4 { grid-row: 1 / 5; }
-  .journal-scene-3 .journal-slot-6 { grid-row: 5 / 9; }
 }

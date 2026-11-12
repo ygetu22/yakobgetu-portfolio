@@ -1,45 +1,47 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import type { JournalScene } from "@/features/projects/elsewhere/journal-data";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import type { JournalEntry, JournalPhoto, JournalQuote } from "./journal-data";
+import { tibebBand } from "./tibeb";
 
-const sceneDetails = [
-  { numeral: "፩", folio: "01", word: "ትዝታ" },
-  { numeral: "፪", folio: "02", word: "ጉዞ" },
-  { numeral: "፫", folio: "03", word: "ታሪክ" },
-];
+const bandStyle = {
+  "--tibeb-band": tibebBand.url,
+  "--tibeb-band-height": `${tibebBand.height}px`,
+} as CSSProperties;
 
-function ManuscriptOrnament({ variant, total }: { variant: number; total: number }) {
-  const detail = sceneDetails[variant - 1] ?? sceneDetails[0];
+function PhotoPrint({ photo }: { photo: JournalPhoto }) {
+  const shape = photo.height > photo.width ? "is-tall" : "is-wide";
   return (
-    <div className="journal-folio-mark" aria-hidden="true">
-      <span lang="am">{detail.word}</span>
-      <span>{detail.folio} / {String(total).padStart(2, "0")} · {detail.numeral}</span>
-    </div>
+    <figure className={`journal-print ${shape}`}>
+      <figcaption className="journal-label">
+        {photo.place} · {photo.date}
+      </figcaption>
+      <div className="journal-mat">
+        <Image
+          src={photo.image}
+          alt={photo.alt}
+          width={photo.width}
+          height={photo.height}
+          sizes="(max-width: 480px) 80vw, 45vw"
+          draggable={false}
+        />
+      </div>
+    </figure>
   );
 }
 
-function ManuscriptFrame() {
+function ProverbCard({ quote }: { quote: JournalQuote }) {
   return (
-    <div className="journal-frame" aria-hidden="true">
-      {(["top", "bottom"] as const).map((edge) => (
-        <svg key={edge} className={`journal-border journal-border-${edge}`}>
-          <defs>
-            <pattern id={`harag-${edge}`} width="40" height="18" patternUnits="userSpaceOnUse">
-              <path className="journal-pattern-ink" d="m20 3 16 6-16 6L4 9Z" />
-              <path className="journal-pattern-red" d="m20 6 8 3-8 3-8-3Z" />
-              <circle className="journal-pattern-gold" cx="20" cy="9" r="1.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="18" fill={`url(#harag-${edge})`} />
-        </svg>
-      ))}
-    </div>
+    <blockquote className="journal-proverb">
+      <p className="journal-proverb-amharic" lang="am">{quote.amharic}</p>
+      <p className="journal-proverb-english">“{quote.english}”</p>
+      <footer>Amharic proverb</footer>
+    </blockquote>
   );
 }
 
-export default function PhotoJournal({ scenes }: { scenes: JournalScene[] }) {
+export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ x: number; scroll: number } | null>(null);
@@ -122,8 +124,9 @@ export default function PhotoJournal({ scenes }: { scenes: JournalScene[] }) {
   }
 
   return (
-    <div ref={rootRef} className="journal-world">
-      <ManuscriptFrame />
+    <div ref={rootRef} className="journal-world" style={bandStyle}>
+      <div className="journal-band journal-band-top" aria-hidden="true" />
+      <div className="journal-band journal-band-bottom" aria-hidden="true" />
       <header className="journal-header">
         <div className="journal-header-right">
           <div className="journal-title-lockup">
@@ -164,33 +167,13 @@ export default function PhotoJournal({ scenes }: { scenes: JournalScene[] }) {
         onPointerCancel={() => { dragRef.current = null; setIsDragging(false); }}
       >
         <div className="journal-canvas">
-          {scenes.map((scene, sceneIndex) => (
-            <section key={scene.id} className={`journal-scene journal-scene-${sceneIndex % 3 + 1}`} aria-label={`Composition ${sceneIndex + 1}`}>
-              <ManuscriptOrnament variant={sceneIndex + 1} total={scenes.length} />
-              <div className="journal-composition">
-                {scene.items.map((item, itemIndex) => item.kind === "photo" ? (
-                  <figure key={item.id} className={`journal-piece journal-slot-${itemIndex + 1}`} data-photo={item.id}>
-                    <figcaption className="journal-label">{item.label}</figcaption>
-                    <div className="journal-photo">
-                      {item.image ? (
-                        <Image src={item.image} alt={item.alt} fill sizes="(max-width: 900px) 400px, 40vw" className="object-cover" draggable={false} />
-                      ) : (
-                        <div className="journal-photo-placeholder" role="img" aria-label={`Photo ${item.id.replace("photo-", "")} placeholder`}>
-                          <span lang="am">ምስል</span>
-                          <b>{item.id.replace("photo-", "")}</b>
-                        </div>
-                      )}
-                    </div>
-                  </figure>
-                ) : (
-                  <div key={item.id} className={`journal-piece journal-note journal-note-${item.kind} journal-slot-${itemIndex + 1}`}>
-                    {item.kind === "quote" ? <blockquote>{item.text}</blockquote> : <p>{item.text}</p>}
-                    <span className="journal-note-signature" aria-hidden="true">— yg</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ))}
+          {entries.map((entry) =>
+            entry.kind === "photo" ? (
+              <PhotoPrint key={entry.id} photo={entry} />
+            ) : (
+              <ProverbCard key={entry.id} quote={entry} />
+            ),
+          )}
         </div>
       </div>
       <footer className="journal-footer">

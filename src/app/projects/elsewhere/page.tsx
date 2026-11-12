@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PhotoJournal from "@/features/projects/elsewhere/photo-journal";
-import { journalScenes } from "@/features/projects/elsewhere/journal-data";
+import { journalEntries } from "@/features/projects/elsewhere/journal-data";
 
 export const metadata: Metadata = {
   title: "Elsewhere · Yakob Getu",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function ElsewherePage() {
-  return <PhotoJournal scenes={journalScenes} />;
+  return <PhotoJournal entries={journalEntries} />;
 }
