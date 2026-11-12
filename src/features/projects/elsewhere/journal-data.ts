@@ -40,8 +40,7 @@ export const journalScenes: JournalScene[] = [
       { id: "ohio-union-2026", kind: "photo", label: "OHIO UNION · JAN 2026", image: "/images/elsewhere/2026-01-ohio-union.jpg", alt: "Yakob and two friends in white habesha shirts with tibeb embroidery at Night by the Red Sea." },
       { id: "cueva-ventana-2026", kind: "photo", label: "CUEVA VENTANA, PUERTO RICO · MAR 2026", image: "/images/elsewhere/2026-03-puerto-rico-cave.jpg", alt: "Four friends in hard hats standing in the mouth of a cave that opens onto a green valley." },
       { id: "puerto-rico-2026", kind: "photo", label: "PUERTO RICO · MAR 2026", image: "/images/elsewhere/2026-03-puerto-rico-mountains.jpg", alt: "Yakob and three friends taking a selfie with green mountains behind them." },
-      // Place not confirmed yet; add it before the year once Yakob confirms.
-      { id: "overlook-2026", kind: "photo", label: "AUG 2026", image: "/images/elsewhere/2026-08-overlook.jpg", alt: "Yakob standing on a rock ledge above a forested valley." },
+      { id: "natural-bridge-2026", kind: "photo", label: "NATURAL BRIDGE, KENTUCKY · AUG 2026", image: "/images/elsewhere/2026-08-natural-bridge.jpg", alt: "Yakob standing on a rock ledge above a forested valley at Natural Bridge State Resort Park." },
       { id: "quote-02", kind: "quote", text: "A memory worth keeping. A little perspective." },
     ],
   },
