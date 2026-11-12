@@ -10,12 +10,12 @@ const sceneDetails = [
   { numeral: "፫", folio: "03", word: "ታሪክ" },
 ];
 
-function ManuscriptOrnament({ variant }: { variant: number }) {
+function ManuscriptOrnament({ variant, total }: { variant: number; total: number }) {
   const detail = sceneDetails[variant - 1] ?? sceneDetails[0];
   return (
     <div className="journal-folio-mark" aria-hidden="true">
       <span lang="am">{detail.word}</span>
-      <span>{detail.folio} / 03 · {detail.numeral}</span>
+      <span>{detail.folio} / {String(total).padStart(2, "0")} · {detail.numeral}</span>
     </div>
   );
 }
@@ -166,7 +166,7 @@ export default function PhotoJournal({ scenes }: { scenes: JournalScene[] }) {
         <div className="journal-canvas">
           {scenes.map((scene, sceneIndex) => (
             <section key={scene.id} className={`journal-scene journal-scene-${sceneIndex % 3 + 1}`} aria-label={`Composition ${sceneIndex + 1}`}>
-              <ManuscriptOrnament variant={sceneIndex + 1} />
+              <ManuscriptOrnament variant={sceneIndex + 1} total={scenes.length} />
               <div className="journal-composition">
                 {scene.items.map((item, itemIndex) => item.kind === "photo" ? (
                   <figure key={item.id} className={`journal-piece journal-slot-${itemIndex + 1}`} data-photo={item.id}>
