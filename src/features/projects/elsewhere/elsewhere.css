@@ -183,7 +183,11 @@
 }
 
 .journal-proverb { flex: none; width: min(300px, 70vw); margin: 0; }
-.journal-proverb-amharic { color: var(--journal-red); font-family: "Kefa", "Noto Sans Ethiopic", Georgia, serif; font-size: 30px; line-height: 1.35; }
+.journal-proverb-original { color: var(--journal-red); font-family: Georgia, "Times New Roman", serif; font-size: 30px; line-height: 1.35; text-wrap: balance; }
+.journal-proverb-original:lang(am) { font-family: "Kefa", "Noto Sans Ethiopic", Georgia, serif; }
+/* keep-all: Japanese words stay whole, so the line breaks at the comma */
+.journal-proverb-original:lang(ja) { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif; font-size: 26px; word-break: keep-all; }
+.journal-proverb-original:lang(es) { font-size: 26px; font-style: italic; }
 .journal-proverb-english { margin-top: 12px; font-family: Georgia, "Times New Roman", serif; font-size: 15px; font-style: italic; line-height: 1.6; }
 .journal-proverb footer { margin-top: 10px; color: var(--journal-muted); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; }
 
@@ -213,7 +217,7 @@
   .journal-footer p > span[aria-hidden] { display: none; }
   .journal-wordmark span:first-child { font-size: 20px; }
   .journal-print.is-wide img { height: auto; width: 82vw; }
-  .journal-proverb-amharic { font-size: 24px; }
+  .journal-proverb-original { font-size: 22px; }
 }
 @media (max-width: 360px) {
   .journal-wordmark span:first-child { font-size: 17px; }
@@ -225,6 +229,6 @@
   .journal-print { gap: 6px; }
   .journal-label { font-size: 8px; }
   .journal-mat { padding: 6px; }
-  .journal-proverb-amharic { font-size: 22px; }
+  .journal-proverb-original { font-size: 20px; }
   .journal-footer { bottom: max(10px, env(safe-area-inset-bottom)); }
 }

@@ -34,9 +34,9 @@ function PhotoPrint({ photo }: { photo: JournalPhoto }) {
 function ProverbCard({ quote }: { quote: JournalQuote }) {
   return (
     <blockquote className="journal-proverb">
-      <p className="journal-proverb-amharic" lang="am">{quote.amharic}</p>
+      <p className="journal-proverb-original" lang={quote.lang}>{quote.original}</p>
       <p className="journal-proverb-english">“{quote.english}”</p>
-      <footer>Amharic proverb</footer>
+      <footer>{quote.source}</footer>
     </blockquote>
   );
 }
