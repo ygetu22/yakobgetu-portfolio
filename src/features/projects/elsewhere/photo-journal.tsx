@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { JournalEntry, JournalPhoto, JournalQuote } from "./journal-data";
 import PhotoViewer from "./photo-viewer";
+import SaveButton from "./save-button";
+import { useSavedPhotos } from "./saved-photos";
 import { tibebBand } from "./tibeb";
 
 // How far the mouse must move before a press counts as a drag instead of a click.
@@ -14,12 +16,20 @@ const bandStyle = {
   "--tibeb-band-height": `${tibebBand.height}px`,
 } as CSSProperties;
 
-function PhotoPrint({ photo, onOpen }: { photo: JournalPhoto; onOpen: () => void }) {
+type PhotoPrintProps = {
+  photo: JournalPhoto;
+  isSaved: boolean;
+  onOpen: () => void;
+  onToggleSave: () => void;
+};
+
+function PhotoPrint({ photo, isSaved, onOpen, onToggleSave }: PhotoPrintProps) {
   const shape = photo.height > photo.width ? "is-tall" : "is-wide";
   return (
     <figure className={`journal-print ${shape}`}>
       <figcaption className="journal-label">
         {photo.place} · {photo.date}
+        <SaveButton place={photo.place} isSaved={isSaved} onToggle={onToggleSave} />
       </figcaption>
       <button type="button" className="journal-mat" onClick={onOpen} aria-label={`Open photo: ${photo.place}, ${photo.date}`}>
         <Image
@@ -55,8 +65,13 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
   const [isDragging, setIsDragging] = useState(false);
   const [edges, setEdges] = useState({ start: true, end: false });
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [view, setView] = useState<"all" | "saved">("all");
 
-  const photos = entries.filter((entry): entry is JournalPhoto => entry.kind === "photo");
+  const allPhotos = entries.filter((entry): entry is JournalPhoto => entry.kind === "photo");
+  const { saved, toggle } = useSavedPhotos(allPhotos.map((photo) => photo.id));
+  // The saved view shows only the visitor's saved photos, without the sayings.
+  const visibleEntries = view === "all" ? entries : allPhotos.filter((photo) => saved.has(photo.id));
+  const photos = visibleEntries.filter((entry): entry is JournalPhoto => entry.kind === "photo");
   const sayings = new Map<string, JournalQuote>();
   entries.forEach((entry, position) => {
     const previous = entries[position - 1];
@@ -129,6 +144,11 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
     };
   }, []);
 
+  function showView(next: "all" | "saved") {
+    setView(next);
+    railRef.current?.scrollTo({ left: 0, behavior: "instant" });
+  }
+
   function move(direction: number | "start" | "end") {
     const rail = railRef.current;
     if (!rail) return;
@@ -147,6 +167,12 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
             <div className="journal-title-lockup">
               <h1>Elsewhere</h1>
               <span className="journal-title-alt"><span lang="am">ትዝታ</span><small>Tizita</small></span>
+            </div>
+            <div className="journal-views" role="group" aria-label="Show photos">
+              <button type="button" aria-pressed={view === "all"} onClick={() => showView("all")}>All</button>
+              <button type="button" aria-pressed={view === "saved"} onClick={() => showView("saved")}>
+                Saved <span aria-hidden="true">♥</span> {saved.size}
+              </button>
             </div>
           </div>
         </header>
@@ -195,12 +221,23 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
           onPointerCancel={() => { dragRef.current = null; setIsDragging(false); }}
         >
           <div className="journal-canvas">
-            {entries.map((entry) =>
+            {visibleEntries.map((entry) =>
               entry.kind === "photo" ? (
-                <PhotoPrint key={entry.id} photo={entry} onOpen={() => setOpenIndex(photos.indexOf(entry))} />
+                <PhotoPrint
+                  key={entry.id}
+                  photo={entry}
+                  isSaved={saved.has(entry.id)}
+                  onOpen={() => setOpenIndex(photos.indexOf(entry))}
+                  onToggleSave={() => toggle(entry.id)}
+                />
               ) : (
                 <ProverbCard key={entry.id} quote={entry} />
               ),
+            )}
+            {visibleEntries.length === 0 && (
+              <p className="journal-empty">
+                Nothing saved yet. Tap ♡ on a photo to keep it here. Saves stay in this browser on this device.
+              </p>
             )}
           </div>
         </div>
@@ -216,6 +253,8 @@ export default function PhotoJournal({ entries }: { entries: JournalEntry[] }) {
         photos={photos}
         sayings={sayings}
         index={openIndex}
+        saved={saved}
+        onToggleSave={toggle}
         onChange={setOpenIndex}
         onClose={() => setOpenIndex(null)}
       />

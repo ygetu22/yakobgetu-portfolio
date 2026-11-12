@@ -3,19 +3,22 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import type { JournalPhoto, JournalQuote } from "./journal-data";
+import SaveButton from "./save-button";
 
 type PhotoViewerProps = {
   photos: JournalPhoto[];
   // The saying shown beside each photo on the rail, if it has one.
   sayings: Map<string, JournalQuote>;
   index: number | null;
+  saved: Set<string>;
+  onToggleSave: (id: string) => void;
   onChange: (index: number) => void;
   onClose: () => void;
 };
 
 // A full-size view of one photo. The native <dialog> gives us Escape to close,
 // a focus trap, and the backdrop without extra code.
-export default function PhotoViewer({ photos, sayings, index, onChange, onClose }: PhotoViewerProps) {
+export default function PhotoViewer({ photos, sayings, index, saved, onToggleSave, onChange, onClose }: PhotoViewerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const photo = index === null ? null : photos[index];
 
@@ -53,6 +56,7 @@ export default function PhotoViewer({ photos, sayings, index, onChange, onClose 
         <header className="journal-viewer-header">
           <p className="journal-label">{photo.place} · {photo.date}</p>
           <span className="journal-viewer-count">{index + 1} / {photos.length}</span>
+          <SaveButton place={photo.place} isSaved={saved.has(photo.id)} onToggle={() => onToggleSave(photo.id)} />
           <button type="button" className="journal-viewer-close" onClick={() => dialogRef.current?.close()} aria-label="Close photo">
             ×
           </button>

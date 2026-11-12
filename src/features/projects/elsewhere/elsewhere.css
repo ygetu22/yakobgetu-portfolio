@@ -163,6 +163,40 @@
 .journal-mat:focus-visible { outline: 2px solid var(--journal-red); outline-offset: 4px; }
 .journal-rail.is-dragging .journal-mat { cursor: grabbing; }
 
+/* Save heart, shown at the end of each label and in the photo view */
+.journal-save {
+  flex: none;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  color: var(--journal-red);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 150ms ease;
+}
+.journal-save:hover { transform: scale(1.2); }
+.journal-save:focus-visible { outline: 2px solid var(--journal-red); outline-offset: 2px; }
+
+/* All / Saved switch in the header */
+.journal-header-right { display: flex; align-items: center; gap: 28px; }
+.journal-views { display: flex; gap: 4px; pointer-events: auto; }
+.journal-views button {
+  padding: 5px 10px;
+  border: 1px solid color-mix(in srgb, var(--journal-ink) 25%, transparent);
+  border-radius: 2px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.journal-views button span { color: var(--journal-red); }
+.journal-views button[aria-pressed="true"] { border-color: var(--journal-ink); background: var(--journal-ink); color: var(--journal-paper); }
+.journal-views button[aria-pressed="true"] span { color: inherit; }
+.journal-views button:focus-visible { outline: 2px solid var(--journal-red); outline-offset: 2px; }
+
+.journal-empty { max-width: 320px; color: var(--journal-muted); font-size: 12px; line-height: 1.7; }
+
 /* Photo view: one photo at a time on a dimmed backdrop */
 .journal-viewer {
   max-width: none;
@@ -206,8 +240,10 @@
 .journal-viewer button:focus-visible { outline: 2px solid var(--journal-red); outline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .journal-mat { transition: none; }
-  .journal-mat:hover { transform: none; }
+  .journal-mat,
+  .journal-save { transition: none; }
+  .journal-mat:hover,
+  .journal-save:hover { transform: none; }
 }
 
 .journal-label {
