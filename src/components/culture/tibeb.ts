@@ -45,11 +45,11 @@ function bandRows(): string[] {
     Array.from({ length: width }, (_, x) => ((x + offset) % 4 < 2 ? "R" : ".")).join("");
 
   return [
-    solid("G"), solid("G"), solid("."),
+    solid("G"), solid("."),
     teeth(0), teeth(2), solid("."),
     ...motifs,
     solid("."), teeth(2), teeth(0),
-    solid("."), solid("G"), solid("G"),
+    solid("."), solid("G"),
   ];
 }
 

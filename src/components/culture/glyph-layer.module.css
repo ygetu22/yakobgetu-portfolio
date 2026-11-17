@@ -1,0 +1,34 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+}
+
+.hidden { opacity: 0; }
+
+.glyph {
+  position: absolute;
+  display: grid;
+  justify-items: center;
+  font-family: var(--font-display), sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  /* --near runs from 0 (pointer far away) to 1 (pointer on the letter). */
+  --near: 0;
+  opacity: calc(0.2 + var(--near) * 0.7);
+  transform: translate(-50%, -50%) scale(calc(1 + var(--near) * 1.5));
+  transition: opacity 0.7s ease;
+}
+
+/* Fading out before it reappears as another letter somewhere else. */
+.moving { opacity: 0; }
+
+.glyph small {
+  margin-top: 6px;
+  font-family: var(--font-body), monospace;
+  font-size: 5px;
+  letter-spacing: 0.1em;
+  opacity: calc((var(--near) - 0.55) * 3);
+}
