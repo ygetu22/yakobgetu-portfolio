@@ -2,11 +2,23 @@
 
 ## Current behavior
 
-Each of the 20 tracks in `src/features/projects/zempled/sample-pairs.ts` has saved YouTube, Spotify, and Apple Music song URLs. The platform icons open specific recordings rather than searching. YouTube opens in a new tab. Spotify and Apple Music default to installed apps, using `spotify:track:<id>` and `musics://music.apple.com/...` respectively. `platform-links.tsx` owns those app URL conversions and preserves Apple's song ID. The App / Browser buttons below the players switch those two services back to HTTPS/new-tab links when a visitor lacks the apps or prefers web playback. This choice remains active across sample pairs but resets on a new visit.
+The collection has 19 pairs in `src/features/projects/zempled/sample-pairs.ts`. Each pair is an Ethiopian original, a song that sampled it, a short note, and one source that documents the connection.
 
-The large play button plays the existing 30-second Deezer preview. Opening a platform link pauses both previews and cancels an outstanding preview request so Zempled does not overlap the external player. Native links use ordinary anchors and the OS's registered handlers; the browser may request permission to open an app. There is no install/login detection or timer-based automatic fallback, which could wrongly open the browser after a successful handoff. Visitors can explicitly choose Browser.
+- **Page.** Two record sleeves side by side (original on the left, sample on the right), a counter such as `03 / 19`, previous/next buttons, the left and right arrow keys, and Shuffle. Under the records are two fold-out notes: "Behind the sample" (the note and its source) and "About <artist>" (a short background from `artists.ts` with a Learn more link). At the bottom is an index of every pair, grouped by the Ethiopian artist who was sampled.
+- **Previews.** The large play button plays a 30-second Deezer preview. Only one side plays at a time, and changing pair stops playback (`use-preview-player.ts`). The preview address is fetched from `/api/zempled/preview` the first time a song is played, because Deezer's addresses expire. The route only accepts track ids that are in the collection.
+- **Song links.** Every track links to Deezer. YouTube, Spotify and Apple Music icons appear only when that exact recording was confirmed there, so some tracks show fewer icons. Spotify and Apple Music open the installed apps by default (`spotify:track:<id>` and `musics://music.apple.com/...`); the App / Browser buttons switch them to normal web links. Opening any link pauses the previews. There is no install or login detection.
 
-The portfolio has no Spotify or MusicKit authorization configured. External apps/pages manage their own sessions, subscriptions, territory availability, and playback. Opening the installed app lets it use its own session; this does not grant the portfolio account access. A song link does not guarantee automatic playback or bypass login. The portfolio cannot read another site's login cookies or use an Apple Music app login as browser authorization.
+The portfolio has no Spotify or MusicKit authorization configured. External apps and pages manage their own sessions, subscriptions and availability; a song link does not guarantee automatic playback.
+
+## Adding a pair
+
+1. Find a source that documents the sample (an article, liner notes, an interview). Do not add a pair on the strength of a "sounds like" alone, and never guess.
+2. Look both songs up on Deezer and copy the track id, title, artist and album. Save the album cover as `public/projects/zempled/artwork/<track id>.jpg`.
+3. Add the pair to `sample-pairs.ts`. Add YouTube, Spotify and Apple Music links only for the exact recording.
+4. If the original artist is new, add a short profile to `artists.ts` with a source.
+5. Run `npm test`. It fails when a cover file is missing, a pair has no source, or a link points at the wrong service.
+
+Why 19 and not more: the nine pairs added in November 2026 were the ones that could be both sourced and found on Deezer. WhoSampled lists many more Ethiopian samples but blocks automated reading, so more pairs need to be collected by hand from its pages.
 
 ## October 11 app handoff review
 
