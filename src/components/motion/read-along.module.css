@@ -1,0 +1,10 @@
+.paragraph {
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+.read,
+.unread { transition: opacity 0.5s ease; }
+
+.read { opacity: 0.86; }
+.unread { opacity: 0.3; }
