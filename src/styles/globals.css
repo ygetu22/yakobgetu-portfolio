@@ -1,20 +1,31 @@
 @import "tailwindcss";
+@import "./site.css";
 @import "../components/layout/arrival-screen.css";
-@import "../features/home/home.css";
-@import "../components/motion/scroll-reveal.css";
-@import "../components/ui/photo-placeholder.css";
-@import "../features/projects/elsewhere/elsewhere.css";
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Warm off-white for light mode; a warm near-black for dark mode so both feel like the same palette. */
+/* Light mode is warm parchment; dark mode is a warm near-black, so both feel like the same palette. */
 :root {
-  --background: #ede6da;
-  --foreground: #17130f;
+  --background: #e6d9c3;
+  --foreground: #1c150d;
+  /* Two soft patches of light that drift slowly behind the page (light mode only). */
+  --glow-warm: #f3e3c4;
+  --glow-deep: #d6c09d;
+  --soft-strength: 62%;
 }
 
 .dark {
   --background: #1b1813;
   --foreground: #e8e0d1;
+  --soft-strength: 50%;
+}
+
+:root {
+  --line: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --edge: color-mix(in srgb, var(--foreground) 16%, transparent);
+  /* Secondary text. Strong enough to stay readable (about 4.5:1 against the background). */
+  --soft: color-mix(in srgb, var(--foreground) var(--soft-strength), transparent);
+  --text: color-mix(in srgb, var(--foreground) 76%, transparent);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
@@ -24,43 +35,65 @@
   --font-serif: var(--font-display);
 }
 
-html,
-body {
-  height: 100%;
-}
-
 html {
   scrollbar-width: none;
   scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
 }
 
 html::-webkit-scrollbar {
   display: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 body {
+  min-height: 100svh;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), ui-monospace, Menlo, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-x: clip;
+}
+
+/* The warm light behind the light theme. It is larger than the screen and drifts, so the page never looks flat. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(42% 46% at 22% 24%, var(--glow-warm), transparent 70%),
+    radial-gradient(48% 52% at 82% 78%, var(--glow-deep), transparent 72%);
+  animation: glow-drift 48s ease-in-out infinite alternate;
+}
+
+.dark body::before { display: none; }
+
+@keyframes glow-drift {
+  from { transform: translate3d(-4%, -3%, 0) scale(1); }
+  to { transform: translate3d(5%, 4%, 0) scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
 }
 
 ::selection {
   background: color-mix(in srgb, var(--foreground) 18%, transparent);
 }
 
-.display-heading {
-  font-family: var(--font-display), Helvetica, Arial, sans-serif;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.08;
-  text-wrap: balance;
+:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 4px;
 }
 
-.site-wordmark {
-  font-weight: 500;
-  font-style: italic;
+/* The theme switch opens as a circle from its button (see theme-toggle.tsx). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
