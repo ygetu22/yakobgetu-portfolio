@@ -1,136 +1,184 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import type { JournalPhoto, JournalQuote } from "./journal-data";
-import PostActions from "./post-actions";
+import { useEffect, useRef } from "react";
+import { pointer, usePointerFrame } from "@/components/motion/pointer-motion";
+import { prefersReducedMotion } from "@/components/motion/scroll-frame";
+import type { JournalPhoto } from "./journal-data";
+import styles from "./journal.module.css";
+
+const EASING = "cubic-bezier(0.2, 0.8, 0.2, 1)";
+const LOUPE_ZOOM = 2.2;
+const LOUPE_RADIUS_PX = 75;
 
 type PhotoViewerProps = {
   photos: JournalPhoto[];
-  // The saying shown beside each photo on the rail, if it has one.
-  sayings: Map<string, JournalQuote>;
-  index: number | null;
-  liked: Set<string>;
-  saved: Set<string>;
-  onToggleLike: (id: string) => void;
-  onToggleSave: (id: string) => void;
-  onShare: (photo: JournalPhoto) => void;
+  // Index of the photo being shown, or null when the viewer is closed.
+  openIndex: number | null;
   onChange: (index: number) => void;
   onClose: () => void;
 };
 
-// One photo laid out like an Instagram post: the photo, and a side panel with
-// the place, the caption, and the actions. The native <dialog> gives us Escape
-// to close, a focus trap, and the backdrop without extra code.
-export default function PhotoViewer(props: PhotoViewerProps) {
-  const { photos, sayings, index, liked, saved, onToggleLike, onToggleSave, onShare, onChange, onClose } = props;
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  // Increases on each double-click so the heart burst animation restarts.
-  const [burst, setBurst] = useState(0);
-  const photo = index === null ? null : photos[index];
+function shotFrame(photo: JournalPhoto): HTMLElement | null {
+  return document.querySelector(`#shot-${CSS.escape(photo.id)} [data-shot-frame]`);
+}
 
+// The transform that makes `image` sit exactly over another rectangle on screen.
+function transformOnto(image: HTMLElement, target: DOMRect): string {
+  const own = image.getBoundingClientRect();
+  const scaleX = target.width / own.width;
+  const scaleY = target.height / own.height;
+  return `translate(${target.left - own.left}px, ${target.top - own.top}px) scale(${scaleX}, ${scaleY})`;
+}
+
+// A full-screen view of one photo. It grows out of the photo that was clicked and shrinks back
+// into it when closed. Arrow keys move between photos, Escape closes, and with a mouse a round
+// magnifying glass follows the pointer. A native <dialog> keeps keyboard focus inside it.
+export default function PhotoViewer({ photos, openIndex, onChange, onClose }: PhotoViewerProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const loupeRef = useRef<HTMLDivElement>(null);
+  const lastStep = useRef(0);
+  const photo = openIndex === null ? null : photos[openIndex];
+  const isOpen = photo !== null;
+
+  // Open the dialog and grow the picture out of its place on the page.
   useEffect(() => {
     const dialog = dialogRef.current;
-    if (!dialog) return;
-    if (photo && !dialog.open) dialog.showModal();
-    if (!photo && dialog.open) dialog.close();
+    if (!isOpen || !dialog || dialog.open) return;
+
+    dialog.showModal();
+    const image = imageRef.current;
+    const frame = photo ? shotFrame(photo) : null;
+    if (image && frame && !prefersReducedMotion()) {
+      image.animate(
+        [{ transform: transformOnto(image, frame.getBoundingClientRect()) }, { transform: "none" }],
+        { duration: 560, easing: EASING },
+      );
+    }
+    // Only the open/closed change matters here; moving between photos is handled below.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
+  // Moving to another photo: keep the page behind in step, and slide the new picture in.
+  useEffect(() => {
+    if (!photo || lastStep.current === 0) return;
+
+    shotFrame(photo)?.scrollIntoView({ block: "center", behavior: "instant" });
+    if (!prefersReducedMotion()) {
+      imageRef.current?.animate(
+        [{ opacity: 0, transform: `translateX(${lastStep.current * 48}px)` }, { opacity: 1, transform: "none" }],
+        { duration: 380, easing: EASING },
+      );
+    }
+    lastStep.current = 0;
   }, [photo]);
 
-  if (index === null || !photo) {
-    return <dialog ref={dialogRef} className="journal-viewer" onClose={onClose} />;
+  function step(direction: 1 | -1) {
+    if (openIndex === null) return;
+    lastStep.current = direction;
+    onChange((openIndex + direction + photos.length) % photos.length);
   }
 
-  const saying = sayings.get(photo.id);
-  const hasPrevious = index > 0;
-  const hasNext = index < photos.length - 1;
+  async function close() {
+    const dialog = dialogRef.current;
+    const image = imageRef.current;
+    const frame = photo ? shotFrame(photo) : null;
+
+    if (image && frame && !prefersReducedMotion()) {
+      dialog?.classList.add(styles.closing);
+      await image.animate(
+        [{ transform: "none" }, { transform: transformOnto(image, frame.getBoundingClientRect()) }],
+        { duration: 460, easing: EASING },
+      ).finished;
+      dialog?.classList.remove(styles.closing);
+    }
+
+    dialog?.close();
+    onClose();
+    frame?.focus({ preventScroll: true });
+  }
+
+  usePointerFrame(() => {
+    const loupe = loupeRef.current;
+    const image = imageRef.current;
+    if (!loupe || !image) return;
+
+    const box = image.getBoundingClientRect();
+    const isOverImage =
+      isOpen &&
+      pointer.isActive &&
+      pointer.x >= box.left &&
+      pointer.x <= box.right &&
+      pointer.y >= box.top &&
+      pointer.y <= box.bottom;
+
+    loupe.classList.toggle(styles.loupeActive, isOverImage);
+    if (!isOverImage) return;
+
+    loupe.style.backgroundImage = `url("${image.currentSrc}")`;
+    loupe.style.backgroundSize = `${box.width * LOUPE_ZOOM}px ${box.height * LOUPE_ZOOM}px`;
+    const offsetX = LOUPE_RADIUS_PX - (pointer.x - box.left) * LOUPE_ZOOM;
+    const offsetY = LOUPE_RADIUS_PX - (pointer.y - box.top) * LOUPE_ZOOM;
+    loupe.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
+    loupe.style.transform = `translate(${pointer.x}px, ${pointer.y}px)`;
+  });
+
+  const position =
+    openIndex === null
+      ? ""
+      : `${String(openIndex + 1).padStart(2, "0")} / ${String(photos.length).padStart(2, "0")}`;
 
   return (
     <dialog
       ref={dialogRef}
-      className="journal-viewer"
-      aria-label={`${photo.place}, ${photo.date}`}
-      onClose={onClose}
-      onClick={(event) => {
-        // A click on the backdrop (outside the post) closes the viewer.
-        if (event.target === event.currentTarget) event.currentTarget.close();
+      className={styles.viewer}
+      aria-label="Photo viewer"
+      // Escape asks to close; run the same shrink-back animation instead of closing instantly.
+      onCancel={(event) => {
+        event.preventDefault();
+        void close();
       }}
       onKeyDown={(event) => {
-        // Arrow keys move between photos, except while typing (comments come later).
-        if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
-        if (event.key === "ArrowLeft" && hasPrevious) onChange(index - 1);
-        if (event.key === "ArrowRight" && hasNext) onChange(index + 1);
+        if (event.key === "ArrowRight") step(1);
+        else if (event.key === "ArrowLeft") step(-1);
+      }}
+      // A click on the dimmed area around the photo closes the viewer.
+      onClick={(event) => {
+        if (event.target === event.currentTarget) void close();
       }}
     >
-      <article className="journal-post">
-        <div
-          className="journal-post-photo"
-          onDoubleClick={() => {
-            // Like Instagram: double-click likes (never un-likes) and shows a heart.
-            if (!liked.has(photo.id)) onToggleLike(photo.id);
-            setBurst((count) => count + 1);
-          }}
-        >
+      {photo && (
+        <>
           <Image
-            key={photo.id}
+            ref={imageRef}
+            className={styles.viewerImage}
             src={photo.image}
             alt={photo.alt}
             width={photo.width}
             height={photo.height}
-            sizes="(max-width: 760px) 100vw, 65vw"
-            priority
-            draggable={false}
+            sizes="92vw"
+            // Fit the whole photo on screen, leaving room for the caption and buttons underneath.
+            style={{ width: `min(92vw, calc((100svh - 170px) * ${photo.width / photo.height}))`, height: "auto" }}
           />
-          {burst > 0 && (
-            <svg key={burst} className="journal-heart-burst" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7C19.5 15.9 12 20.5 12 20.5Z" />
-            </svg>
-          )}
-          {hasPrevious && (
-            <button type="button" className="journal-post-step is-previous" onClick={() => onChange(index - 1)} aria-label="Previous photo">
-              ‹
+          <p className={styles.viewerCaption} aria-live="polite">
+            <span aria-hidden="true">{position} · </span>
+            {photo.place} · {photo.date}
+          </p>
+          <div className={styles.viewerControls}>
+            <button type="button" className="round-button" aria-label="Previous photo" onClick={() => step(-1)}>
+              <span aria-hidden="true">←</span>
             </button>
-          )}
-          {hasNext && (
-            <button type="button" className="journal-post-step is-next" onClick={() => onChange(index + 1)} aria-label="Next photo">
-              ›
+            <button type="button" className="round-button" aria-label="Close the photo" autoFocus onClick={close}>
+              <span aria-hidden="true">×</span>
             </button>
-          )}
-        </div>
-
-        <div className="journal-post-panel">
-          <header className="journal-post-header">
-            <p className="journal-label">{photo.place} · {photo.date}</p>
-            {/* Focus starts here (not on the photo arrows), like closing a post on Instagram. */}
-            <button type="button" className="journal-post-close" onClick={() => dialogRef.current?.close()} aria-label="Close photo" autoFocus>
-              ×
+            <button type="button" className="round-button" aria-label="Next photo" onClick={() => step(1)}>
+              <span aria-hidden="true">→</span>
             </button>
-          </header>
-
-          <div className="journal-post-caption">
-            {saying ? (
-              <>
-                <p className="journal-post-saying" lang={saying.lang}>{saying.original}</p>
-                <p className="journal-post-translation">“{saying.english}”</p>
-                <p className="journal-post-source">{saying.source}</p>
-              </>
-            ) : (
-              <p className="journal-post-translation">{photo.place}, {photo.date}.</p>
-            )}
           </div>
-
-          <footer className="journal-post-footer">
-            <PostActions
-              photo={photo}
-              isLiked={liked.has(photo.id)}
-              isSaved={saved.has(photo.id)}
-              onToggleLike={() => onToggleLike(photo.id)}
-              onToggleSave={() => onToggleSave(photo.id)}
-              onShare={() => onShare(photo)}
-            />
-            <p className="journal-post-meta">{index + 1} of {photos.length} · {photo.date}</p>
-          </footer>
-        </div>
-      </article>
+        </>
+      )}
+      <div ref={loupeRef} className={styles.loupe} aria-hidden="true" />
     </dialog>
   );
 }
