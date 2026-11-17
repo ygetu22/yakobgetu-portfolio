@@ -1,15 +1,12 @@
-.track {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: 60;
-  height: 3px;
-  pointer-events: none;
-  background: color-mix(in srgb, var(--foreground) 8%, transparent);
-}
-
 .fill {
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 8;
+  height: 2px;
   background: var(--foreground);
   transform: scaleX(0);
   transform-origin: left;
+  pointer-events: none;
 }

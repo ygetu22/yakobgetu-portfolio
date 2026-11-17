@@ -40,7 +40,12 @@ export default function ArrivalScreen() {
     >
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-        <h1 className="arrival-name text-6xl leading-[0.9] tracking-[-0.025em] sm:text-8xl">Yakob<br /><span>Getu</span></h1>
+        {/* A paragraph, not a heading: each page already has its own h1 underneath. */}
+        <p className="arrival-name text-6xl leading-[0.9] tracking-[-0.025em] sm:text-8xl">
+          Yakob
+          <br />
+          <span>Getu</span>
+        </p>
       </div>
     </section>
   );
