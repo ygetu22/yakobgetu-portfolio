@@ -1,0 +1,62 @@
+/* The strip slides sideways as the page scrolls (set from life-strip.tsx). */
+.window {
+  margin-top: 36px;
+  overflow: hidden;
+}
+
+.strip {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  will-change: transform;
+}
+
+.photo img {
+  display: block;
+  width: auto;
+  height: 300px;
+  border-radius: 14px;
+  filter: grayscale(0.85) contrast(0.95);
+  opacity: 0.8;
+  transition: filter 0.5s ease, opacity 0.5s ease;
+}
+
+/* A photo gets its colour back when pointed at. */
+.photo:hover img {
+  filter: none;
+  opacity: 1;
+}
+
+.photo figcaption {
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--soft);
+  transition: color 0.3s;
+}
+
+.photo:hover figcaption { color: var(--foreground); }
+
+.note {
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+@media (max-width: 800px) {
+  .photo img { height: 240px; }
+}
+
+/* No pointer-driven sliding here, so the row scrolls by hand and the photos keep their colour. */
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .window {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+}
+
+@media (hover: none) {
+  .photo img {
+    filter: none;
+    opacity: 1;
+  }
+}

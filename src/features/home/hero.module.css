@@ -1,0 +1,86 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: 48px;
+  max-width: 1152px;
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 96px 48px;
+}
+
+.intro { min-width: 0; }
+
+/* My name in fidel sits above the English, like a caption written first. */
+.fidelName {
+  width: fit-content;
+  font-family: var(--font-display), sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.name {
+  margin-top: 14px;
+  font-size: clamp(52px, 7.2vw, 108px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+/* Three plain facts on one ruled line each, instead of tags. */
+.facts {
+  max-width: 420px;
+  margin-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.facts div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.facts dt {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.hint {
+  margin-top: 40px;
+  font-size: 13px;
+}
+
+.portrait {
+  position: relative;
+  width: 100%;
+  max-width: 448px;
+  margin: 0 auto;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 32px;
+}
+
+.portrait img {
+  object-fit: cover;
+  object-position: 60% 42%;
+  transform: scale(1.6);
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 120px 24px 64px;
+  }
+}
+
+/* No keyboard, no shortcut to mention. */
+@media (hover: none) {
+  .shortcutHint { display: none; }
+}
