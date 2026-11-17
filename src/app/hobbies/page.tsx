@@ -1,11 +1,8 @@
-import PagePlaceholder from "@/components/ui/page-placeholder";
+import type { Metadata } from "next";
+import SimplePage from "@/components/ui/simple-page";
+
+export const metadata: Metadata = { title: "Hobbies · Yakob Getu" };
 
 export default function HobbiesPage() {
-  return (
-    <PagePlaceholder
-      eyebrow="Hobbies"
-      title="This page is being prepared."
-      description="More personal interests and hobbies will be added here."
-    />
-  );
+  return <SimplePage title="Hobbies" text="More about what I do outside of work will be added here." />;
 }

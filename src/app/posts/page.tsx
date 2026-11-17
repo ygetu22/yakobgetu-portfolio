@@ -1,11 +1,8 @@
-import PagePlaceholder from "@/components/ui/page-placeholder";
+import type { Metadata } from "next";
+import SimplePage from "@/components/ui/simple-page";
+
+export const metadata: Metadata = { title: "Posts · Yakob Getu" };
 
 export default function PostsPage() {
-  return (
-    <PagePlaceholder
-      eyebrow="Posts"
-      title="Posts are on the way."
-      description="Notes, updates, and writeups will be added here."
-    />
-  );
+  return <SimplePage title="Posts" text="Notes, updates, and writeups will live here." />;
 }
