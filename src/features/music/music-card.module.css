@@ -1,0 +1,78 @@
+.card { display: grid; gap: 8px; }
+
+.title { font-size: 22px; }
+
+.about {
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.player {
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.song {
+  display: grid;
+  line-height: 1.4;
+}
+
+.songTitle {
+  font-family: var(--font-display), sans-serif;
+  font-size: 17px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.control {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--edge);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.control:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.control svg {
+  width: 12px;
+  height: 12px;
+}
+
+.slider {
+  flex: 1;
+  min-width: 0;
+  height: 3px;
+  margin-left: 6px;
+  accent-color: var(--foreground);
+  cursor: pointer;
+}
+
+.time {
+  min-width: 30px;
+  font-size: 11px;
+  text-align: right;
+  color: var(--soft);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.note { font-size: 11px; }

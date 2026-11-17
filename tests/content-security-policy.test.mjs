@@ -18,3 +18,15 @@ test("production policy allows no third-party scripts or frames", () => {
   assert(!policy.includes("challenges.cloudflare.com"));
   assert(!policy.includes("frame-src"));
 });
+
+test("audio may only come from this site, Deezer previews and Spotify preview clips", () => {
+  const policy = contentSecurityPolicy("test-nonce", false);
+  const media = policy.split(";").find((directive) => directive.trim().startsWith("media-src"));
+  assert.equal(media.trim(), "media-src 'self' https://*.dzcdn.net https://p.scdn.co");
+});
+
+test("development additions stay out of the production policy", () => {
+  const production = contentSecurityPolicy("test-nonce", false);
+  assert(!production.includes("ws://"));
+  assert(contentSecurityPolicy("test-nonce", true).includes("ws://127.0.0.1:*"));
+});

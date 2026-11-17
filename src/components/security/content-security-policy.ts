@@ -7,7 +7,8 @@ export function contentSecurityPolicy(nonce: string, development: boolean): stri
     "img-src 'self' data: blob:",
     "font-src 'self'",
     `connect-src 'self'${development ? " ws://127.0.0.1:* ws://localhost:*" : ""}`,
-    "media-src 'self' https://*.dzcdn.net",
+    // Zempled's song previews come from Deezer, and the background music from Spotify's preview clips.
+    "media-src 'self' https://*.dzcdn.net https://p.scdn.co",
     "object-src 'none'",
     "base-uri 'none'",
     "form-action 'self'",
