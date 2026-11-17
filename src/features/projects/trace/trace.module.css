@@ -1,111 +1,134 @@
-.page {
-  --trace-accent: #a8664d;
-  width: min(100% - 48px, 1040px);
-  margin: 0 auto;
-  padding: 168px 0 90px;
-}
-
-.back {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: color-mix(in srgb, var(--foreground) 56%, transparent);
-  font-size: 11px;
-  transition: color 180ms ease, gap 180ms ease;
-}
-
-.back:hover { color: var(--foreground); gap: 14px; }
-
-.hero {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 48px;
-  margin: 54px 0 48px;
-  animation: arrive 600ms cubic-bezier(.2, .7, .2, 1) both;
-}
-
-.heroCopy { max-width: 650px; }
-.eyebrow { display: flex; align-items: center; gap: 9px; opacity: .58; font-size: 9px; text-transform: uppercase; letter-spacing: .17em; }
-.eyebrowMark { width: 6px; height: 6px; border-radius: 50%; background: var(--trace-accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--trace-accent) 13%, transparent); }
-
-.title {
-  margin-top: 20px;
-  font-family: var(--font-display), Helvetica, Arial, sans-serif;
-  font-size: clamp(76px, 11vw, 132px);
-  font-weight: 400;
-  letter-spacing: -.075em;
-  line-height: .78;
-}
-
-.title span { color: var(--trace-accent); }
-.intro { margin-top: 26px; font-family: var(--font-display), Helvetica, Arial, sans-serif; font-size: clamp(25px, 3.8vw, 39px); line-height: 1.2; letter-spacing: -.025em; }
-.copy { max-width: 550px; margin-top: 13px; color: color-mix(in srgb, var(--foreground) 60%, transparent); font-size: 13px; line-height: 1.85; }
-
-.heroAside { min-width: 155px; padding: 0 0 7px 17px; border-left: 1px solid color-mix(in srgb, var(--foreground) 17%, transparent); color: color-mix(in srgb, var(--foreground) 50%, transparent); font-size: 10px; line-height: 2.2; }
-.asideRule { display: block; width: 25px; height: 1px; margin-bottom: 12px; background: var(--trace-accent); }
-
-/* The terminal stays dark in both site themes, like a real terminal window. */
 .terminal {
-  --terminal-bg: #1b1813;
-  --terminal-text: #e8e0d1;
+  max-width: 860px;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
-  border-radius: 8px;
-  background: var(--terminal-bg);
-  color: var(--terminal-text);
-  box-shadow: 0 22px 60px color-mix(in srgb, var(--foreground) 8%, transparent);
-  animation: arrive 650ms 100ms cubic-bezier(.2, .7, .2, 1) both;
+  border: 1px solid var(--edge);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--foreground) 4%, var(--background));
+  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.3);
 }
 
-.terminalBar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid rgb(232 224 209 / 10%); }
-.terminalBar > span { width: 10px; height: 10px; border-radius: 50%; background: rgb(232 224 209 / 18%); }
-.terminalBar h2 { margin-left: 10px; color: rgb(232 224 209 / 55%); font-size: 10px; font-weight: 400; }
-
-/* Long lines wrap (keeping their indentation) so nothing is cut off on a phone. */
-.terminalBody { max-height: 720px; overflow-y: auto; padding: 18px 20px 22px; font-size: 12px; line-height: 1.7; }
-.run { display: block; }
-.run + .run { margin-top: 18px; }
-.run > span { display: block; white-space: pre-wrap; overflow-wrap: anywhere; animation: appear 1ms calc(var(--line) * 45ms + 500ms) both; }
-
-.prompt { color: #d89a7c; }
-.passed { color: #9cc58c; }
-.failed { color: #e58a78; }
-.review { color: #dfbc6a; }
-.heading { font-weight: 700; }
-.dim { color: rgb(232 224 209 / 52%); }
-
-.caption { margin-top: 14px; color: color-mix(in srgb, var(--foreground) 52%, transparent); font-size: 11px; line-height: 1.7; }
-
-.details { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 64px; }
-.details h2, .setup h2 { font-family: var(--font-display), Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 400; letter-spacing: -.02em; }
-.details h2 { color: var(--trace-accent); }
-.details p { margin-top: 10px; color: color-mix(in srgb, var(--foreground) 62%, transparent); font-size: 12px; line-height: 1.8; }
-
-.setup { margin-top: 64px; padding-top: 40px; border-top: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent); }
-.setupNote { margin-top: 8px; color: color-mix(in srgb, var(--foreground) 55%, transparent); font-size: 11px; }
-.setupCode { margin-top: 18px; overflow-x: auto; padding: 16px 18px; border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent); border-radius: 6px; background: color-mix(in srgb, var(--foreground) 3%, var(--background)); font-size: 12px; line-height: 1.8; }
-.repoLink { display: inline-flex; margin-top: 22px; font-size: 12px; }
-
-@keyframes arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes appear { from { visibility: hidden; } to { visibility: visible; } }
-
-@media (max-width: 650px) {
-  .page { width: min(100% - 36px, 520px); padding: 143px 0 65px; }
-  .hero { align-items: flex-start; margin: 43px 0 35px; }
-  .heroAside { display: none; }
-  .title { font-size: clamp(76px, 20vw, 112px); }
-  .terminalBody { padding: 14px; font-size: 11px; }
-  .details { grid-template-columns: 1fr; gap: 26px; margin-top: 48px; }
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--soft);
 }
 
-@media (max-width: 390px) {
-  .page { width: calc(100% - 32px); }
-  .hero { margin-top: 36px; }
-  .copy { font-size: 12px; }
+.bar i {
+  width: 10px;
+  height: 10px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 30%, transparent);
+  border-radius: 50%;
+}
+
+.bar span { margin-left: 10px; }
+
+.screen {
+  height: 440px;
+  padding: 18px 20px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  font-family: var(--font-body), monospace;
+  font-size: 13px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  color: var(--text);
+}
+
+.line {
+  min-height: 1.75em;
+  animation: line-in 0.25s ease both;
+}
+
+.command,
+.good,
+.heading { color: var(--foreground); }
+
+.question { color: var(--soft); }
+
+@keyframes line-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 8px;
+  height: 1.05em;
+  vertical-align: text-bottom;
+  background: var(--foreground);
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+/* ---------- How it works, and running it yourself ---------- */
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  max-width: 980px;
+}
+
+.details h3 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 22px;
+}
+
+.details p {
+  margin-top: 8px;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.setup {
+  max-width: 860px;
+  margin-top: 56px;
+}
+
+.setup h3 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 22px;
+}
+
+.setupCode {
+  margin: 14px 0 18px;
+  padding: 16px 18px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-family: var(--font-body), monospace;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+@media (max-width: 800px) {
+  .screen {
+    height: 380px;
+    font-size: 12px;
+  }
+
+  .details { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero, .terminal, .run > span { animation: none; }
-  .back { transition: none; }
+  .line, .caret { animation: none; }
 }
