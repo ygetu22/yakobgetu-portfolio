@@ -1,32 +1,30 @@
 import type { Metadata } from "next";
-import ScrollReveal from "@/components/motion/scroll-reveal";
-import { ProjectGrid, projectCards } from "@/features/projects/project-list";
+import { SiteLink } from "@/components/layout/page-curtain";
+import Reveal from "@/components/motion/reveal";
+import WeightLetters from "@/components/motion/weight-letters";
+import ProjectIndex from "@/features/projects/project-index";
+import { projects } from "@/features/projects/projects";
 
 export const metadata: Metadata = {
   title: "Projects · Yakob Getu",
-  description:
-    "Projects by Yakob Getu: Elsewhere, Zempled, Trace, Reversi–Othello, Fruitful, and Gradient, a collaborative AI grading tool.",
+  description: `Projects by Yakob Getu: ${projects.map((project) => project.name).join(", ")}.`,
 };
 
 export default function ProjectsPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 pb-16 pt-24 sm:px-10 sm:pt-28 lg:px-12">
-      <ScrollReveal variant="title">
-        <h1 className="display-heading mt-12 text-5xl sm:text-6xl">Projects</h1>
-      </ScrollReveal>
-      <p className="mt-5 max-w-lg text-sm leading-6 text-foreground/55">
-        Things I&apos;m building, ideas I&apos;m exploring, and a little of the world outside my work.
+    <section className="section page-top" aria-labelledby="projects-title">
+      <SiteLink href="/#projects" curtainTitle="Home" className="back-link">
+        <span aria-hidden="true">←</span> Back to Home
+      </SiteLink>
+      <h1 id="projects-title" className="display-heading page-title">
+        <WeightLetters text="Projects" restingWeight={300} decodeOnMount />
+      </h1>
+      <p className="muted" style={{ margin: "24px 0 40px" }}>
+        {projects.length} projects so far.
       </p>
-
-      <section className="mt-16" aria-labelledby="highlighted-projects">
-        <div className="mb-6 flex items-center gap-5">
-          <h2 id="highlighted-projects" className="text-xs uppercase tracking-[0.18em] text-foreground/50">
-            Highlighted
-          </h2>
-          <div className="h-px flex-1 bg-foreground/10" />
-        </div>
-        <ProjectGrid cards={projectCards} />
-      </section>
-    </div>
+      <Reveal>
+        <ProjectIndex projects={projects} />
+      </Reveal>
+    </section>
   );
 }
