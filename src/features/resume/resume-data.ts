@@ -14,17 +14,18 @@ export const education = {
   honors: [
     "Amazon Future Engineer Scholar — one of 400 recipients in the U.S.",
     "Choose Ohio First Scholar",
-    "Dean's List (3×)",
+    "Dean's List (4×)",
   ],
 };
 
 export const experience: TimelineEntry[] = [
   {
+    id: "jpmc-2026",
+    shortName: "JPMorgan Chase ’26",
     name: "JPMorgan Chase & Co.",
     role: "Software Engineering Intern",
     location: "Columbus, OH",
     date: "Jun 2026 – Aug 2026",
-    mark: "J",
     stack: ["Playwright", "Gherkin", "BDD"],
     bullets: [
       "Authored 200+ Playwright regression scenarios for the first 2 of 12 planned core user flows.",
@@ -33,11 +34,12 @@ export const experience: TimelineEntry[] = [
     ],
   },
   {
+    id: "jpmc-2025",
+    shortName: "JPMorgan Chase ’25",
     name: "JPMorgan Chase & Co.",
     role: "Software Engineering Intern",
     location: "Columbus, OH",
     date: "Jun 2025 – Aug 2025",
-    mark: "J",
     stack: ["React", "TypeScript", "Spring Boot", "Java", "JUnit", "Jest"],
     bullets: [
       "Rebuilt the internal employee directory in React and TypeScript, splitting the interface into reusable components.",
@@ -46,12 +48,13 @@ export const experience: TimelineEntry[] = [
     ],
   },
   {
+    id: "amazon-2024",
+    shortName: "Amazon ’24",
     name: "Amazon Devices",
     role: "Software Development Engineer Intern",
     location: "Seattle, WA",
     date: "May 2024 – Aug 2024",
-    mark: "A",
-    stack: ["Java", "AWS", "Microservices"],
+    stack: ["Java", "AWS", "CDK", "Microservices"],
     bullets: [
       "Helped migrate the Devices Sales Page's post-purchase carousel to a microservice architecture.",
       "Built 3 core service packages in Java on AWS powering customer-facing post-purchase features.",
@@ -73,33 +76,33 @@ export const skillGroups = [
 
 export const leadership: TimelineEntry[] = [
   {
+    id: "codepath",
     name: "CodePath Technical Interview Prep",
     role: "Career Preparation Fellow",
     location: "Remote",
     date: "Feb 2025 – Present",
-    mark: "C",
     bullets: [
       "Selected for a competitive national course focused on Python-based technical interviews.",
       "Solve data structures and algorithms problems weekly, sharpening debugging and peer review skills.",
     ],
   },
   {
+    id: "mlt",
     name: "Management Leadership for Tomorrow",
     role: "Career Preparation Fellow",
     location: "Washington, DC",
     date: "Nov 2024 – Present",
-    mark: "M",
     bullets: [
       "Selected from thousands for an 18-month program led by Deloitte, LinkedIn, and Bloomberg.",
       "Completed business case studies and cohort projects strengthening leadership and communication.",
     ],
   },
   {
+    id: "dev-osu",
     name: "DEV at The Ohio State University",
     role: "Project Manager",
     location: "Columbus, OH",
     date: "Aug 2023 – May 2024",
-    mark: "D",
     bullets: [
       "Led a team of 6 engineers and designers building software for the Ohio State community.",
       "Ran sprint planning and translated the roadmap into two-week cycles with clear owners and deadlines.",
@@ -107,11 +110,11 @@ export const leadership: TimelineEntry[] = [
     ],
   },
   {
+    id: "wow",
     name: "Wonder of Our World",
     role: "Outreach Volunteer, OSU College of Engineering",
     location: "Columbus, OH",
     date: "Sep 2023 – Mar 2024",
-    mark: "W",
     bullets: [
       "Taught hands-on science lessons to 15+ elementary students through OSU's Honors & Scholars outreach program.",
     ],
@@ -119,12 +122,14 @@ export const leadership: TimelineEntry[] = [
 ];
 
 export type TimelineEntry = {
+  // Used in links such as /#entry-jpmc-2026.
+  id: string;
+  // Short label used where space is tight, e.g. next to a skill ("JPMorgan Chase ’26").
+  shortName?: string;
   name: string;
   role: string;
   location: string;
   date: string;
-  mark: string;
-  badge?: string;
   stack?: string[];
   bullets: string[];
 };
