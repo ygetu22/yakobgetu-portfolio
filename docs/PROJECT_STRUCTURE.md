@@ -53,6 +53,20 @@ Where things live in this repository and where a new change should go.
 - `public/projects/<slug>` holds a project's images. Portraits and company marks are in
   `public/images`, the resume PDF in `public/documents`.
 
+## Design decisions
+
+- **Look.** Hanken Grotesk for headings, Fragment Mono for text. Light mode is warm parchment with a
+  slow soft glow; dark mode is a warm near-black. The layout stays plain; the character comes from
+  small interactions (letters that react to the pointer, Ge'ez letters in the background, hover cards
+  that teach a little Amharic and history, a curtain between pages).
+- **Motion is optional.** Every effect checks `prefersReducedMotion()` and the site works without it.
+- **Music** plays Spotify's 30-second preview clips with its own player instead of an embed: no
+  Spotify login, no third-party scripts. Full songs are one click away on Spotify.
+- **No database.** The contact form and journal reactions email me; likes and comments are kept in
+  the visitor's browser. See [CONTACT_AND_REACTIONS.md](CONTACT_AND_REACTIONS.md).
+- **Honest content.** Project pages describe what each project actually does, including what was
+  not finished (Gradient). Quotes and artist notes name their source.
+
 ## Adding a project
 
 1. Add an entry to `src/features/projects/projects.ts`. With a `highlights` list and no folder of
@@ -89,5 +103,4 @@ them. `.env.local` holds secrets and is ignored; `.env.example` shows which valu
 
 Prefer clear ownership, readable TypeScript and plain control flow over clever abstractions.
 Share code only for a real shared responsibility, and add a dependency only when it earns its
-upkeep. Comments explain reasons, not what the code already says. These preferences are also
-recorded in `AGENTS.md`.
+upkeep. Comments explain reasons, not what the code already says.
