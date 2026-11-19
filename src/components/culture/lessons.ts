@@ -14,8 +14,8 @@ export const lessons = {
   fidel: {
     title: "ፊደል · Fidel",
     text: "These letters are fidel, the Ge'ez script. Ethiopia uses it to write Amharic and other languages, and it has been in use for well over 1,500 years. Each letter is a whole syllable, and one consonant has seven forms.",
-    example: "ለ ሉ ሊ ላ ሌ ል ሎ",
-    exampleSound: "le · lu · li · la · lé · l · lo",
+    example: "ሀ ሁ ሂ ሃ ሄ ህ ሆ",
+    exampleSound: "ha · hu · hi · hā · he · hə · ho",
     source: { label: "Omniglot: the Ge'ez script", url: "https://www.omniglot.com/writing/ethiopic.htm" },
   },
   tibeb: {
