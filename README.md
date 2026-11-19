@@ -73,4 +73,4 @@ docs/                   Longer notes, listed below
   Content Security Policy (`src/proxy.ts`).
 - `/projects/ethiotunes` and `/api/ethiotunes/preview` are old addresses that still work and
   point at Zempled. `/yakob_getu_resume.pdf` redirects to `/documents/yakob_getu_resume.pdf`.
-- `vercel.json` turns off automatic deploys for the working branch. Nothing deploys until I say so.
+- Vercel deploys `main` to yakobgetu.com and makes a preview for every other branch.
