@@ -77,6 +77,13 @@ export const journalChapters: JournalChapter[] = [
         alt: "Turquoise Diablo Lake winding between forested mountains under a clear blue sky.",
       },
     ],
+    quote: {
+      id: "quote-seattle",
+      lang: "en",
+      original: "And did you get what\nyou wanted from this life, even so?\nI did.\nAnd what did you want?\nTo call myself beloved, to feel myself\nbeloved on the earth.",
+      english: null,
+      source: "Raymond Carver · Late Fragment, 1989",
+    },
   },
   {
     id: "japan",
@@ -231,9 +238,9 @@ export const journalChapters: JournalChapter[] = [
     quote: {
       id: "quote-japan",
       lang: "ja",
-      original: "月日は百代の過客にして、行かふ年も又旅人也。",
-      english: "The months and days are the travellers of eternity. The years that come and go are also voyagers.",
-      source: "Matsuo Bashō · The Narrow Road to the Deep North, 1689 · tr. Donald Keene",
+      original: "日々旅にして、旅を栖とす。",
+      english: "Every day is a journey, and the journey itself is home.",
+      source: "Matsuo Bashō · Oku no Hosomichi, 1689 · tr. Sam Hamill",
     },
   },
   {
@@ -297,9 +304,9 @@ export const journalChapters: JournalChapter[] = [
     quote: {
       id: "quote-chicago",
       lang: "en",
-      original: "Come and show me another city with lifted head singing so proud to be alive and coarse and strong and cunning.",
+      original: "Like loving a woman with a broken nose, you may well find lovelier lovelies. But never a lovely so real.",
       english: null,
-      source: "Carl Sandburg · Chicago, 1914",
+      source: "Nelson Algren · Chicago: City on the Make, 1951",
     },
   },
   {
@@ -317,13 +324,6 @@ export const journalChapters: JournalChapter[] = [
         alt: "Five friends bundled up in winter coats outside a wooden cabin.",
       },
     ],
-    quote: {
-      id: "quote-basye",
-      lang: "am",
-      original: "ድር ቢያብር አንበሳ ያስር",
-      english: "When spider webs unite, they can tie up a lion.",
-      source: "Amharic proverb",
-    },
   },
   {
     id: "puerto-rico",
@@ -429,7 +429,7 @@ export const journalChapters: JournalChapter[] = [
     quote: {
       id: "quote-new-york",
       lang: "en",
-      original: "The city is like poetry: it compresses all life, all races and breeds, into a small island and adds music and the accompaniment of internal engines.",
+      original: "No one should come to New York to live unless he is willing to be lucky.",
       english: null,
       source: "E. B. White · Here Is New York, 1949",
     },
@@ -441,7 +441,7 @@ export const closingQuote: JournalQuote = {
   id: "quote-closing",
   lang: "am",
   original: "ቀስ በቀስ እንቁላል በእግሩ ይሄዳል",
-  english: "Little by little, an egg will walk.",
+  english: "Little by little, the egg will walk on its own legs.",
   source: "Amharic proverb",
 };
 
