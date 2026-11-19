@@ -1,5 +1,6 @@
 "use client";
 
+import { artistNote, artistPhoto, songMeaning } from "./artists";
 import { useMusicPlayer } from "./music-player";
 import { PLAYLIST_URL } from "./playlist-tracks";
 import styles from "./music-card.module.css";
@@ -14,6 +15,9 @@ function formatTime(totalSeconds: number): string {
 export default function MusicCard() {
   const music = useMusicPlayer();
   const { track } = music;
+  const photo = track ? artistPhoto(track.artist) : null;
+  const note = track ? artistNote(track.artist) : null;
+  const meaning = track ? songMeaning(track.title) : null;
 
   return (
     <div className={styles.card}>
@@ -25,10 +29,28 @@ export default function MusicCard() {
 
       {music.isOn && track ? (
         <div className={styles.player}>
-          <p className={styles.song} aria-live="polite">
-            <span className={styles.songTitle}>{track.title}</span>
-            <span className="muted">{track.artist}</span>
-          </p>
+          {/* key: the photo fades in again for each new song. */}
+          <div className={styles.story} key={track.id}>
+            {photo && (
+              // eslint-disable-next-line @next/next/no-img-element -- a small faded backdrop; next/image adds nothing here
+              <img className={styles.photo} src={photo} alt="" />
+            )}
+            <p className={styles.song} aria-live="polite">
+              <span className={styles.songTitle}>{track.title}</span>
+              <span className="muted">{track.artist}</span>
+            </p>
+            {(meaning || note) && (
+              <p className={styles.storyText}>
+                {meaning} {note?.text}
+              </p>
+            )}
+            {note && (
+              <a className={styles.source} href={note.source.url} target="_blank" rel="noreferrer">
+                About the artist: {note.source.label}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            )}
+          </div>
 
           <div className={styles.controls}>
             <button
