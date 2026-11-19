@@ -72,17 +72,29 @@ kbd {
   letter-spacing: -0.035em;
 }
 
+/* On the narrowest phones a long title ("Elsewhere") would break in the middle of the word. */
+@media (max-width: 380px) {
+  .page-title { font-size: 14vw; }
+}
+
+/* A pill at least 44 px tall, so it is easy to hit with a thumb. */
 .back-link {
   display: inline-flex;
+  align-items: center;
   gap: 8px;
-  font-size: 12px;
-  letter-spacing: 0.06em;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
   color: var(--soft);
-  transition: color 0.2s, gap 0.3s var(--ease-out);
+  transition: color 0.2s, gap 0.3s var(--ease-out), background-color 0.2s;
 }
 
 .back-link:hover {
   color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 7%, transparent);
   gap: 14px;
 }
 
