@@ -20,13 +20,12 @@ The portfolio has no Spotify or MusicKit authorization configured. External apps
 
 Why 19 and not more: the nine pairs added in November 2026 were the ones that could be both sourced and found on Deezer. WhoSampled lists many more Ethiopian samples but blocks automated reading, so more pairs need to be collected by hand from its pages.
 
-## October 11 app handoff review
+## What was checked
 
-Yakob clarified that he is signed in inside the installed apps, not the browser. Fresh Chrome checks reached the correct Spotify/Apple song pages but showed sign-in controls and no automatic audio. Confirmed the locally installed Spotify registers `spotify`, and Apple's Music app registers `music`/`musics`, by reading their application metadata. Spotify also documents its URI scheme in [content linking](https://developer.spotify.com/documentation/ios/tutorials/content-linking).
-
-After the app-link change, isolated Chrome checked all 20 recordings in both App and Browser modes, unchanged YouTube links, correct tab targets, a real Deezer preview pausing when a provider icon is activated, keyboard access, light/dark rendering, and 1440/390/320px layouts without overflow or page errors. External app launching was suppressed in that UI check. Lint and the production Webpack build passed.
-
-Separate approved OS handoff checks opened the first song's exact URIs in the installed apps. Spotify selected “Yègellé Tezeta” but reported paused. Music accepted the URI and reported stopped; the selected Apple song was not independently confirmed in its UI. Neither check demonstrated automatic playback. These results must not be reported as successful autoplay or as proof of every device's behavior. Temporary checks are `/private/tmp/zempled-provider-review.cjs` and `/private/tmp/zempled-app-ui-review.cjs`; durable behavior and limitations are recorded here.
+Spotify registers the `spotify:` link scheme and Apple's Music app registers `music:`/`musics:`, so
+App mode hands the song to the installed app. In testing, both apps opened the right song but did not
+start playing it automatically; that depends on the app and the visitor's account, so the site never
+promises autoplay.
 
 ## Catalog sources and maintenance
 
