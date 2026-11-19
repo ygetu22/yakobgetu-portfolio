@@ -1,0 +1,49 @@
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.neighbours {
+  display: flex;
+  gap: 8px;
+}
+
+/* 44 px: the smallest comfortable touch target. */
+.step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--soft);
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.step:hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 7%, transparent);
+}
+
+.nextStep {
+  padding: 0 16px;
+}
+
+@media (max-width: 380px) {
+  .nextName {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step {
+    transition: none;
+  }
+}

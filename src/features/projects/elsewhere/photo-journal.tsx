@@ -9,6 +9,7 @@ import ReadAlong from "@/components/motion/read-along";
 import Reveal from "@/components/motion/reveal";
 import { prefersReducedMotion, useScrollFrame } from "@/components/motion/scroll-frame";
 import WeightLetters from "@/components/motion/weight-letters";
+import ProjectSteps from "../project-steps";
 import { closingQuote, journalChapters, journalPhotos, type JournalQuote } from "./journal-data";
 import { placeChapters } from "./journal-layout";
 import JournalShot from "./journal-shot";
@@ -75,9 +76,7 @@ export default function PhotoJournal() {
   return (
     <>
       <section className={`section page-top ${styles.head}`} aria-labelledby="journal-title">
-        <SiteLink href="/#life" curtainTitle="Life" className="back-link">
-          <span aria-hidden="true">←</span> Back to Life
-        </SiteLink>
+        <ProjectSteps projectId="elsewhere" back={{ href: "/#life", label: "Back to Life", curtainTitle: "Life" }} />
         <h1 id="journal-title" className="display-heading page-title">
           <WeightLetters text="Elsewhere" restingWeight={300} decodeOnMount />
         </h1>

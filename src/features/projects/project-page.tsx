@@ -6,6 +6,7 @@ import Reveal from "@/components/motion/reveal";
 import Tilt from "@/components/motion/tilt";
 import WeightLetters from "@/components/motion/weight-letters";
 import SectionHeading from "@/components/ui/section-heading";
+import ProjectSteps from "./project-steps";
 import { projects, type Project } from "./projects";
 import styles from "./project-page.module.css";
 
@@ -33,9 +34,7 @@ export default function ProjectPage({ project, children }: ProjectPageProps) {
   return (
     <>
       <section className="section page-top" aria-labelledby="project-title">
-        <SiteLink href="/projects" curtainTitle="Projects" className="back-link">
-          <span aria-hidden="true">←</span> All projects
-        </SiteLink>
+        <ProjectSteps projectId={project.id} />
         <h1 id="project-title" className="display-heading page-title">
           <WeightLetters text={project.name} restingWeight={300} decodeOnMount />
         </h1>

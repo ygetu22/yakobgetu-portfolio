@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { SiteLink } from "@/components/layout/page-curtain";
 import { prefersReducedMotion } from "@/components/motion/scroll-frame";
+import ProjectSteps from "../project-steps";
 import { profileFor } from "./artists";
 import { groupByOriginalArtist, randomOtherIndex, wrapIndex } from "./pair-order";
 import PlatformLinks from "./platform-links";
@@ -186,9 +186,7 @@ export default function Zempled() {
     <main className={styles.page}>
       <header className={styles.heading}>
         <div>
-          <SiteLink href="/projects" curtainTitle="Projects" className="back-link">
-            <span aria-hidden="true">←</span> All projects
-          </SiteLink>
+          <ProjectSteps projectId="zempled" />
           <h1 className="display-heading">
             Zem<span>pled</span>
             <i>.</i>
