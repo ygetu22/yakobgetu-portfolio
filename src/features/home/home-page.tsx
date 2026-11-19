@@ -13,7 +13,7 @@ import lifeStyles from "./life.module.css";
 import styles from "./home.module.css";
 
 const aboutParagraphs = [
-  "I'm a Computer Science and Engineering student at Ohio State, graduating in May 2027. I've completed three software engineering internships, and I'm looking for a spring 2027 co-op.",
+  "I'm a Computer Science and Engineering student at Ohio State, graduating in May 2027. I've completed three software engineering internships, and I'm looking for a spring 2027 co-op and new-grad roles.",
   "On my own time I build tools around music and the web. A few of them are further down this page.",
 ];
 
@@ -73,7 +73,7 @@ export default function Home() {
             ))}
           </ul>
           <SiteLink href="/projects" curtainTitle="Projects" className="pill pill-link" data-cursor="open">
-            See all {projects.length} projects <span aria-hidden="true">↗</span>
+            See all projects <span aria-hidden="true">↗</span>
           </SiteLink>
         </Reveal>
       </section>
