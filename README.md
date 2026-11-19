@@ -66,7 +66,6 @@ docs/                   Longer notes, listed below
 - [Project structure](docs/PROJECT_STRUCTURE.md): where each kind of change goes, and how to add a project.
 - [Contact and reactions](docs/CONTACT_AND_REACTIONS.md): setup, protections, known limits.
 - [Zempled listening](docs/ZEMPLED_LISTENING.md): how previews and song links work, and how pairs are sourced.
-- [Handoff](docs/PROJECT_HANDOFF.md): history of design decisions and what is still open.
 
 ## Good to know
 
