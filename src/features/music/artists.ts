@@ -1,81 +1,46 @@
-// Short notes on the artists in the "ethio" playlist, shown in the music card behind the song.
-// Each note sticks to what its linked source says. Artists without a note show only their photo.
-// Photos come from scripts/fetch-artist-photos.mjs.
+// The music card shows what the current song is about, the artist's photo behind it, and a link
+// to the artist's Wikipedia page. Photos come from scripts/fetch-artist-photos.mjs.
 
-export type ArtistNote = {
-  text: string;
-  source: { label: string; url: string };
+// Wikipedia page titles, keyed by artistSlug().
+const artistWikipediaPages: Record<string, string> = {
+  "aster-aweke": "Aster_Aweke",
+  "teddy-afro": "Teddy_Afro",
+  "tewodros-kasshun": "Teddy_Afro",
+  "gigi": "Gigi_(singer)",
+  "gossaye-tesfaye": "Gossaye_Tesfaye",
+  "neway-debebe": "Neway_Debebe",
+  "tamrat-desta": "Tamrat_Desta",
+  "mikaya-behailu": "Mikaya_Behailu",
+  "mulatu-astatke": "Mulatu_Astatke",
+  "mahmoud-ahmed": "Mahmoud_Ahmed",
+  "alemayehu-eshete": "Alemayehu_Eshete",
+  "getatchew-mekurya": "Getatchew_Mekurya",
+  "hailu-mergia": "Hailu_Mergia",
 };
 
-const WIKIPEDIA = "https://en.wikipedia.org/wiki/";
-
-function wikipedia(title: string) {
-  return { label: "Wikipedia", url: `${WIKIPEDIA}${title}` };
-}
-
-// Keyed by artistSlug(). Older artists share their wording with the Zempled notes.
-const artistNotes: Record<string, ArtistNote> = {
-  "aster-aweke": {
-    text: "Called the Queen of Ethiopian pop. She moved to the United States in 1981, and her 1989 album Aster carried her voice far beyond Ethiopia.",
-    source: wikipedia("Aster_Aweke"),
-  },
-  "teddy-afro": {
-    text: "Tewodros Kassahun, one of the most loved Ethiopian artists of all time. His first album, Abugida (2001), made his name, and his songs often turn to Ethiopia's history and its people.",
-    source: wikipedia("Teddy_Afro"),
-  },
-  "tewodros-kasshun": {
-    text: "Teddy Afro's own name, Tewodros Kassahun, credited on some of his early recordings.",
-    source: wikipedia("Teddy_Afro"),
-  },
-  gigi: {
-    text: "Ejigayehu Shibabaw. She joins Ethiopian singing with jazz, funk and other styles, often with the bassist and producer Bill Laswell.",
-    source: wikipedia("Gigi_(singer)"),
-  },
-  "gossaye-tesfaye": {
-    text: "An Ethiopian singer and songwriter, and the voice behind many of the slow songs on this playlist.",
-    source: wikipedia("Gossaye_Tesfaye"),
-  },
-  "neway-debebe": {
-    text: "He first became known through recordings with the Roha Band and went on to release more than five albums of his own.",
-    source: wikipedia("Neway_Debebe"),
-  },
-  "tamrat-desta": {
-    text: "A singer and songwriter best known for his albums Anleyaym (2004) and Kanchi Ayebeltm (2008).",
-    source: wikipedia("Tamrat_Desta"),
-  },
-  "mikaya-behailu": {
-    text: "Her 2007 album Shemametew made her one of the best-known voices of her generation, and earned a Kora Award nomination in 2009.",
-    source: wikipedia("Mikaya_Behailu"),
-  },
-  "mulatu-astatke": {
-    text: "The father of Ethio-jazz. He studied in London, New York and Boston, then joined jazz and Latin rhythms to Ethiopia's five-note scales.",
-    source: wikipedia("Mulatu_Astatke"),
-  },
-  "mahmoud-ahmed": {
-    text: "He shined shoes as a boy, got his break with the Imperial Bodyguard Band, and became one of the defining voices of Ethiopia's golden age.",
-    source: wikipedia("Mahmoud_Ahmed"),
-  },
-  "alemayehu-eshete": {
-    text: "A star of the 1960s and 70s, nicknamed the Ethiopian Elvis for his stage moves and soul shouts.",
-    source: wikipedia("Alemayehu_Eshete"),
-  },
-  "getatchew-mekurya": {
-    text: "A saxophonist who turned shellela, a warrior's chant, into a fierce style of playing all his own.",
-    source: wikipedia("Getatchew_Mekurya"),
-  },
-  "hailu-mergia": {
-    text: "Keyboardist of the Walias Band. He stayed in Washington, DC after a 1981 tour and drove a taxi for years, until reissues of his old tapes brought him back to the stage.",
-    source: wikipedia("Hailu_Mergia"),
-  },
-};
-
-// What a few song titles mean, for songs whose title says what the song is about.
+// What a song is about, keyed by its title as it appears in the playlist. Most say what the
+// title means; a song without an entry shows only its title and artist.
 const songMeanings: Record<string, string> = {
   Tizita: "Tizita means memory, or longing for what is gone. It is also the name of a whole style of Ethiopian song.",
+  Tezeta: "Tezeta means memory, or longing for what is gone. It is also the name of a whole style of Ethiopian song.",
+  "Yègellé Tezeta": "“My own Tezeta”: an instrumental take on tezeta, the Ethiopian song of memory and longing.",
+  "Yèkèrmo Sèw": "Yèkèrmo sèw means “a man of experience,” someone who has lived through a lot.",
+  "Muziqa heywete": "Muziqa heywete means “music is my life.”",
   Hagerae: "Hagerae means “my country.”",
   "Wede Ager Bet": "Wede ager bet means “toward home.”",
+  "Addis Ababa Bete": "“Addis Ababa, my home”: a song for the capital.",
+  "Ke Ehud Eske Ehud": "Ke ehud eske ehud means “from Sunday to Sunday,” all week long.",
   Fikir: "Fikir means love.",
+  Fikrey: "Fikrey means “my love.”",
   Nafkot: "Nafkot means longing for someone far away.",
+  Ayzoh: "Ayzoh means “take heart,” what you say to someone to keep them going.",
+  "Yene Konjo": "Yene konjo means “my beautiful one.”",
+  "Lebe [Remastered]": "Lebe means “my heart.”",
+  "Semay [Remastered]": "Semay means sky.",
+  Merkeb: "Merkeb means ship.",
+  Zim: "Zim means silence.",
+  Guramayle: "Guramayle means a mix, like a sentence that blends two languages.",
+  "Bale Washintu": "Bale washintu means “the one with the flute.”",
 };
 
 // "Teddy Afro" -> "teddy-afro". A shared credit ("Hailu Mergia, Dahlak Band") uses its first
@@ -101,8 +66,9 @@ export function artistPhoto(credit: string): string | null {
   return ARTISTS_WITHOUT_PHOTO.has(slug) ? null : `/music/artists/${slug}.jpg`;
 }
 
-export function artistNote(credit: string): ArtistNote | null {
-  return artistNotes[artistSlug(credit)] ?? null;
+export function artistWikipediaUrl(credit: string): string | null {
+  const page = artistWikipediaPages[artistSlug(credit)];
+  return page ? `https://en.wikipedia.org/wiki/${page}` : null;
 }
 
 export function songMeaning(title: string): string | null {
