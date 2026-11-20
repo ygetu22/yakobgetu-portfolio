@@ -1,0 +1,32 @@
+/* Centred with auto margins rather than a transform: a transformed parent would become the
+   reference box for the hover cards inside it, which place themselves against the screen. */
+.controls {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 36px;
+  z-index: 5;
+  display: grid;
+  gap: 8px;
+  height: fit-content;
+  margin-block: auto;
+}
+
+/* Wraps a button so the hover area stays put while the button itself is pulled toward the pointer. */
+.anchor { display: block; }
+
+.cardHint {
+  margin-top: 10px;
+  font-size: 11px;
+}
+
+/* On phones the three buttons sit in a row at the bottom left. */
+@media (max-width: 800px) {
+  .controls {
+    top: auto;
+    bottom: 24px;
+    left: 24px;
+    display: flex;
+    margin-block: 0;
+  }
+}

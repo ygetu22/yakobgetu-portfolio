@@ -1,35 +1,85 @@
-import BackToTop from "@/components/back-to-top";
-import DarkModeSpotlight from "@/components/dark-mode-spotlight";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
-import { ThemeProvider } from "@/components/theme-provider";
+import GlyphLayer from "@/components/culture/glyph-layer";
+import ArrivalScreen from "@/components/layout/arrival-screen";
+import BackToTop from "@/components/layout/back-to-top";
+import { HashTargetHighlighter } from "@/components/layout/location-hash";
+import { PageCurtainProvider } from "@/components/layout/page-curtain";
+import PointerDot from "@/components/layout/pointer-dot";
+import ScrollProgress from "@/components/layout/scroll-progress";
+import SideControls from "@/components/layout/side-controls";
+import SiteChrome from "@/components/layout/site-chrome";
+import SiteFooter from "@/components/layout/site-footer";
+import { InterfaceSoundsProvider } from "@/components/providers/interface-sounds";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import Toast from "@/components/ui/toast";
+import { MusicPlayerProvider } from "@/features/music/music-player";
 import type { Metadata } from "next";
-import "./globals.css";
+import { Fragment_Mono, Hanken_Grotesk } from "next/font/google";
+import { headers } from "next/headers";
+import "@/styles/globals.css";
 
+const bodyFont = Fragment_Mono({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-body",
+});
+
+const displayFont = Hanken_Grotesk({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+});
+
+const siteDescription = "Computer science student at Ohio State, based in Columbus, Ohio.";
+
+// The preview card shown when a link is shared (LinkedIn, iMessage, Slack) is
+// src/app/opengraph-image.png; metadataBase turns its path into a full address.
 export const metadata: Metadata = {
+  metadataBase: new URL("https://yakobgetu.com"),
   title: "Yakob Getu",
-  description: "Portfolio",
+  description: siteDescription,
+  openGraph: {
+    title: "Yakob Getu",
+    description: siteDescription,
+    siteName: "Yakob Getu",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-background text-foreground">
-        <ThemeProvider>
-          <div className="relative min-h-screen overflow-hidden">
-            <DarkModeSpotlight />
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
 
-            <div className="relative z-10 flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-              <BackToTop />
-            </div>
-          </div>
+  return (
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <body className={`${bodyFont.variable} ${displayFont.variable}`}>
+        <ThemeProvider nonce={nonce}>
+          <InterfaceSoundsProvider>
+            <MusicPlayerProvider>
+              <PageCurtainProvider>
+                <a className="skip-link" href="#main">
+                  Skip to the content
+                </a>
+                <ArrivalScreen />
+                <ScrollProgress />
+                <GlyphLayer />
+                <SiteChrome />
+                <SideControls />
+                <main id="main" className="site-main">
+                  {children}
+                </main>
+                <SiteFooter />
+                <BackToTop />
+                <PointerDot />
+                <Toast />
+                <HashTargetHighlighter />
+              </PageCurtainProvider>
+            </MusicPlayerProvider>
+          </InterfaceSoundsProvider>
         </ThemeProvider>
       </body>
     </html>

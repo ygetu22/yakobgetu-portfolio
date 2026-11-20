@@ -1,0 +1,135 @@
+.card { display: grid; gap: 8px; }
+
+.title { font-size: 22px; }
+
+.about {
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.player {
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+/* The current song, with the artist's photo fading in behind the text. */
+.story {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: 6px;
+  min-height: 84px;
+  /* Starts the text below the top of the photo, so more of the photo shows. */
+  padding-top: 56px;
+  animation: story-in 0.5s var(--ease-out);
+}
+
+.photo {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  z-index: -1;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  opacity: 0.5;
+  /* Fades out toward the text so it never fights with it. */
+  mask-image: radial-gradient(ellipse at 100% 0%, #000 35%, transparent 75%);
+}
+
+.song {
+  display: grid;
+  line-height: 1.4;
+}
+
+.storyText {
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.source {
+  justify-self: start;
+  font-size: 10.5px;
+  color: var(--soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.source:hover {
+  color: var(--foreground);
+}
+
+@keyframes story-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story {
+    animation: none;
+  }
+}
+
+.songTitle {
+  font-family: var(--font-display), sans-serif;
+  font-size: 17px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.control {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--edge);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.control:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.control svg {
+  width: 12px;
+  height: 12px;
+}
+
+.slider {
+  flex: 1;
+  min-width: 0;
+  height: 3px;
+  margin-left: 6px;
+  accent-color: var(--foreground);
+  cursor: pointer;
+}
+
+.time {
+  min-width: 30px;
+  font-size: 11px;
+  text-align: right;
+  color: var(--soft);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.note { font-size: 11px; }

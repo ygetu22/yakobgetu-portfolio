@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yakob Getu's portfolio
 
-## Getting Started
+My personal site: who I am, my resume, and the things I've built.
+Built with Next.js (App Router), React, TypeScript and Tailwind CSS.
 
-First, run the development server:
+## Run it
 
-```bash
+```sh
+nvm use 22
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://127.0.0.1:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Before calling a change done:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+npm run lint
+npm test
+npm run build
+```
 
-## Learn More
+The build downloads the two fonts (Hanken Grotesk and Fragment Mono) from Google Fonts, so it needs a network connection.
 
-To learn more about Next.js, take a look at the following resources:
+## Contact form (optional)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The contact form emails me through [Resend](https://resend.com).
+Copy `.env.example` to `.env.local` and add a key to switch it on. Without a key the site still
+runs and the form asks visitors to email instead. Details: [docs/CONTACT_FORM.md](docs/CONTACT_FORM.md).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## What's where
 
-## Deploy on Vercel
+```text
+src/
+  app/                  Routes and their metadata. API routes re-export handlers from features.
+  features/
+    home/               Hero, About and the Life strip (its photos are in life-photos.ts)
+    resume/             Resume content (resume-data.ts) and how it is shown
+    contact/            Contact form, its rules, and the /api/contact handler
+    music/              The background music player (30-second Spotify clips)
+    notifications/      Emailing me: Resend call, request checks, rate limit
+    projects/
+      projects.ts       The list of projects shown on Home and /projects
+      zempled/          Ethiopian originals next to the songs that sampled them
+      trace/            Replay of real runs of the Trace terminal tool
+  components/
+    layout/             Header, menu, search, side buttons, footer, page transition
+    motion/             Pointer and scroll effects (all respect reduced motion)
+    culture/            Ge'ez letters, the woven tibeb band, and the small "learn" cards
+    providers/          Theme and interface sounds
+    security/           Content Security Policy
+    ui/                 Small shared pieces (hover card, toast, section heading)
+  styles/               globals.css (colors, Tailwind) and site.css (shared layout classes)
+public/
+  projects/<name>/      Each project's images
+  images/, documents/   Portraits, company marks, the resume PDF
+scripts/                One-off helpers (refresh the playlist and artist photos, render the favicon)
+tests/                  node --test files for the logic that matters
+docs/                   Longer notes, listed below
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Docs
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Project structure](docs/PROJECT_STRUCTURE.md): where each kind of change goes, and how to add a project.
+- [Contact form](docs/CONTACT_FORM.md): setup, protections, known limits.
+- [Zempled listening](docs/ZEMPLED_LISTENING.md): how previews and song links work, and how pairs are sourced.
+
+## Good to know
+
+- Pages are rendered per request so each response gets its own script nonce for the
+  Content Security Policy (`src/proxy.ts`).
+- `/projects/ethiotunes` and `/api/ethiotunes/preview` are old addresses that still work and
+  point at Zempled. `/yakob_getu_resume.pdf` redirects to `/documents/yakob_getu_resume.pdf`.
+- Vercel deploys `main` to yakobgetu.com and makes a preview for every other branch.

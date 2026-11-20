@@ -1,0 +1,148 @@
+/* --lean is set from project-index.tsx while the page scrolls. */
+.index {
+  --lean: 0deg;
+  transform: skewY(var(--lean));
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto 40px;
+  align-items: baseline;
+  gap: 16px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  transition: opacity 0.35s ease;
+}
+
+.number {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.name {
+  font-size: clamp(36px, 5.4vw, 76px);
+  line-height: 1;
+  font-variation-settings: "wght" 300;
+  transition: transform 0.45s var(--ease-out), font-variation-settings 0.45s ease;
+}
+
+.kind {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.arrow {
+  justify-self: end;
+  font-size: 18px;
+  transition: transform 0.35s ease;
+}
+
+/* The summary is always available to screen readers; sighted mouse users see it in the floating preview. */
+.summary {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Pointing at one project quiets the rest. */
+.index:hover .row:not(:hover) { opacity: 0.3; }
+
+.row:hover .name,
+.row:focus-visible .name {
+  font-style: italic;
+  font-variation-settings: "wght" 420;
+  transform: translateX(14px);
+}
+
+.row:hover .arrow,
+.row:focus-visible .arrow { transform: translate(4px, -4px); }
+
+/* ---------- The floating preview that follows the pointer ---------- */
+
+.preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  width: 336px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  will-change: transform;
+}
+
+.previewActive { opacity: 1; }
+
+.frame {
+  position: relative;
+  aspect-ratio: 334 / 187;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  border-radius: 16px;
+  background: var(--background);
+  box-shadow: 0 30px 60px -18px rgb(0 0 0 / 0.35);
+}
+
+.frame span {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.frame .currentArt { opacity: 1; }
+
+.frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Each project has a picture for each theme. */
+.darkArt { display: none; }
+:global(.dark) .darkArt { display: block; }
+:global(.dark) .lightArt { display: none; }
+
+.preview p {
+  margin-top: 8px;
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  border-radius: 12px;
+  background: var(--background);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+/* Touch screens have no pointer to follow, and reduced-motion visitors get no floating preview,
+   so the summary is shown in each row instead. */
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .preview { display: none; }
+  .row { grid-template-columns: 32px minmax(0, 1fr) 24px; }
+
+  .kind {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .summary {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    grid-column: 2;
+    color: var(--text);
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index { transform: none; }
+}

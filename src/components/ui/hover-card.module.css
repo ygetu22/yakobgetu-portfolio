@@ -1,0 +1,28 @@
+/* A small floating card next to the element it explains (see hover-card.ts for the behaviour). */
+.card {
+  position: fixed;
+  z-index: 12;
+  width: min(300px, calc(100vw - 24px));
+  padding: 16px 18px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+  border-radius: 16px;
+  background: var(--background);
+  box-shadow: 0 24px 50px -20px rgb(0 0 0 / 0.4);
+  font-size: 12px;
+  line-height: 1.65;
+  text-align: left;
+  animation: card-in 0.25s var(--ease-out);
+}
+
+.card[hidden] { display: none; }
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { animation: none; }
+}
