@@ -3,7 +3,6 @@ import { existsSync } from "node:fs";
 import test from "node:test";
 import { profileFor } from "../src/features/projects/zempled/artists.ts";
 import {
-  groupByOriginalArtist,
   randomOtherIndex,
   wrapIndex,
 } from "../src/features/projects/zempled/pair-order.ts";
@@ -62,16 +61,4 @@ test("shuffle always lands on a different pair", () => {
     }
   }
   assert.equal(randomOtherIndex(0, 1, 0.5), 0);
-});
-
-test("the index groups every pair under the artist who was sampled", () => {
-  const groups = groupByOriginalArtist(samplePairs, (credit) => profileFor(credit)?.name ?? credit);
-  const grouped = groups.flatMap((group) => group.pairs);
-
-  assert.equal(grouped.length, samplePairs.length);
-  assert.equal(new Set(groups.map((group) => group.artist)).size, groups.length);
-
-  const hailu = groups.find((group) => group.artist === "Hailu Mergia");
-  assert(hailu.pairs.every((pair) => pair.original.artist.startsWith("Hailu Mergia")));
-  assert(hailu.pairs.length > 1, "Hailu Mergia's different band credits should share one group");
 });

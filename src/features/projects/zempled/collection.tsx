@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { prefersReducedMotion } from "@/components/motion/scroll-frame";
+import { useEffect, useState } from "react";
 import ProjectSteps from "../project-steps";
 import { profileFor } from "./artists";
-import { groupByOriginalArtist, randomOtherIndex, wrapIndex } from "./pair-order";
+import { randomOtherIndex, wrapIndex } from "./pair-order";
 import PlatformLinks from "./platform-links";
 import { samplePairs, type SamplePair } from "./sample-pairs";
 import { usePreviewPlayer } from "./use-preview-player";
@@ -154,11 +153,9 @@ function PairNotes({ pair }: { pair: SamplePair }) {
   );
 }
 
-const artistGroups = groupByOriginalArtist(samplePairs, (credit) => profileFor(credit)?.name ?? credit);
 
 export default function Zempled() {
   const [index, setIndex] = useState(0);
-  const collection = useRef<HTMLElement>(null);
   const pair = samplePairs[index];
   const total = samplePairs.length;
 
@@ -176,11 +173,6 @@ export default function Zempled() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [total]);
-
-  function openFromIndex(pairId: string) {
-    setIndex(samplePairs.findIndex((entry) => entry.id === pairId));
-    collection.current?.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" });
-  }
 
   return (
     <main className={styles.page}>
@@ -201,7 +193,7 @@ export default function Zempled() {
         </span>
       </header>
 
-      <section ref={collection} aria-label="Original and sampled recordings" className={styles.collection}>
+      <section aria-label="Original and sampled recordings" className={styles.collection}>
         <div className={styles.counter}>
           <span>ORIGINAL → SAMPLE</span>
           <span aria-live="polite">
@@ -243,35 +235,6 @@ export default function Zempled() {
         </div>
       </section>
 
-      <section className={styles.index} aria-labelledby="zempled-index-title">
-        <h2 id="zempled-index-title">All {total} pairs</h2>
-        <p className={styles.indexHint}>Grouped by the Ethiopian artist who was sampled.</p>
-
-        {artistGroups.map((group) => (
-          <div className={styles.group} key={group.artist}>
-            <h3>{group.artist}</h3>
-            <ul>
-              {group.pairs.map((entry) => (
-                <li key={entry.id}>
-                  <button
-                    type="button"
-                    onClick={() => openFromIndex(entry.id)}
-                    aria-current={entry.id === pair.id ? "true" : undefined}
-                  >
-                    <span>{entry.original.title}</span>
-                    <span aria-hidden="true">→</span>
-                    <span className="sr-only">sampled in</span>
-                    <span>
-                      {entry.sampled.title}
-                      <small>{entry.sampled.artist}</small>
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </section>
     </main>
   );
 }
