@@ -35,7 +35,12 @@ export default function ArrivalScreen() {
   return (
     <section
       aria-label="Welcome to Yakob Getu's portfolio"
-      className={`arrival-screen arrival-palette-${palette} fixed inset-0 z-[100] overflow-hidden text-[#fff3d9] ${leaving ? "arrival-screen-leaving" : ""}`}
+      className={[
+        "arrival-screen",
+        `arrival-palette-${palette}`,
+        "fixed inset-0 z-[100] overflow-hidden text-[#fff3d9]",
+        leaving ? "arrival-screen-leaving" : "",
+      ].join(" ")}
       onClick={enterSite}
     >
 
