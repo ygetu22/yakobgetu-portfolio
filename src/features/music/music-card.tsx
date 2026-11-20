@@ -1,6 +1,6 @@
 "use client";
 
-import { artistNote, artistPhoto, songMeaning } from "./artists";
+import { artistPhoto, artistWikipediaUrl, songMeaning } from "./artists";
 import { useMusicPlayer } from "./music-player";
 import { PLAYLIST_URL } from "./playlist-tracks";
 import styles from "./music-card.module.css";
@@ -16,7 +16,7 @@ export default function MusicCard() {
   const music = useMusicPlayer();
   const { track } = music;
   const photo = track ? artistPhoto(track.artist) : null;
-  const note = track ? artistNote(track.artist) : null;
+  const artistPage = track ? artistWikipediaUrl(track.artist) : null;
   const meaning = track ? songMeaning(track.title) : null;
 
   return (
@@ -39,14 +39,10 @@ export default function MusicCard() {
               <span className={styles.songTitle}>{track.title}</span>
               <span className="muted">{track.artist}</span>
             </p>
-            {(meaning || note) && (
-              <p className={styles.storyText}>
-                {meaning} {note?.text}
-              </p>
-            )}
-            {note && (
-              <a className={styles.source} href={note.source.url} target="_blank" rel="noreferrer">
-                About the artist: {note.source.label}
+            {meaning && <p className={styles.storyText}>{meaning}</p>}
+            {artistPage && (
+              <a className={styles.source} href={artistPage} target="_blank" rel="noreferrer">
+                About the artist: Wikipedia
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
             )}
