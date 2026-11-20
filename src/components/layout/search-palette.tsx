@@ -8,7 +8,7 @@ import { copyEmail } from "@/features/contact/copy-email";
 import { useMusicPlayer } from "@/features/music/music-player";
 import { journalPhotos } from "@/features/projects/elsewhere/journal-data";
 import { projects } from "@/features/projects/projects";
-import { experience, leadership, skillGroups } from "@/features/resume/resume-data";
+import { experience, leadership, otherSkillUses, skillGroups } from "@/features/resume/resume-data";
 import { buildSkillUsage, skillElementId } from "@/features/resume/skill-usage";
 import { goToHash } from "./location-hash";
 import { useCurtainNavigate } from "./page-curtain";
@@ -37,6 +37,7 @@ const homeSections = [
 const skillUsage = buildSkillUsage([
   ...experience.map((job) => ({ label: job.shortName ?? job.name, stack: job.stack })),
   ...projects.map((project) => ({ label: project.name, stack: project.stack })),
+  ...otherSkillUses,
 ]);
 
 export type SearchPaletteHandle = { open: () => void };
