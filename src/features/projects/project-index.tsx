@@ -37,7 +37,8 @@ export default function ProjectIndex({ projects, startNumber = 1 }: ProjectIndex
     preview.current.tilt = ease(preview.current.tilt, clamp(sidewaysSpeed * 0.12, -7, 7), 0.1);
     if (previewRef.current) {
       const { x, y, tilt } = preview.current;
-      previewRef.current.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${tilt.toFixed(2)}deg)`;
+      const move = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+      previewRef.current.style.transform = `${move} rotate(${tilt.toFixed(2)}deg)`;
     }
 
     // The whole list leans slightly in the direction of a fast scroll, then settles.
