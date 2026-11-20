@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { projects } from "@/features/projects/projects";
-import { experience, skillGroups } from "./resume-data";
+import { experience, otherSkillUses, skillGroups } from "./resume-data";
 import { buildSkillUsage, skillElementId } from "./skill-usage";
 import styles from "./resume.module.css";
 
 const skillUsage = buildSkillUsage([
   ...experience.map((job) => ({ label: job.shortName ?? job.name, stack: job.stack })),
   ...projects.map((project) => ({ label: project.name, stack: project.stack })),
+  ...otherSkillUses,
 ]);
 
 const HINT = "Hover or tap a dashed skill to see where I used it.";

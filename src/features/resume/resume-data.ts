@@ -26,7 +26,7 @@ export const experience: TimelineEntry[] = [
     role: "Software Engineering Intern",
     location: "Columbus, OH",
     date: "Jun 2026 – Aug 2026",
-    stack: ["Playwright", "Gherkin", "BDD"],
+    stack: ["Playwright", "Gherkin", "BDD", "CI/CD"],
     bullets: [
       "Authored 200+ Playwright regression scenarios for the first 2 of 12 planned core user flows.",
       "Wrote the scenarios in Gherkin BDD so QA and product partners could review the expected behavior.",
@@ -54,7 +54,7 @@ export const experience: TimelineEntry[] = [
     role: "Software Development Engineer Intern",
     location: "Seattle, WA",
     date: "May 2024 – Aug 2024",
-    stack: ["Java", "AWS", "CDK", "Microservices"],
+    stack: ["Java", "AWS", "CDK", "Brazil", "CI/CD", "Microservices"],
     bullets: [
       "Helped migrate the Devices Sales Page's post-purchase carousel to a microservice architecture.",
       "Built 3 core service packages in Java on AWS powering customer-facing post-purchase features.",
@@ -72,6 +72,15 @@ export const skillGroups = [
   { label: "Cloud & DevOps", items: ["AWS", "CDK", "Brazil", "Git", "CI/CD"] },
   { label: "Testing & Data", items: ["Playwright", "Gherkin", "Jest", "JUnit", "MongoDB"] },
   { label: "AI & Developer Tools", items: ["FastMCP", "MCP", "LLM APIs", "Claude Code", "Codex"] },
+];
+
+// Skills I used in places whose listed stack doesn't name them (this site isn't a listed
+// project, and a project's stack lists its main tools only). Shown next to each skill.
+export const otherSkillUses = [
+  { label: "This site", stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "HTML/CSS", "Git", "Claude Code", "Codex"] },
+  { label: "Fruitful", stack: ["SQL", "Git", "Claude Code", "Codex"] },
+  { label: "Trace", stack: ["Git", "Claude Code", "Codex"] },
+  { label: "Gradient", stack: ["JavaScript", "HTML/CSS", "Git"] },
 ];
 
 export const leadership: TimelineEntry[] = [
