@@ -57,10 +57,11 @@
   height: auto;
 }
 
-/* Each project has a picture for each theme. */
-.darkArt { display: none; }
-:global(.dark) .darkArt { display: block; }
-:global(.dark) .lightArt { display: none; }
+/* Each project has a picture for each theme; only the current theme's is shown.
+   Scoped under .artwork so these win over `.artwork img` above. */
+.artwork .darkArt { display: none; }
+:global(.dark) .artwork .darkArt { display: block; }
+:global(.dark) .artwork .lightArt { display: none; }
 
 /* ---------- "What it does" list ---------- */
 
