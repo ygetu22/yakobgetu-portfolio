@@ -28,7 +28,6 @@ function sectionForPath(pathname: string): string {
   if (pathname.startsWith("/projects/elsewhere")) return "life";
   if (pathname.startsWith("/projects")) return "projects";
   if (pathname.startsWith("/resume")) return "resume";
-  if (pathname.startsWith("/posts")) return "posts";
   if (pathname.startsWith("/contact")) return "contact";
   return "";
 }

@@ -12,7 +12,12 @@ const nextConfig: NextConfig = {
     ] }];
   },
   async redirects() {
-    return [{ source: "/yakob_getu_resume.pdf", destination: "/documents/yakob_getu_resume.pdf", permanent: true }];
+    return [
+      { source: "/yakob_getu_resume.pdf", destination: "/documents/yakob_getu_resume.pdf", permanent: true },
+      // Old placeholder pages; Posts now lives on Home. Not permanent in case these pages come back.
+      { source: "/posts", destination: "/#posts", permanent: false },
+      { source: "/hobbies", destination: "/", permanent: false },
+    ];
   },
 };
 
