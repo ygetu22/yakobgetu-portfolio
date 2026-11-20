@@ -1,4 +1,4 @@
-// Checks shared by the routes that accept input from visitors (contact form, journal reactions).
+// Checks shared by the routes that accept input from visitors (the contact form).
 
 // True when the request was sent by a page of this same site. Browsers always attach Origin to
 // a POST made by fetch, so a missing or foreign Origin means the request did not come from the form.

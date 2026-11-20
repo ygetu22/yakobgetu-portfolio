@@ -3,11 +3,11 @@ import ReadAlong from "@/components/motion/read-along";
 import Reveal from "@/components/motion/reveal";
 import SectionHeading from "@/components/ui/section-heading";
 import ContactSection from "@/features/contact/contact-section";
-import { journalPhotos } from "@/features/projects/elsewhere/journal-data";
 import ProjectIndex from "@/features/projects/project-index";
 import { FEATURED_PROJECT_COUNT, projects } from "@/features/projects/projects";
 import ResumeBlocks, { DownloadResumeLink } from "@/features/resume/resume-blocks";
 import Hero from "./hero";
+import { lifePhotos } from "./life-photos";
 import LifeStrip from "./life-strip";
 import lifeStyles from "./life.module.css";
 import styles from "./home.module.css";
@@ -16,19 +16,6 @@ const aboutParagraphs = [
   "I'm a Computer Science and Engineering student at Ohio State, graduating in May 2027. I've completed three software engineering internships, and I'm looking for a spring 2027 co-op and new-grad roles.",
   "On my own time I like building things. A few of them are further down this page.",
 ];
-
-// A handful of journal photos for the Life section, picked to show different places.
-const lifePhotoIds = [
-  "space-needle-dusk",
-  "diablo-lake",
-  "fushimi-inari",
-  "mount-fuji",
-  "washington-monument",
-  "chicago-night",
-  "cueva-ventana-view",
-  "times-square",
-];
-const lifePhotos = journalPhotos.filter((photo) => lifePhotoIds.includes(photo.id));
 
 const featuredProjects = projects.slice(0, FEATURED_PROJECT_COUNT);
 const otherProjects = projects.slice(FEATURED_PROJECT_COUNT);

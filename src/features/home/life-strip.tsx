@@ -4,12 +4,12 @@ import Image from "next/image";
 import { useRef } from "react";
 import { clamp, ease } from "@/components/motion/motion-math";
 import { usePointerFrame } from "@/components/motion/pointer-motion";
-import type { JournalPhoto } from "@/features/projects/elsewhere/journal-data";
+import type { LifePhoto } from "./life-photos";
 import styles from "./life.module.css";
 
-// A row of journal photos that slides sideways as the page scrolls past it.
+// A row of photos that slides sideways as the page scrolls past it.
 // On touch screens, or with reduced motion, it is an ordinary sideways-scrolling row.
-export default function LifeStrip({ photos }: { photos: JournalPhoto[] }) {
+export default function LifeStrip({ photos }: { photos: LifePhoto[] }) {
   const windowRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLUListElement>(null);
   const offset = useRef(0);
@@ -31,7 +31,7 @@ export default function LifeStrip({ photos }: { photos: JournalPhoto[] }) {
   });
 
   return (
-    <div ref={windowRef} className={styles.window} role="group" aria-label="Photos from my journal" tabIndex={0}>
+    <div ref={windowRef} className={styles.window} role="group" aria-label="Photos from places I've been" tabIndex={0}>
       <ul ref={stripRef} className={styles.strip}>
         {photos.map((photo) => (
           <li key={photo.id}>

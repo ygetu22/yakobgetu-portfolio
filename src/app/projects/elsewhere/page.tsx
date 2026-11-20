@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import PhotoJournal from "@/features/projects/elsewhere/photo-journal";
+import ProjectPage from "@/features/projects/project-page";
+import { projects } from "@/features/projects/projects";
+
+// The photo journal is being reworked (the old version is saved on the local branch
+// elsewhere-journal-v1). Until it is back, this address shows the project's summary page,
+// whose status says it is coming soon.
+const elsewhere = projects.find((project) => project.id === "elsewhere")!;
 
 export const metadata: Metadata = {
   title: "Elsewhere · Yakob Getu",
-  description: "A photo journal of the places I've been, in the order they happened.",
+  description: elsewhere.summary,
 };
 
 export default function ElsewherePage() {
-  return <PhotoJournal />;
+  return <ProjectPage project={elsewhere} />;
 }

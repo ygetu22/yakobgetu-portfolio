@@ -2,7 +2,7 @@
 //
 // It lives in the memory of one server process. On serverless hosting each instance keeps its
 // own count and forgets it when it stops, so this slows a burst down but is not a hard
-// guarantee. See docs/CONTACT_AND_REACTIONS.md for what to add if spam ever gets through.
+// guarantee. See docs/CONTACT_FORM.md for what to add if spam ever gets through.
 
 // Old keys are dropped once this many are being tracked, so memory use stays bounded.
 const MAX_TRACKED_KEYS = 5000;
