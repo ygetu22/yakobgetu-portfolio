@@ -30,9 +30,21 @@ const displayFont = Hanken_Grotesk({
   variable: "--font-display",
 });
 
+const siteDescription = "Computer science student at Ohio State, based in Columbus, Ohio.";
+
+// The preview card shown when a link is shared (LinkedIn, iMessage, Slack) is
+// src/app/opengraph-image.png; metadataBase turns its path into a full address.
 export const metadata: Metadata = {
+  metadataBase: new URL("https://yakobgetu.com"),
   title: "Yakob Getu",
-  description: "Software engineer in Columbus, Ohio.",
+  description: siteDescription,
+  openGraph: {
+    title: "Yakob Getu",
+    description: siteDescription,
+    siteName: "Yakob Getu",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default async function RootLayout({
