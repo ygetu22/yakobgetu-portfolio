@@ -14,7 +14,7 @@ import styles from "./home.module.css";
 
 const aboutParagraphs = [
   "I'm a Computer Science and Engineering student at Ohio State, graduating in May 2027. I've completed three software engineering internships, and I'm looking for a spring 2027 co-op and new-grad roles.",
-  "On my own time I build tools around music and the web. A few of them are further down this page.",
+  "On my own time I like building things. A few of them are further down this page.",
 ];
 
 // A handful of journal photos for the Life section, picked to show different places.

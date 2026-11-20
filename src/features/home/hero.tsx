@@ -21,8 +21,8 @@ export default function Hero() {
 
         <dl className={styles.facts}>
           <div>
-            <dt>Work</dt>
-            <dd>Software engineer</dd>
+            <dt>Study</dt>
+            <dd>Computer science</dd>
           </div>
           <div>
             <dt>Based</dt>
