@@ -1,6 +1,6 @@
 # Yakob Getu's portfolio
 
-My personal site: who I am, my resume, the things I've built, and a photo journal.
+My personal site: who I am, my resume, and the things I've built.
 Built with Next.js (App Router), React, TypeScript and Tailwind CSS.
 
 ## Run it
@@ -25,9 +25,9 @@ The build downloads the two fonts (Hanken Grotesk and Fragment Mono) from Google
 
 ## Contact form (optional)
 
-The contact form and the journal's like/comment buttons email me through [Resend](https://resend.com).
-Copy `.env.example` to `.env.local` and add a key to switch them on. Without a key the site still
-runs and the form asks visitors to email instead. Details: [docs/CONTACT_AND_REACTIONS.md](docs/CONTACT_AND_REACTIONS.md).
+The contact form emails me through [Resend](https://resend.com).
+Copy `.env.example` to `.env.local` and add a key to switch it on. Without a key the site still
+runs and the form asks visitors to email instead. Details: [docs/CONTACT_FORM.md](docs/CONTACT_FORM.md).
 
 ## What's where
 
@@ -35,14 +35,13 @@ runs and the form asks visitors to email instead. Details: [docs/CONTACT_AND_REA
 src/
   app/                  Routes and their metadata. API routes re-export handlers from features.
   features/
-    home/               Hero, About and the Life strip
+    home/               Hero, About and the Life strip (its photos are in life-photos.ts)
     resume/             Resume content (resume-data.ts) and how it is shown
     contact/            Contact form, its rules, and the /api/contact handler
     music/              The background music player (30-second Spotify clips)
     notifications/      Emailing me: Resend call, request checks, rate limit
     projects/
       projects.ts       The list of projects shown on Home and /projects
-      elsewhere/        Photo journal: chapters, photo viewer, reactions
       zempled/          Ethiopian originals next to the songs that sampled them
       trace/            Replay of real runs of the Trace terminal tool
   components/
@@ -56,7 +55,7 @@ src/
 public/
   projects/<name>/      Each project's images
   images/, documents/   Portraits, company marks, the resume PDF
-scripts/                One-off helpers (prepare journal photos, refresh the playlist)
+scripts/                One-off helpers (refresh the playlist and artist photos, render the favicon)
 tests/                  node --test files for the logic that matters
 docs/                   Longer notes, listed below
 ```
@@ -64,7 +63,7 @@ docs/                   Longer notes, listed below
 ## Docs
 
 - [Project structure](docs/PROJECT_STRUCTURE.md): where each kind of change goes, and how to add a project.
-- [Contact and reactions](docs/CONTACT_AND_REACTIONS.md): setup, protections, known limits.
+- [Contact form](docs/CONTACT_FORM.md): setup, protections, known limits.
 - [Zempled listening](docs/ZEMPLED_LISTENING.md): how previews and song links work, and how pairs are sourced.
 
 ## Good to know
