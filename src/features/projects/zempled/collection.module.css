@@ -387,66 +387,6 @@
   background: color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
-/* ---------- Index of every pair ---------- */
-
-.index {
-  margin: 90px 70px 0;
-}
-
-.index > h2 {
-  font-size: 24px;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-}
-
-.indexHint {
-  margin: 8px 0 30px;
-  font-size: 12px;
-  color: var(--soft);
-}
-
-.group {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 20px;
-  padding: 16px 0;
-  border-top: 1px solid var(--line);
-}
-
-.group h3 {
-  padding-top: 7px;
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--soft);
-}
-
-.group button {
-  display: grid;
-  grid-template-columns: 1fr 20px 1fr;
-  gap: 12px;
-  align-items: baseline;
-  width: 100%;
-  padding: 7px 10px;
-  margin-left: -10px;
-  border-radius: 6px;
-  font-size: 13px;
-  text-align: left;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.group button:hover,
-.group button[aria-current] {
-  background: color-mix(in srgb, var(--foreground) 7%, transparent);
-}
-
-.group small {
-  display: block;
-  margin-top: 2px;
-  font-size: 11px;
-  color: var(--soft);
-}
-
 .page button:focus-visible,
 .page a:focus-visible,
 .page summary:focus-visible,
@@ -562,15 +502,6 @@
     margin-left: 0;
     margin-right: 0;
   }
-
-  .index {
-    margin: 70px 0 0;
-  }
-
-  .group {
-    grid-template-columns: 1fr;
-    gap: 6px;
-  }
 }
 
 @media (max-width: 360px) {
@@ -602,8 +533,7 @@
   .arrow,
   .shuffle,
   .platforms a,
-  .notes summary span,
-  .group button {
+  .notes summary span {
     transition: none;
   }
 }
