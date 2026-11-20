@@ -3,13 +3,13 @@
 @import "../components/layout/arrival-screen.css";
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Light mode is warm parchment; dark mode is a warm near-black, so both feel like the same palette. */
+/* Light mode is a pale warm paper; dark mode is a warm near-black, so both feel like the same palette. */
 :root {
-  --background: #e6d9c3;
+  --background: #f5f0e6;
   --foreground: #1c150d;
   /* Two soft patches of light that drift slowly behind the page (light mode only). */
-  --glow-warm: #f3e3c4;
-  --glow-deep: #d6c09d;
+  --glow-warm: #fbf8f1;
+  --glow-deep: #ebe1cf;
   --soft-strength: 62%;
 }
 
