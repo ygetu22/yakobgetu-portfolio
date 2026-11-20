@@ -1,0 +1,239 @@
+.block {
+  max-width: 820px;
+  margin-top: 56px;
+}
+
+.block:first-of-type { margin-top: 0; }
+.block section { scroll-margin-top: 48px; }
+
+.blockTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 24px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.blockTitle :global(.display-heading) {
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Education ---------- */
+
+.education {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.school { font-size: 16px; }
+
+.educationWhen {
+  text-align: right;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.honors { margin-top: 16px; }
+
+/* ---------- Experience and leadership rows ---------- */
+
+/* A line runs down the experience list and fills as it is scrolled past. */
+.timeline {
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline::before,
+.timelineFill {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 5px;
+  width: 1px;
+  background: var(--line);
+}
+
+.timelineFill {
+  background: var(--foreground);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.entry {
+  border-bottom: 1px solid var(--line);
+  transition: opacity 0.35s ease;
+}
+
+/* Pointing at one row quiets the others. */
+.entries:hover .entry:not(:hover) { opacity: 0.4; }
+
+.entryHead {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 24px;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.timeline .entryHead::before {
+  content: "";
+  position: absolute;
+  left: -27px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -5px;
+  border: 1px solid var(--soft);
+  border-radius: 50%;
+  background: var(--background);
+  transition: background-color 0.4s, border-color 0.4s, transform 0.4s var(--ease-out);
+}
+
+.timeline .passed .entryHead::before {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  transform: scale(1.15);
+}
+
+.entryName {
+  display: block;
+  font-size: 22px;
+  font-variation-settings: "wght" 400;
+  transition: font-variation-settings 0.4s ease, transform 0.45s var(--ease-out);
+}
+
+.entryHead:hover .entryName,
+.open .entryName { font-variation-settings: "wght" 620; }
+
+.entryHead:hover .entryName { transform: translateX(6px); }
+
+.entryRole {
+  display: block;
+  margin-top: 2px;
+  color: var(--soft);
+  text-wrap: pretty;
+}
+
+.entryWhen {
+  text-align: right;
+  font-size: 12px;
+  color: var(--soft);
+  white-space: nowrap;
+}
+
+.entrySign {
+  justify-self: end;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--soft);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.open .entrySign { transform: rotate(45deg); }
+
+/* Animating grid rows from 0fr to 1fr lets the details open to their natural height. */
+.entryBody {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease-out);
+}
+
+.open .entryBody { grid-template-rows: 1fr; }
+.entryBody > div { overflow: hidden; }
+
+.entryStack {
+  font-size: 12px;
+  color: var(--soft);
+}
+
+.entryBullets {
+  margin-top: 8px;
+  padding-bottom: 22px;
+}
+
+/* ---------- Skills ---------- */
+
+.skillCaption {
+  min-height: 24px;
+  margin-bottom: 18px;
+  font-size: 12px;
+  color: var(--soft);
+  transition: color 0.3s;
+}
+
+.captionActive { color: var(--foreground); }
+
+.skillGroups {
+  display: grid;
+  gap: 16px;
+}
+
+.skillGroup {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+}
+
+.skillGroup dt {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.skillGroup dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Skills that link to real work on this site are dashed and react to the pointer. */
+.linkedSkill {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--foreground) 38%, transparent);
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s, transform 0.3s var(--ease-out);
+}
+
+.linkedSkill:hover,
+.linkedSkill:focus-visible {
+  border-style: solid;
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 800px) {
+  .education {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .educationWhen { text-align: left; }
+  .entryHead { grid-template-columns: minmax(0, 1fr) 24px; }
+
+  .entryWhen {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+  }
+
+  .skillGroup {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entryBody, .entrySign, .entryName, .linkedSkill { transition: none; }
+}

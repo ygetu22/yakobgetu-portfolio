@@ -1,0 +1,17 @@
+.arrival-screen {
+  transition: opacity 1300ms ease;
+}
+/* Warm dusk tones that match the site's sand and umber palette. */
+.arrival-palette-0 { background: radial-gradient(circle at 20% 22%, #f3c78a 0 3%, transparent 24%), linear-gradient(135deg, #3a2416, #8a4a2b 50%, #b8693a); }
+.arrival-palette-1 { background: radial-gradient(circle at 80% 18%, #ddd5a0 0 2%, transparent 22%), linear-gradient(135deg, #1f2416, #4a5230 50%, #7d7444); }
+.arrival-palette-2 { background: radial-gradient(circle at 22% 78%, #f2b8a0 0 3%, transparent 25%), linear-gradient(135deg, #3b1f22, #84413c 50%, #b56b52); }
+.arrival-palette-3 { background: radial-gradient(circle at 75% 76%, #ffd890 0 2%, transparent 23%), linear-gradient(135deg, #4a2e12, #8f5524 50%, #c08440); }
+.arrival-palette-4 { background: radial-gradient(circle at 18% 75%, #d8b48a 0 3%, transparent 24%), linear-gradient(135deg, #141210, #2e2419 50%, #574230); }
+.arrival-palette-5 { background: radial-gradient(circle at 78% 20%, #f7c08a 0 2%, transparent 22%), linear-gradient(135deg, #43190f, #8e3a21 50%, #c0623a); }
+.arrival-palette-6 { background: radial-gradient(circle at 22% 20%, #e6dcb0 0 3%, transparent 24%), linear-gradient(135deg, #262b22, #555d42 50%, #8f8862); }
+.arrival-palette-7 { background: radial-gradient(circle at 80% 78%, #e8c79a 0 2%, transparent 23%), linear-gradient(135deg, #1a1a26, #3d3348 50%, #7a5444); }
+.arrival-screen-leaving { opacity: 0; pointer-events: none; }
+.arrival-name { font-family: var(--font-display), Helvetica, Arial, sans-serif; color: #fff3d9; font-weight: 400; }
+.arrival-name span { color: #f5c85e; font-style: italic; font-weight: 400; }
+
+@media (prefers-reduced-motion: reduce) { .arrival-screen { transition-duration: 1ms; } }

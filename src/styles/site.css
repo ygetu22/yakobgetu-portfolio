@@ -1,0 +1,210 @@
+/* Small building blocks shared by every page: type, sections, pills and round buttons.
+   Anything used by only one feature lives in that feature's CSS module instead. */
+
+.display-heading {
+  font-family: var(--font-display), Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.muted { color: var(--soft); }
+
+.text-link {
+  color: var(--foreground);
+  border-bottom: 1px solid var(--soft);
+  transition: border-color 0.2s;
+}
+
+.text-link:hover { border-bottom-color: var(--foreground); }
+
+kbd {
+  padding: 2px 6px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+  border-radius: 6px;
+  font: 11px var(--font-body), ui-monospace, monospace;
+  color: var(--soft);
+}
+
+/* ---------- Sections ---------- */
+
+.section {
+  position: relative;
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 72px 48px;
+  scroll-margin-top: 32px;
+}
+
+.section-head {
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-head.with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.section-head h2 {
+  margin-top: 12px;
+  font-size: 36px;
+}
+
+/* Top of a page that is not Home: leaves room for the fixed wordmark and menu. */
+.page-top { padding-top: 150px; }
+
+.page-title {
+  margin-top: 18px;
+  font-size: clamp(64px, 12vw, 170px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+/* On the narrowest phones a long title ("Elsewhere") would break in the middle of the word. */
+@media (max-width: 380px) {
+  .page-title { font-size: 14vw; }
+}
+
+/* A pill at least 44 px tall, so it is easy to hit with a thumb. */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--soft);
+  transition: color 0.2s, gap 0.3s var(--ease-out), background-color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 7%, transparent);
+  gap: 14px;
+}
+
+/* ---------- Pills, round buttons, small lists ---------- */
+
+.pill {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--foreground) 4.5%, transparent);
+  font-size: 12px;
+}
+
+.pill-link {
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+.pill-link:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.round-button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--edge);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--background) 75%, transparent);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+  font: 18px var(--font-display), sans-serif;
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+.round-button[aria-pressed="true"] {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.round-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.plain-list { color: var(--text); }
+
+.plain-list li {
+  position: relative;
+  padding: 4px 0 4px 16px;
+  /* Keeps a single word from being left alone on the last line. */
+  text-wrap: pretty;
+}
+
+.plain-list li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--soft);
+}
+
+.skill-tag {
+  padding: 4px 10px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+/* Brief highlight on whatever the search just jumped to (see go-to.ts). */
+.is-flash { animation: flash 1.8s ease-out; }
+
+@keyframes flash {
+  0%, 25% { background-color: color-mix(in srgb, var(--foreground) 13%, transparent); }
+  100% { background-color: transparent; }
+}
+
+@media (max-width: 800px) {
+  .section { padding: 56px 24px; }
+  .page-top { padding-top: 130px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-flash { animation: none; }
+}
+
+/* ---------- Page frame ---------- */
+
+/* Sits above the fixed background letters. */
+.site-main {
+  position: relative;
+  z-index: 1;
+}
+
+/* First stop for keyboard users: jumps past the fixed header and side buttons. Visible only when focused. */
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  z-index: 130;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 12px;
+  translate: -50% -200%;
+}
+
+.skip-link:focus-visible { translate: -50% 0; }

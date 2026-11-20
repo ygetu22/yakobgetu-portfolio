@@ -1,0 +1,134 @@
+.eyebrow { margin-top: 28px; }
+
+.lede {
+  max-width: 34ch;
+  margin-top: 20px;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(22px, 2.6vw, 34px);
+  font-weight: 350;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.overview {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: 56px;
+}
+
+/* ---------- Facts ---------- */
+
+.fact {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.fact:first-child { border-top: 1px solid var(--line); }
+
+.fact dt {
+  padding-top: 3px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.fact dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: var(--text);
+}
+
+.artwork {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--background);
+}
+
+.artwork img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Each project has a picture for each theme; only the current theme's is shown.
+   Scoped under .artwork so these win over `.artwork img` above. */
+.artwork .darkArt { display: none; }
+:global(.dark) .artwork .darkArt { display: block; }
+:global(.dark) .artwork .lightArt { display: none; }
+
+/* ---------- "What it does" list ---------- */
+
+.highlights li {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  transition: opacity 0.35s ease;
+}
+
+.highlights:hover li:not(:hover) { opacity: 0.35; }
+
+.highlightNumber {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.highlights :global(.display-heading) {
+  font-size: clamp(20px, 2.4vw, 30px);
+  line-height: 1.25;
+  text-wrap: pretty;
+  font-variation-settings: "wght" 350;
+  transition: font-variation-settings 0.4s ease, transform 0.45s var(--ease-out);
+}
+
+.highlights li:hover :global(.display-heading) {
+  font-variation-settings: "wght" 560;
+  transform: translateX(10px);
+}
+
+/* ---------- Next project ---------- */
+
+.next {
+  display: grid;
+  gap: 8px;
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.nextName {
+  font-size: clamp(56px, 10vw, 140px);
+  line-height: 1;
+  font-variation-settings: "wght" 300;
+  transition: font-variation-settings 0.45s ease, transform 0.5s var(--ease-out);
+}
+
+.next:hover .nextName {
+  font-style: italic;
+  font-variation-settings: "wght" 420;
+  transform: translateX(18px);
+}
+
+.nextKind {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+  .overview {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .fact { grid-template-columns: 90px minmax(0, 1fr); }
+}

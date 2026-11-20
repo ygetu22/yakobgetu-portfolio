@@ -1,0 +1,49 @@
+.button {
+  position: fixed;
+  right: 36px;
+  bottom: 32px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  min-width: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--background) 80%, transparent);
+  backdrop-filter: blur(8px);
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  translate: 0 14px;
+  transition: opacity 0.4s ease, translate 0.5s var(--ease-out), background-color 0.3s, color 0.3s;
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: auto;
+  translate: 0 0;
+}
+
+.button:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.label {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width 0.6s var(--ease-out), margin 0.6s var(--ease-out);
+}
+
+.atEnd .label {
+  max-width: 120px;
+  margin-right: 10px;
+}
+
+@media (max-width: 800px) {
+  .button { right: 24px; }
+}
