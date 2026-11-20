@@ -59,6 +59,7 @@ export const projects: Project[] = [
     kind: "Photo journal",
     year: "2026",
     summary: "A photo journal of the places I've been.",
+    status: "Being reworked into something new. Coming soon.",
     stack: ["Next.js", "React", "TypeScript"],
     href: "/projects/elsewhere",
   },

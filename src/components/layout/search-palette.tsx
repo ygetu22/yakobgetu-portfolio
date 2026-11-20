@@ -6,7 +6,6 @@ import { toggleGlyphs } from "@/components/culture/glyph-visibility";
 import { showToast } from "@/components/ui/toast";
 import { copyEmail } from "@/features/contact/copy-email";
 import { useMusicPlayer } from "@/features/music/music-player";
-import { journalPhotos } from "@/features/projects/elsewhere/journal-data";
 import { projects } from "@/features/projects/projects";
 import { experience, leadership, otherSkillUses, skillGroups } from "@/features/resume/resume-data";
 import { buildSkillUsage, skillElementId } from "@/features/resume/skill-usage";
@@ -85,13 +84,6 @@ export default function SearchPalette({ ref }: { ref: Ref<SearchPaletteHandle> }
       type: "Project",
       keywords: `${project.summary} ${project.stack.join(" ")}`,
       run: () => goTo(project.href, project.name),
-    })),
-    ...journalPhotos.map((photo) => ({
-      title: photo.place,
-      detail: photo.date,
-      type: "Photo",
-      keywords: photo.alt,
-      run: () => goTo(`/projects/elsewhere#shot-${photo.id}`, photo.place),
     })),
     ...experience.map((job) => ({
       title: job.name,
