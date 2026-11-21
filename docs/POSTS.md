@@ -21,7 +21,8 @@ Add an entry at the top of the `posts` array (newest first) with an `id` (used i
   comments aren't switched on yet.
 
 Keys: `post:<id>:likes` (a number) and `post:<id>:comments` (a list of JSON comments, newest
-first, at most 200).
+first, at most 200). The same database also keeps `geez-names:count`, the number of names
+written with "Your name in Ge'ez".
 
 ## Comments
 

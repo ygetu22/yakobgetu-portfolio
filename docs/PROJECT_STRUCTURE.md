@@ -65,6 +65,10 @@ Where things live in this repository and where a new change should go.
     bottom; the letters and music open as sheets from the bottom (`phone-sheet.tsx`).
   - The music note opens the player instead of stopping the song, and a "now playing" bar
     shows while music is on (`mini-player.tsx`).
+  - "Your name in Ge'ez" (`src/features/geez-name`, phones only for now): a visitor's name is
+    written in fidel by sound (`transliterate.ts`, tested), shown on a card with a tibeb border,
+    and can be shared as a picture drawn in their browser (`share-card.ts`). Only a count of
+    names is stored (`/api/geez-names`); the names themselves never leave the browser.
   - `.phone-only` / `.desktop-only` in `site.css` switch between the two layouts, and
     `useIsPhone()` does the same in components.
 - **Motion is optional.** Every effect checks `prefersReducedMotion()` and the site works without it.

@@ -46,6 +46,7 @@ src/
     contact/            Contact form, its rules, and the /api/contact handler
     music/              The background music player (30-second Spotify clips)
     posts/              Posts (posts.ts), their pages, likes and comments
+    geez-name/          "Your name in Ge'ez": spelling a name in fidel and the share card
     storage/            The Upstash Redis calls behind likes and comments
     notifications/      Emailing me: Resend call, request checks, rate limit
     projects/
