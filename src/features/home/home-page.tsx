@@ -16,8 +16,8 @@ import lifeStyles from "./life.module.css";
 import styles from "./home.module.css";
 
 const aboutParagraphs = [
-  "I'm a Computer Science and Engineering student at Ohio State, graduating in May 2027. I've completed three software engineering internships, and I'm looking for a spring 2027 co-op and new-grad roles.",
-  "On my own time I like building things. A few of them are further down this page.",
+  "I'm Yakob. I study computer science at Ohio State and live in Columbus.",
+  "Outside of class I'm usually building something, taking pictures on my Fujifilm, or listening to Ethiopian music. I travel when I can, and most of what I make ends up on this page.",
 ];
 
 const featuredProjects = projects.slice(0, FEATURED_PROJECT_COUNT);
