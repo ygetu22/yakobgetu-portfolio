@@ -203,7 +203,7 @@ kbd {
     --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Helvetica Neue", sans-serif;
     --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, "Helvetica Neue", sans-serif;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -218,10 +218,11 @@ kbd {
     letter-spacing: 0.04em;
   }
 
-  .section { padding-block: 36px; }
+  /* Generous space between sections, so one thing is read at a time. */
+  .section { padding-block: 60px; }
 
   .section-head {
-    margin-bottom: 20px;
+    margin-bottom: 28px;
     padding-bottom: 0;
     border-bottom: 0;
   }
