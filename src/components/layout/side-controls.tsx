@@ -111,14 +111,14 @@ function FidelButton() {
       <div
         ref={setCard}
         id={cardId}
-        className={cardStyles.card}
+        className={`${cardStyles.card} ${styles.sheet}`}
         role="note"
         hidden={!isOpen}
         {...hoverProps}
       >
         <LessonContent lesson={lessons.fidel} />
         <p className={`muted ${styles.cardHint}`}>
-          {areVisible ? "Click ሀ to hide the letters." : "Click ሀ to show the letters."}
+          {areVisible ? "Press ሀ to hide the letters." : "Press ሀ to show the letters."}
         </p>
       </div>
     </>
@@ -168,13 +168,13 @@ function MusicButton() {
       <div
         ref={setCard}
         id={cardId}
-        className={cardStyles.card}
+        className={`${cardStyles.card} ${styles.sheet}`}
         role="group"
         aria-label="Music player"
         hidden={!isOpen}
         {...hoverProps}
       >
-        <MusicCard />
+        <MusicCard onClose={close} />
       </div>
     </>
   );
@@ -183,10 +183,13 @@ function MusicButton() {
 // Theme, letters and music: a column on the left edge (a row at the bottom on phones).
 export default function SideControls() {
   return (
-    <div className={styles.controls} role="group" aria-label="Site settings">
-      <ThemeButton />
-      <FidelButton />
-      <MusicButton />
-    </div>
+    <>
+      <div className={styles.phoneBand} aria-hidden="true" />
+      <div className={styles.controls} role="group" aria-label="Site settings">
+        <ThemeButton />
+        <FidelButton />
+        <MusicButton />
+      </div>
+    </>
   );
 }

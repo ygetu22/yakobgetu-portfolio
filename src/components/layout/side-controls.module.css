@@ -20,13 +20,64 @@
   font-size: 11px;
 }
 
-/* On phones the three buttons sit in a row at the bottom left. */
+/* Phones: the three buttons sit together in one pill at the bottom left, over a soft band that
+   keeps page text from showing through behind them. */
+.phoneBand { display: none; }
+
 @media (max-width: 800px) {
   .controls {
     top: auto;
-    bottom: 24px;
-    left: 24px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    left: 16px;
     display: flex;
+    gap: 4px;
     margin-block: 0;
+    padding: 4px;
+  }
+
+  /* The pill's frosted backing is a separate layer: a backdrop-filter on .controls itself would,
+     like a transform, become the reference box for the fixed cards inside it. */
+  .controls::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border: 1px solid var(--edge);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--background) 80%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .controls :global(.round-button) {
+    border-color: transparent;
+    background: none;
+    backdrop-filter: none;
+  }
+
+  .controls :global(.round-button[aria-pressed="true"]) { background: var(--foreground); }
+
+  .phoneBand {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 4;
+    display: block;
+    height: calc(84px + env(safe-area-inset-bottom));
+    background: linear-gradient(transparent, var(--background) 60%);
+    pointer-events: none;
+  }
+
+  /* The cards open as a panel across the bottom of the screen instead of beside the button.
+     !important overrides the position that hover-card.ts sets for the desktop layout. */
+  .sheet {
+    top: auto !important;
+    right: 12px;
+    bottom: calc(76px + env(safe-area-inset-bottom));
+    left: 12px !important;
+    width: auto;
+    max-height: calc(100dvh - 190px);
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 22px;
+    font-size: 13px;
   }
 }

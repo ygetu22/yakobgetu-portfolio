@@ -177,6 +177,8 @@ kbd {
 }
 
 @media (max-width: 800px) {
+  /* Room under the footer, so the buttons fixed to the bottom of the screen never cover it. */
+  body { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
   .section { padding: 56px 24px; }
   .page-top { padding-top: 130px; }
 }

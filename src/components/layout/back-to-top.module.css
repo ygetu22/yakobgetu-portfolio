@@ -45,5 +45,11 @@
 }
 
 @media (max-width: 800px) {
-  .button { right: 24px; }
+  /* Lines up with, and matches the height of, the settings pill at the bottom left. */
+  .button {
+    right: 16px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    height: 50px;
+    min-width: 50px;
+  }
 }
