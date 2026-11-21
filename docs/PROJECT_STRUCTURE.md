@@ -56,10 +56,17 @@ Where things live in this repository and where a new change should go.
   (#f5f0e6) with a slow soft glow; dark mode is a warm near-black. The layout stays plain; the character comes from
   small interactions (letters that react to the pointer, Ge'ez letters in the background, hover cards
   that teach a little Amharic and history, a curtain between pages).
-- **Phones (800 px and narrower) get their own layout.** The top and bottom of the screen fade
-  so text never runs under the fixed buttons, the menu covers the whole screen, the theme,
-  letters and music buttons share one pill at the bottom, and their cards open as a panel across
-  the bottom instead of beside the button. Desktop is unaffected. Hover cards also open on tap.
+- **Phones (800 px and narrower) get their own iOS-style layout.** Desktop is unaffected.
+  - Apple's system font, large bold titles, and content on rounded panels (`--surface`), like
+    iOS grouped lists ("Phone look" in `site.css`, plus a phone block in each feature's CSS).
+  - Projects are cards with a small looping animation each (`project-cards.tsx`,
+    `project-scenes.tsx`), drawn in HTML and CSS rather than GIFs.
+  - The menu is frosted glass over the page. Theme, letters and music share one pill at the
+    bottom; the letters and music open as sheets from the bottom (`phone-sheet.tsx`).
+  - The music note opens the player instead of stopping the song, and a "now playing" bar
+    shows while music is on (`mini-player.tsx`).
+  - `.phone-only` / `.desktop-only` in `site.css` switch between the two layouts, and
+    `useIsPhone()` does the same in components.
 - **Motion is optional.** Every effect checks `prefersReducedMotion()` and the site works without it.
 - **Music** plays Spotify's 30-second preview clips with its own player instead of an embed: no
   Spotify login, no third-party scripts. Full songs are one click away on Spotify.
