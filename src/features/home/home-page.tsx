@@ -80,7 +80,7 @@ export default function Home() {
 
       <section id="life" className="section" aria-labelledby="life-title">
         <SectionHeading eyebrow="Outside of work" title="Life" titleId="life-title" />
-        <ReadAlong text="Places I've been and everyday moments, shot on my Fujifilm X-M5." />
+        <ReadAlong text="Places I've been and everyday moments, some shot on my Fujifilm X-M5." />
         <Reveal>
           <LifeStrip photos={lifePhotos} />
           <p className={`muted ${lifeStyles.note}`}>
