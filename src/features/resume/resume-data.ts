@@ -81,6 +81,10 @@ export const otherSkillUses = [
   { label: "Fruitful", stack: ["SQL", "Git", "Claude Code", "Codex"] },
   { label: "Trace", stack: ["Git", "Claude Code", "Codex"] },
   { label: "Gradient", stack: ["JavaScript", "HTML/CSS", "Git"] },
+  // My resume itself is written in LaTeX.
+  { label: "My resume", stack: ["LaTeX"] },
+  // Used in school and my own work, but not in anything shown on this site.
+  { label: "Work outside this site", stack: ["Bash", "LLM APIs"] },
 ];
 
 export const leadership: TimelineEntry[] = [

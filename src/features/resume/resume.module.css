@@ -234,13 +234,14 @@
   }
 }
 
-/* The skill group tabs exist only on phones. */
+/* The skill group tabs and the "where used" line on each skill exist only on phones. */
 .groupTabs { display: none; }
+.usedCount { display: none; }
 
 /* Phones: education, jobs and roles sit on rounded panels like iOS grouped lists, the rows open
    with a chevron, and skills show one group at a time as tiles picked from a row of tabs. */
 @media (max-width: 800px) {
-  .block { margin-top: 36px; }
+  .block { margin-top: 52px; }
 
   .blockTitle {
     margin-bottom: 12px;
@@ -277,7 +278,7 @@
 
   .entryHead {
     gap: 4px 12px;
-    padding: 14px 0;
+    padding: 18px 0;
   }
 
   .entryName {
@@ -357,15 +358,47 @@
     gap: 8px;
   }
 
+  /* Each skill is a small tile: its name, and underneath, where it was used. */
   .skillGroup dd > * {
-    padding: 12px;
-    border-radius: 14px;
+    display: grid;
+    gap: 2px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
     background: var(--surface);
     font-size: 15px;
-    text-align: center;
+    font-weight: 600;
+    text-align: left;
+    transition: background-color 0.25s, color 0.25s, scale 0.2s var(--ease-out);
   }
 
-  .linkedSkill:hover { transform: none; }
+  .skillGroup dd > *:active { scale: 0.97; }
+
+  .linkedSkill,
+  .linkedSkill:hover,
+  .linkedSkill:focus-visible {
+    border-style: solid;
+    border-color: var(--line);
+    background: var(--surface);
+    color: var(--foreground);
+    transform: none;
+  }
+
+  .linkedSkill[data-active] {
+    border-color: var(--foreground);
+    background: var(--foreground);
+    color: var(--background);
+  }
+
+  .usedCount {
+    display: block;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    opacity: 0.6;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

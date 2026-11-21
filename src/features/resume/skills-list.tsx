@@ -13,6 +13,11 @@ const skillUsage = buildSkillUsage([
   ...otherSkillUses,
 ]);
 
+// "Fruitful", "Fruitful + 1", for the small line under each skill on phones.
+function describeUse(places: string[]): string {
+  return places.length === 1 ? places[0] : `${places[0]} + ${places.length - 1}`;
+}
+
 const HINT = "Hover or tap a dashed skill to see where I used it.";
 const PHONE_HINT = "Tap a skill to see where I used it.";
 
@@ -60,6 +65,7 @@ export default function SkillsList() {
                     id={skillElementId(skill)}
                     type="button"
                     className={`skill-tag ${styles.linkedSkill}`}
+                    data-active={activeSkill === skill || undefined}
                     // A finger also sends enter and leave, which would clear the answer as soon as
                     // the tap ends, so touch uses the click instead.
                     onPointerEnter={(event) => event.pointerType === "mouse" && setActiveSkill(skill)}
@@ -69,6 +75,8 @@ export default function SkillsList() {
                     onBlur={() => setActiveSkill(null)}
                   >
                     {skill}
+                    {/* Phones only: where it was used, right on the tile. */}
+                    <small className={styles.usedCount}>{describeUse(skillUsage.get(skill)!)}</small>
                   </button>
                 ) : (
                   <span key={skill} id={skillElementId(skill)} className="skill-tag">
