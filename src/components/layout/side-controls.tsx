@@ -236,7 +236,7 @@ export default function SideControls() {
         <>
           {!isPlayerOpen && <MiniPlayer onOpen={openPlayer} />}
           <PhoneSheet isOpen={isPlayerOpen} onClose={closePlayer} label="Music player">
-            <MusicCard />
+            <MusicCard onStop={closePlayer} />
           </PhoneSheet>
         </>
       )}

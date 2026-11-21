@@ -12,7 +12,8 @@ function formatTime(totalSeconds: number): string {
 
 // What the visitor sees in the card next to the music button: what the playlist is,
 // and, once the music is on, the current song with pause, skip and a seek slider.
-export default function MusicCard() {
+// `onStop` lets the phone sheet close itself once the music is stopped.
+export default function MusicCard({ onStop }: { onStop?: () => void }) {
   const music = useMusicPlayer();
   const { track } = music;
   const photo = track ? artistPhoto(track.artist) : null;
@@ -22,10 +23,7 @@ export default function MusicCard() {
   return (
     <div className={styles.card}>
       <p className={`display-heading ${styles.title}`}>ethio</p>
-      <p className={styles.about}>
-        My playlist of Ethiopian music: Aster Aweke, Gigi, Teddy Afro and more. These are the songs
-        I grew up around, and they still take me back home.
-      </p>
+      <p className={styles.about}>My Ethiopian playlist on Spotify. Aster Aweke, Teddy Afro, Gigi and more.</p>
 
       {music.isOn && track ? (
         <div className={styles.player}>
@@ -99,7 +97,14 @@ export default function MusicCard() {
             30-second clips, shuffled.<span className={styles.desktopOnly}> Click the note again to stop.</span>
           </p>
           {/* Phones only: there the note button opens this player instead of stopping the music. */}
-          <button type="button" className={styles.stop} onClick={music.toggle}>
+          <button
+            type="button"
+            className={styles.stop}
+            onClick={() => {
+              music.toggle();
+              onStop?.();
+            }}
+          >
             Stop the music
           </button>
         </div>
