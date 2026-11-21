@@ -47,7 +47,21 @@
 }
 
 @media (max-width: 800px) {
-  .footer { padding: 0 24px 96px; }
+  .footer {
+    padding: 0 24px 84px;
+    font-size: 12px;
+  }
+
+  .meta {
+    gap: 4px 16px;
+    padding-top: 14px;
+  }
+
+  /* Smaller on phones, where the footer closes every page. */
+  .signature {
+    margin-top: 16px;
+    font-size: 11vw;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
