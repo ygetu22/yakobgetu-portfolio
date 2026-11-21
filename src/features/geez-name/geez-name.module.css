@@ -1,103 +1,186 @@
-.wrap {
-  display: grid;
-  gap: 14px;
-  max-width: 520px;
-}
-
-.form {
-  display: flex;
-  gap: 8px;
-}
-
-.form input {
-  flex: 1;
-  min-width: 0;
-  padding: 12px 16px;
-  border: 1px solid var(--edge);
-  border-radius: 14px;
-  background: var(--surface);
-  font: inherit;
-  font-size: 17px;
-  color: var(--foreground);
-}
-
-.form button,
-.share {
-  padding: 12px 18px;
-  border-radius: 14px;
-  background: var(--foreground);
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--background);
-  cursor: pointer;
-}
-
-/* The card: the name between two tibeb bands, like the edge of a netela. */
-.card {
+/* A dark panel (light in dark mode) between two tibeb bands, so it stands apart from the
+   sections around it the way a woven netela edge stands out from the cloth. */
+.panel {
+  --ink: var(--background);
+  --paper: var(--foreground);
   display: grid;
   justify-items: center;
-  gap: 6px;
-  padding: calc(var(--band-height) + 28px) 18px calc(var(--band-height) + 24px);
-  border: 1px solid var(--line);
-  border-radius: 22px;
+  gap: 16px;
+  padding: calc(var(--band-height) + 34px) 20px calc(var(--band-height) + 26px);
+  border-radius: 28px;
   background:
-    var(--band) repeat-x left 14px,
-    var(--band) repeat-x left calc(100% - 14px),
-    var(--surface);
-  box-shadow: 0 14px 34px -24px rgb(0 0 0 / 0.5);
-  animation: card-in 0.5s var(--ease-out);
+    var(--band) repeat-x left 16px,
+    var(--band) repeat-x left calc(100% - 16px),
+    var(--paper);
+  color: var(--ink);
+  text-align: center;
+  box-shadow: 0 24px 50px -30px rgb(0 0 0 / 0.6);
+}
+
+.kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.headline {
+  margin-top: -8px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.result {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  min-height: 150px;
+  align-content: center;
 }
 
 .geez {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0 16px;
-  font-size: clamp(44px, 13vw, 64px);
+  gap: 0 14px;
+  font-size: clamp(46px, 14vw, 68px);
   font-weight: 600;
   line-height: 1.2;
 }
+
+/* The examples are a little quieter than a visitor's own name. */
+.example { opacity: 0.85; }
 
 .word { display: inline-flex; }
 
 /* Each letter writes itself in after the one before it. */
 .letter {
+  display: inline-block;
   padding: 0 1px;
   border-radius: 10px;
+  color: inherit;
   cursor: pointer;
   animation: letter-in 0.55s calc(var(--i) * 0.14s) var(--ease-out) both;
   transition: background-color 0.2s;
 }
 
-.pickedLetter { background: color-mix(in srgb, var(--foreground) 10%, transparent); }
+.example .letter { cursor: default; }
+
+.pickedLetter { background: color-mix(in srgb, var(--ink) 16%, transparent); }
 
 .typed {
   font-size: 17px;
-  color: var(--soft);
+  opacity: 0.65;
 }
 
 .sound {
   min-height: 22px;
   font-size: 14px;
-  color: var(--soft);
+  opacity: 0.7;
 }
 
-.sound span {
-  font-size: 18px;
-  color: var(--foreground);
+.sound span { font-size: 18px; }
+
+.form {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 420px;
 }
 
-.share { justify-self: start; }
+.form input {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 16px;
+  border: 0;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--ink) 14%, transparent);
+  font: inherit;
+  font-size: 17px;
+  color: var(--ink);
+}
 
-.share:disabled { opacity: 0.6; }
+.form input::placeholder {
+  color: var(--ink);
+  opacity: 0.55;
+}
 
-.count { font-size: 14px; }
+.form button {
+  min-width: 92px;
+  padding: 13px 18px;
+  border-radius: 14px;
+  background: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--paper);
+  cursor: pointer;
+}
 
-@keyframes card-in {
-  from {
-    opacity: 0;
-    translate: 0 10px;
-  }
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 14%, transparent);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.actions svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+button:disabled { opacity: 0.6; }
+
+.spellings {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.options button {
+  padding: 6px 12px;
+  border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  border-radius: 999px;
+  font-size: 17px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.options [aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.footnote {
+  font-size: 12px;
+  opacity: 0.55;
 }
 
 @keyframes letter-in {
@@ -109,5 +192,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card, .letter { animation: none; }
+  .letter { animation: none; }
 }

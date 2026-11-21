@@ -41,3 +41,12 @@ test("says how each letter sounds", () => {
     { glyph: "ም", sound: "m" },
   ]);
 });
+
+test("tells how any Ge'ez letter is said", async () => {
+  const { lettersOf } = await import("../src/features/geez-name/transliterate.ts");
+  assert.deepEqual(
+    lettersOf("አስቴር").map((letter) => letter.sound),
+    ["a", "s", "té", "r"],
+  );
+  assert.deepEqual(lettersOf("ሰላም").map((letter) => letter.sound), ["se", "la", "m"]);
+});

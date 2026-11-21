@@ -37,6 +37,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Right after About, so visitors meet it early. Phones only for now; desktop keeps its layout. */}
+      <section id="your-name" className="section phone-only" aria-labelledby="your-name-title">
+        <Reveal>
+          <GeezNameCard />
+        </Reveal>
+      </section>
+
       <section id="resume" className="section" aria-labelledby="resume-title">
         <SectionHeading
           eyebrow="Experience"
@@ -82,13 +89,6 @@ export default function Home() {
             </SiteLink>
           </p>
         </Reveal>
-      </section>
-
-      {/* Phones only for now; desktop keeps its current layout. */}
-      <section id="your-name" className="section phone-only" aria-labelledby="your-name-title">
-        <SectionHeading eyebrow="Try it" title="Your name in Ge'ez" titleId="your-name-title" />
-        <p className={styles.nameIntro}>Type your name and see it written the way Amharic writes it.</p>
-        <GeezNameCard />
       </section>
 
       <section id="posts" className="section" aria-labelledby="posts-title">

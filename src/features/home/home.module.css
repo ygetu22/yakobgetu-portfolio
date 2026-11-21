@@ -30,17 +30,14 @@
   font-size: 13px;
 }
 
-.nameIntro {
-  margin-bottom: 18px;
-  color: var(--text);
-}
-
 @media (hover: none) {
   .fadedNames { padding-left: 48px; }
 }
 
 /* Phones show the project cards instead, so the faded names go and the button sits under the cards. */
 @media (max-width: 800px) {
+  .about { gap: 18px; }
+
   .fadedNames { display: none; }
 
   .moreProjects { padding-top: 0; }

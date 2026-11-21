@@ -144,3 +144,35 @@ export function transliterateName(name: string): GeezLetter[][] {
     )
     .filter((word) => word.length > 0);
 }
+
+// ---------- How a Ge'ez letter is said ----------
+
+// The consonant each row of eight letters stands for, keyed by the row's first code point.
+// The empty ones (አ, ዐ) carry a vowel alone.
+const rowSounds: Record<number, string> = {
+  0x1200: "h", 0x1208: "l", 0x1210: "h", 0x1218: "m", 0x1220: "s", 0x1228: "r", 0x1230: "s",
+  0x1238: "sh", 0x1240: "q", 0x1260: "b", 0x1268: "v", 0x1270: "t", 0x1278: "ch", 0x1280: "h",
+  0x1290: "n", 0x1298: "ny", 0x12a0: "", 0x12a8: "k", 0x12b8: "kh", 0x12c8: "w", 0x12d0: "",
+  0x12d8: "z", 0x12e0: "zh", 0x12e8: "y", 0x12f0: "d", 0x1300: "j", 0x1308: "g", 0x1320: "t",
+  0x1328: "ch", 0x1330: "p", 0x1338: "ts", 0x1340: "ts", 0x1348: "f", 0x1350: "p",
+};
+// The seven vowel forms in order (the sixth has no vowel), and the eighth "-wa" form.
+const orderSounds = ["e", "u", "i", "a", "é", "", "o", "wa"];
+
+// "ሳ" → "sa", "ም" → "m", "እ" → "i". Empty for letters outside the common rows.
+export function soundOf(glyph: string): string {
+  const codePoint = glyph.codePointAt(0) ?? 0;
+  const offset = codePoint - 0x1200;
+  if (offset < 0 || offset > 0x157) return "";
+  const consonant = rowSounds[codePoint - (offset % 8)];
+  if (consonant === undefined) return "";
+  const order = offset % 8;
+  // On its own, the first form of አ reads as "a" (አበበ is "Abebe"), and the sixth as "i".
+  if (consonant === "") return order === 0 ? "a" : orderSounds[order] || "i";
+  return consonant + orderSounds[order];
+}
+
+// A word written in Ge'ez, split into letters with how each is said.
+export function lettersOf(word: string): GeezLetter[] {
+  return [...word].filter((glyph) => ETHIOPIC.test(glyph)).map((glyph) => ({ glyph, sound: soundOf(glyph) }));
+}
