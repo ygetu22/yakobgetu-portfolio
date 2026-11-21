@@ -167,35 +167,50 @@
 
   .barButton { height: 38px; min-width: 38px; }
 
+  /* Frosted glass over the page, with the links as one rounded group, each ending in a chevron. */
   .links {
     position: fixed;
     inset: 0;
     grid-template-rows: 1fr;
-    padding: 110px 28px 40px;
-    background: var(--background);
+    padding: 96px 16px 40px;
+    background: color-mix(in srgb, var(--background) 72%, transparent);
+    backdrop-filter: blur(24px) saturate(1.5);
     opacity: 0;
-    transition: opacity 0.35s ease, visibility 0s 0.35s;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
   }
 
   .open .links { opacity: 1; }
 
   .links ul {
     align-content: start;
-    justify-items: start;
-    gap: 4px;
+    justify-items: stretch;
+    gap: 0;
+    padding: 0 18px;
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: 0 20px 40px -24px rgb(0 0 0 / 0.4);
   }
 
   .links li:first-child { margin-top: 0; }
 
+  .links li + li { border-top: 1px solid var(--line); }
+
   .links a {
-    display: block;
-    padding: 8px 0;
-    font-family: var(--font-display), sans-serif;
-    font-size: 34px;
-    letter-spacing: -0.01em;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border: 0;
+    font-size: 19px;
+    letter-spacing: 0;
+    color: var(--foreground);
   }
 
-  .links .current { border-bottom-color: transparent; }
+  .links a::after {
+    content: "›";
+    color: var(--soft);
+  }
+
+  .links .current { font-weight: 700; }
 
   /* The page behind the open menu stays still. */
   :global(html):has(.open) { overflow: hidden; }

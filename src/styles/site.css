@@ -177,14 +177,85 @@ kbd {
 }
 
 @media (max-width: 800px) {
-  /* Room under the footer, so the buttons fixed to the bottom of the screen never cover it. */
-  body { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
   .section { padding: 56px 24px; }
   .page-top { padding-top: 130px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .is-flash { animation: none; }
+}
+
+/* Parts of a page that exist only in the phone layout (800 px and narrower), or only above it. */
+.phone-only { display: none; }
+
+@media (max-width: 800px) {
+  .phone-only { display: block; }
+  .desktop-only { display: none; }
+}
+
+/* ---------- Phone look ----------
+   Phones get an iOS feel: Apple's system font, large bold titles, and content grouped on rounded
+   panels (var(--surface)). Desktop keeps Hanken Grotesk and Fragment Mono. */
+
+@media (max-width: 800px) {
+  /* body[class] outranks the next/font class on <body> that defines these two variables. */
+  body[class] {
+    --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Helvetica Neue", sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .display-heading {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .section { padding-block: 36px; }
+
+  .section-head {
+    margin-bottom: 20px;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .section-head h2 {
+    margin-top: 2px;
+    font-size: 34px;
+  }
+
+  .page-title {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .pill,
+  .back-link {
+    min-height: 40px;
+    padding: 9px 18px;
+    border: 0;
+    background: color-mix(in srgb, var(--foreground) 8%, transparent);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--foreground);
+  }
+
+  .skill-tag {
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  .muted,
+  .plain-list { line-height: 1.5; }
 }
 
 /* ---------- Page frame ---------- */

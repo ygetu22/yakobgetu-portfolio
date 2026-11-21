@@ -163,6 +163,66 @@
   .label { grid-column: 1 / -1; }
 }
 
+/* Phones: the three ways to reach me as one iOS-style grouped list, each row ending in a chevron. */
+@media (max-width: 800px) {
+  .list {
+    margin-top: 20px;
+    padding: 0 16px;
+    border-radius: 16px;
+    background: var(--surface);
+  }
+
+  .list li:last-child .row { border-bottom: 0; }
+
+  .list:hover .row:not(:hover) { opacity: 1; }
+
+  .row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+  }
+
+  .row::after {
+    content: "›";
+    font-size: 22px;
+    line-height: 1;
+    color: var(--soft);
+  }
+
+  .label {
+    grid-column: auto;
+    font-size: 16px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--foreground);
+  }
+
+  .value {
+    overflow: hidden;
+    font-family: var(--font-body), sans-serif;
+    font-size: 15px;
+    font-variation-settings: normal;
+    text-align: right;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--soft);
+  }
+
+  .row:hover .value {
+    font-variation-settings: normal;
+    transform: none;
+  }
+
+  .hint { display: none; }
+
+  .field input,
+  .field textarea {
+    border-radius: 12px;
+    font-size: 16px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .formWrap, .words span { transition: none; }
 }

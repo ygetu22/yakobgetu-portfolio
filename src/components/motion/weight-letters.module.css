@@ -25,3 +25,8 @@
     transition: none;
   }
 }
+
+/* Phones use the system font at fixed weights (see "Phone look" in site.css). */
+@media (max-width: 800px) {
+  .letter { font-variation-settings: normal !important; }
+}
