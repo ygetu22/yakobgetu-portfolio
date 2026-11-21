@@ -22,10 +22,12 @@ export function LessonContent({ lesson }: { lesson: Lesson }) {
           <small>{lesson.exampleSound}</small>
         </p>
       )}
-      <a className={`text-link ${styles.source}`} href={lesson.source.url} target="_blank" rel="noreferrer">
-        Learn more<span className="sr-only">: {lesson.source.label} (opens in a new tab)</span>
-        <span aria-hidden="true"> ↗</span>
-      </a>
+      {lesson.source && (
+        <a className={`text-link ${styles.source}`} href={lesson.source.url} target="_blank" rel="noreferrer">
+          Learn more<span className="sr-only">: {lesson.source.label} (opens in a new tab)</span>
+          <span aria-hidden="true"> ↗</span>
+        </a>
+      )}
     </>
   );
 }

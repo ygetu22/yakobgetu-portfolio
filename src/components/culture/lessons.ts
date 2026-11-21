@@ -1,5 +1,5 @@
 // Short explanations shown when a visitor points at something Ethiopian on the site.
-// Each one ends with a link to a fuller, reliable source.
+// Most end with a link to a fuller, reliable source; the ones about me just say what they are.
 
 export type Lesson = {
   title: string;
@@ -7,7 +7,7 @@ export type Lesson = {
   // Optional sample line, with how it sounds.
   example?: string;
   exampleSound?: string;
-  source: { label: string; url: string };
+  source?: { label: string; url: string };
 };
 
 export const lessons = {
@@ -31,7 +31,6 @@ export const lessons = {
   selam: {
     title: "ሰላም · Selam",
     text: "The everyday hello in Amharic. The same word also means peace.",
-    source: { label: "Wiktionary: ሰላም", url: "https://en.wiktionary.org/wiki/%E1%88%B0%E1%88%8B%E1%88%9D" },
   },
   tizita: {
     title: "ትዝታ · Tizita",
@@ -40,8 +39,7 @@ export const lessons = {
   },
   name: {
     title: "ያዕቆብ ጌቱ · Yakob Getu",
-    text: "My name written in fidel, the Ge'ez script that Amharic is written in.",
-    source: { label: "Omniglot: the Ge'ez script", url: "https://www.omniglot.com/writing/ethiopic.htm" },
+    text: "My name in Ge'ez, the script Amharic is written in. ያዕቆብ is how Jacob is written in Amharic.",
   },
 } satisfies Record<string, Lesson>;
 
