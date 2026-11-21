@@ -51,6 +51,19 @@ async function spellName(name: string): Promise<WordChoice[]> {
     .filter((word) => word.options.length > 0);
 }
 
+// The server counts each device once; remembering that here saves asking again after the first name.
+const COUNTED_FLAG = "geez-name-counted";
+
+function countThisDevice() {
+  try {
+    if (localStorage.getItem(COUNTED_FLAG) === "1") return;
+    localStorage.setItem(COUNTED_FLAG, "1");
+  } catch {
+    // Storage can be blocked (private browsing); the server still counts the device only once.
+  }
+  fetch("/api/geez-names", { method: "POST" }).catch(() => {});
+}
+
 // "Your name in Ge'ez": a visitor types their name and gets it written in fidel, letter by letter,
 // on a card with a tibeb border. They can hear it, pick another spelling, and share the card.
 // The name is sent to Google to spell and say it, but never stored; the server only counts names.
@@ -108,10 +121,7 @@ export default function GeezNameCard() {
     setPicked(null);
     setPlayCount(0);
 
-    fetch("/api/geez-names", { method: "POST" })
-      .then((response) => (response.ok ? response.json() : null))
-      .then((data: { count: number } | null) => data && setCount(data.count))
-      .catch(() => {});
+    countThisDevice();
   }
 
   function pickSpelling(wordIndex: number, optionIndex: number) {

@@ -70,7 +70,8 @@ Where things live in this repository and where a new change should go.
     Ethiopian names Translate leaves in English letters), and Translate's voice for the sound,
     alternating normal and slow (`google-spelling.ts`). Those are free but unofficial endpoints that can change, so the
     site's own rules (`transliterate.ts`, tested) are always offered too and take over if Google
-    fails. Names are passed through, never stored; only a count is kept (`/api/geez-names`).
+    fails. Names are passed through, never stored; only a count of devices is kept, each counted once
+    (`/api/geez-names`).
     The share picture is drawn in the visitor's browser (`share-card.ts`).
   - `.phone-only` / `.desktop-only` in `site.css` switch between the two layouts, and
     `useIsPhone()` does the same in components.
