@@ -23,6 +23,9 @@ const menuLinks: { label: string; section: string; sound: InterfaceSound }[] = [
   { label: "Contact", section: "contact", sound: "home" },
 ];
 
+// Matches the phone layout in site-header.module.css.
+const PHONE_QUERY = "(max-width: 800px)";
+
 // Which menu link is current on pages other than Home.
 function sectionForPath(pathname: string): string {
   if (pathname.startsWith("/projects/elsewhere")) return "life";
@@ -108,6 +111,7 @@ export default function SiteHeader({ onOpenSearch }: { onOpenSearch: () => void 
 
   return (
     <header>
+      <div className={styles.phoneBand} aria-hidden="true" />
       <Wordmark />
 
       <nav className={`${styles.nav} ${isMenuOpen ? styles.open : ""}`} aria-label="Site">
@@ -148,7 +152,11 @@ export default function SiteHeader({ onOpenSearch }: { onOpenSearch: () => void 
                     curtainTitle={link.label}
                     className={isCurrent ? styles.current : undefined}
                     aria-current={isCurrent ? (isHome ? "location" : "page") : undefined}
-                    onClick={() => playSound(link.sound)}
+                    onClick={() => {
+                      playSound(link.sound);
+                      // On phones the menu covers the page, so it closes once a link is chosen.
+                      if (window.matchMedia(PHONE_QUERY).matches) setIsMenuOpen(false);
+                    }}
                   >
                     {link.label}
                   </SiteLink>
