@@ -153,17 +153,103 @@
 
   .storyText { font-size: 14px; line-height: 1.5; }
 
-  .controls { gap: 12px; }
+  /* Like the Now Playing screen on iPhone: a thin progress line with the time under it, then
+     large plain play and skip glyphs centred below. */
+  .controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 36px;
+    margin-top: 4px;
+  }
 
-  .control { width: 52px; height: 52px; }
+  .slider {
+    order: -2;
+    flex: 1 1 100%;
+    height: 22px;
+    margin: 0;
+    background: transparent;
+    appearance: none;
+  }
 
-  .control svg { width: 18px; height: 18px; }
+  .slider::-webkit-slider-runnable-track {
+    height: 5px;
+    border-radius: 3px;
+    background:
+      linear-gradient(var(--foreground), var(--foreground)) 0 / var(--progress) 100% no-repeat,
+      color-mix(in srgb, var(--foreground) 16%, transparent);
+  }
 
-  .slider { height: 28px; }
+  .slider::-moz-range-track {
+    height: 5px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--foreground) 16%, transparent);
+  }
 
-  .time { font-size: 13px; }
+  .slider::-moz-range-progress {
+    height: 5px;
+    border-radius: 3px;
+    background: var(--foreground);
+  }
 
-  .links { font-size: 15px; }
+  .slider::-webkit-slider-thumb {
+    width: 11px;
+    height: 11px;
+    margin-top: -3px;
+    border-radius: 50%;
+    background: var(--foreground);
+    appearance: none;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 11px;
+    height: 11px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--foreground);
+  }
+
+  .time {
+    order: -1;
+    flex: 1 1 100%;
+    min-width: 0;
+    margin-bottom: 6px;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .control {
+    width: 56px;
+    height: 56px;
+    border: 0;
+    background: none;
+    transition: scale 0.15s var(--ease-out);
+  }
+
+  .control:hover {
+    background: none;
+    color: inherit;
+  }
+
+  .control:active { scale: 0.88; }
+
+  .control svg { width: 30px; height: 30px; }
+
+  .links {
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .links :global(.text-link) {
+    padding: 7px 14px;
+    border: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--foreground) 8%, transparent);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .note { text-align: center; }
 
   .note { font-size: 13px; }
 

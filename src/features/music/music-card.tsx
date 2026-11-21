@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { artistPhoto, artistWikipediaUrl, songMeaning } from "./artists";
 import { useMusicPlayer } from "./music-player";
 import { PLAYLIST_URL } from "./playlist-tracks";
@@ -69,6 +70,8 @@ export default function MusicCard({ onStop }: { onStop?: () => void }) {
               max={music.durationSeconds || 30}
               step={0.1}
               value={music.positionSeconds}
+              // How far along, for the filled part of the phone track (music-card.module.css).
+              style={{ "--progress": `${(music.positionSeconds / (music.durationSeconds || 30)) * 100}%` } as CSSProperties}
               onChange={(event) => music.seek(Number(event.target.value))}
               aria-label={`Position in ${track.title}`}
               aria-valuetext={`${formatTime(music.positionSeconds)} of ${formatTime(music.durationSeconds)}`}
