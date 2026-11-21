@@ -32,3 +32,9 @@
   letter-spacing: 0.1em;
   opacity: calc((var(--near) - 0.55) * 3);
 }
+
+/* Phones: the letters sit right behind the text, so there are half as many and they are fainter. */
+@media (max-width: 800px) {
+  .glyph:nth-child(even) { display: none; }
+  .glyph { opacity: calc(0.1 + var(--near) * 0.5); }
+}
