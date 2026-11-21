@@ -16,7 +16,7 @@ export const posts: Post[] = [
     paragraphs: [
       "I finally launched the new version of my site.",
       "I wanted a place that shows my work but also feels like me. So there's Amharic all over it: my name in Ge'ez at the top, letters floating in the background, a tibeb band at the bottom, and my ethio playlist if you tap the music note.",
-      "I rebuilt it this fall with Next.js, with a lot of help from Claude Code and Codex. Taking something from an idea all the way to launch taught me more than I expected.",
+      "I rebuilt it this fall with Next.js. Taking something from an idea all the way to launch taught me more than I expected.",
       "More is on the way. Elsewhere, my photo journal, is being reworked, and I'll post here when it's back.",
       "Thanks for stopping by. Leave a comment and say selam.",
     ],

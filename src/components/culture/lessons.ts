@@ -39,7 +39,7 @@ export const lessons = {
   },
   name: {
     title: "ያዕቆብ ጌቱ · Yakob Getu",
-    text: "My name in Ge'ez, the script Amharic is written in. ያዕቆብ is how Jacob is written in Amharic.",
+    text: "My name in Ge'ez, the script Amharic is written in.",
   },
 } satisfies Record<string, Lesson>;
 
