@@ -1,9 +1,10 @@
 import { createRateLimiter } from "@/features/notifications/rate-limit";
 import { clientAddress } from "@/features/notifications/request-checks";
-import { googleSpeech, googleSpellings } from "./google-spelling";
+import { googleSpeech, googleSpellings, googleTranslation } from "./google-spelling";
 
 // GET /api/geez-names/spell?name=Aster Aweke  →  { words: [["አስቴር", ...], ["አወቀ", ...]] }
-// GET /api/geez-names/say?text=አስቴር አወቀ     →  the name spoken in Amharic (MP3)
+//   Each word's spellings, best first: Google Translate's, then Google's Amharic keyboard's.
+// GET /api/geez-names/say?text=አስቴር አወቀ     →  the name spoken in Amharic (MP3); &slow=1 for slower
 // Names are passed through to Google and back; nothing is stored or logged.
 
 const NAME_MAX = 40;
@@ -26,8 +27,16 @@ export async function spellName(request: Request) {
     return reply(400, { error: "Type a name in English letters." });
   }
 
-  const words = name.split(/[\s-]+/).filter(Boolean).slice(0, MAX_WORDS);
-  const spellings = await Promise.all(words.map((word) => googleSpellings(word.replace(/'/g, ""))));
+  const words = name.replace(/'/g, "").split(/[\s-]+/).filter(Boolean).slice(0, MAX_WORDS);
+  const [translation, keyboard] = await Promise.all([
+    googleTranslation(words),
+    Promise.all(words.map((word) => googleSpellings(word))),
+  ]);
+
+  const spellings = words.map((_, index) => {
+    const translated = translation?.[index];
+    return [...new Set([...(translated ? [translated] : []), ...keyboard[index]])];
+  });
   return reply(200, { words: spellings });
 }
 
@@ -37,7 +46,8 @@ export async function sayName(request: Request) {
   const text = new URL(request.url).searchParams.get("text")?.trim() ?? "";
   if (!text || text.length > NAME_MAX || !GEEZ_TEXT.test(text)) return reply(400, { error: "Nothing to say." });
 
-  const audio = await googleSpeech(text);
+  const slow = new URL(request.url).searchParams.get("slow") === "1";
+  const audio = await googleSpeech(text, slow);
   if (!audio) return reply(502, { error: "The voice isn't available right now." });
 
   // The same name always sounds the same, so browsers may keep it for a day.

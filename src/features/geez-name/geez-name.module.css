@@ -1,20 +1,17 @@
-/* A dark panel (light in dark mode) between two tibeb bands, so it stands apart from the
-   sections around it the way a woven netela edge stands out from the cloth. */
+/* Set on the page's own background between two tibeb bands that run edge to edge, so it stands
+   out like the woven edge of a netela without being a box. */
 .panel {
-  --ink: var(--background);
-  --paper: var(--foreground);
+  --ink: var(--foreground);
+  --paper: var(--background);
   display: grid;
   justify-items: center;
   gap: 16px;
-  padding: calc(var(--band-height) + 34px) 20px calc(var(--band-height) + 26px);
-  border-radius: 28px;
+  margin-inline: -24px;
+  padding: calc(var(--band-height) + 36px) 24px calc(var(--band-height) + 28px);
   background:
-    var(--band) repeat-x left 16px,
-    var(--band) repeat-x left calc(100% - 16px),
-    var(--paper);
-  color: var(--ink);
+    var(--band) repeat-x left top,
+    var(--band) repeat-x left bottom;
   text-align: center;
-  box-shadow: 0 24px 50px -30px rgb(0 0 0 / 0.6);
 }
 
 .kicker {
@@ -70,7 +67,7 @@
 
 .example .letter { cursor: default; }
 
-.pickedLetter { background: color-mix(in srgb, var(--ink) 16%, transparent); }
+.pickedLetter { background: color-mix(in srgb, var(--ink) 10%, transparent); }
 
 .typed {
   font-size: 17px;
@@ -92,17 +89,22 @@
   max-width: 420px;
 }
 
+/* flex-basis 0 lets the field shrink, so the row stays centred instead of pushing the button out. */
 .form input {
-  flex: 1;
+  flex: 1 1 0;
+  width: 0;
   min-width: 0;
   padding: 13px 16px;
   border: 0;
   border-radius: 14px;
-  background: color-mix(in srgb, var(--ink) 14%, transparent);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
   font: inherit;
   font-size: 17px;
   color: var(--ink);
+  outline: none;
 }
+
+.form input:focus-visible { box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 35%, transparent); }
 
 .form input::placeholder {
   color: var(--ink);
@@ -131,7 +133,7 @@
   gap: 6px;
   padding: 10px 16px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--ink) 14%, transparent);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
   font-size: 15px;
   font-weight: 600;
   color: var(--ink);
@@ -166,7 +168,7 @@ button:disabled { opacity: 0.6; }
 
 .options button {
   padding: 6px 12px;
-  border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
   border-radius: 999px;
   font-size: 17px;
   color: var(--ink);

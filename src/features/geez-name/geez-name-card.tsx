@@ -31,10 +31,6 @@ function ruleSpelling(word: string): string {
   return transliterateName(word).map((letters) => letters.map((letter) => letter.glyph).join("")).join("");
 }
 
-// Google's Amharic keyboard spells Ethiopian names well (Aweke → አወቀ) but English ones poorly
-// (Wesley → ወስለይ). These spellings mark a name as English, so the site's own rules go first.
-const ENGLISH_SPELLING = /(y|ah|ey)$|th|ph|ck|ee|oo|ll|ch/i;
-
 async function spellName(name: string): Promise<WordChoice[]> {
   const typedWords = name.split(/[\s-]+/).filter(Boolean).slice(0, 4);
   let google: string[][] = [];
@@ -47,10 +43,10 @@ async function spellName(name: string): Promise<WordChoice[]> {
 
   return typedWords
     .map((word, index) => {
-      const fromGoogle = (google[index] ?? []).slice(0, 3);
-      const fromRules = ruleSpelling(word);
-      const ordered = ENGLISH_SPELLING.test(word) ? [fromRules, ...fromGoogle] : [...fromGoogle, fromRules];
-      return { options: [...new Set(ordered)].filter(Boolean), picked: 0 };
+      // Google's spellings come first (the server puts Google Translate's ahead of its keyboard's);
+      // the site's own rules are the last option, and the only one if Google is unreachable.
+      const options = [...(google[index] ?? []).slice(0, 3), ruleSpelling(word)];
+      return { options: [...new Set(options)].filter(Boolean), picked: 0 };
     })
     .filter((word) => word.options.length > 0);
 }
@@ -67,6 +63,8 @@ export default function GeezNameCard() {
   const [isWriting, setIsWriting] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  // Google has one voice; every other tap plays it slowed down, like Translate's turtle button.
+  const [playCount, setPlayCount] = useState(0);
   const [exampleIndex, setExampleIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -108,6 +106,7 @@ export default function GeezNameCard() {
     setWords(result);
     setShownName(name);
     setPicked(null);
+    setPlayCount(0);
 
     fetch("/api/geez-names", { method: "POST" })
       .then((response) => (response.ok ? response.json() : null))
@@ -120,11 +119,14 @@ export default function GeezNameCard() {
       current.map((word, index) => (index === wordIndex ? { ...word, picked: optionIndex } : word)),
     );
     setPicked(null);
+    setPlayCount(0);
   }
 
   async function say() {
     audioRef.current?.pause();
-    const audio = new Audio(`/api/geez-names/say?text=${encodeURIComponent(join(words))}`);
+    const slow = playCount % 2 === 1 ? "&slow=1" : "";
+    setPlayCount((count) => count + 1);
+    const audio = new Audio(`/api/geez-names/say?text=${encodeURIComponent(join(words))}${slow}`);
     audioRef.current = audio;
     setIsSpeaking(true);
     audio.onended = () => setIsSpeaking(false);
@@ -211,11 +213,14 @@ export default function GeezNameCard() {
       ) : (
         <div className={styles.result} aria-hidden="true">
           <p key={example.geez} className={`${styles.geez} ${styles.example}`} lang="am">
-            {[...example.geez].map((glyph, index) => (
-              <span key={index} className={styles.letter} style={{ "--i": index } as CSSProperties}>
-                {glyph}
-              </span>
-            ))}
+            {/* One word, so the letters sit together like the visitor's own name. */}
+            <span className={styles.word}>
+              {[...example.geez].map((glyph, index) => (
+                <span key={index} className={styles.letter} style={{ "--i": index } as CSSProperties}>
+                  {glyph}
+                </span>
+              ))}
+            </span>
           </p>
           <p className={styles.typed}>{example.typed}</p>
         </div>
@@ -245,7 +250,7 @@ export default function GeezNameCard() {
                 <path d="M4 9.5h4l5-4v13l-5-4H4z" />
                 <path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11" />
               </svg>
-              {isSpeaking ? "Playing…" : "Hear it"}
+              {isSpeaking ? "Playing…" : playCount % 2 === 1 ? "Hear it slower" : "Hear it"}
             </button>
             <button type="button" onClick={share} disabled={isSharing}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
