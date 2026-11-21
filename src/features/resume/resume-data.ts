@@ -43,7 +43,7 @@ export const experience: TimelineEntry[] = [
     stack: ["React", "TypeScript", "Spring Boot", "Java", "JUnit", "Jest"],
     bullets: [
       "Worked on the existing internal employee directory, adding features and design updates in React and TypeScript.",
-      "Added Java/Spring Boot endpoints for phonebook search and profile updates and connected them to the front end.",
+      "Added Java/Spring Boot endpoints for phonebook search and profile updates and connected them to React.",
       "Added loading and error states, and wrote JUnit and Jest tests for the code I worked on.",
     ],
   },
