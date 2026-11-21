@@ -12,7 +12,7 @@ function formatTime(totalSeconds: number): string {
 
 // What the visitor sees in the card next to the music button: what the playlist is,
 // and, once the music is on, the current song with pause, skip and a seek slider.
-export default function MusicCard({ onClose }: { onClose: () => void }) {
+export default function MusicCard() {
   const music = useMusicPlayer();
   const { track } = music;
   const photo = track ? artistPhoto(track.artist) : null;
@@ -21,15 +21,7 @@ export default function MusicCard({ onClose }: { onClose: () => void }) {
 
   return (
     <div className={styles.card}>
-      <div className={styles.header}>
-        <p className={`display-heading ${styles.title}`}>ethio</p>
-        {/* Phones only: there is no pointer to move away, so the panel gets its own close button. */}
-        <button type="button" className={styles.close} onClick={onClose} aria-label="Close the music player">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            <path d="M6 6l12 12M18 6L6 18" />
-          </svg>
-        </button>
-      </div>
+      <p className={`display-heading ${styles.title}`}>ethio</p>
       <p className={styles.about}>
         My playlist of Ethiopian music: Aster Aweke, Gigi, Teddy Afro and more. These are the songs
         I grew up around, and they still take me back home.
@@ -103,10 +95,16 @@ export default function MusicCard({ onClose }: { onClose: () => void }) {
               <span aria-hidden="true"> ↗</span>
             </a>
           </p>
-          <p className={`muted ${styles.note}`}>30-second clips, shuffled. Press the note again to stop.</p>
+          <p className={`muted ${styles.note}`}>
+            30-second clips, shuffled.<span className={styles.desktopOnly}> Click the note again to stop.</span>
+          </p>
+          {/* Phones only: there the note button opens this player instead of stopping the music. */}
+          <button type="button" className={styles.stop} onClick={music.toggle}>
+            Stop the music
+          </button>
         </div>
       ) : (
-        <p className={`muted ${styles.note}`}>Press the note to play 30-second clips, shuffled.</p>
+        <p className={`muted ${styles.note}`}>Click the note to play 30-second clips, shuffled.</p>
       )}
     </div>
   );

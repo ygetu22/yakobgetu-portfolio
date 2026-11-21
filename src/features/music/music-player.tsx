@@ -88,6 +88,14 @@ export function MusicPlayerProvider({ children }: { children: ReactNode }) {
     }
     failedInARow.current = 0;
     setIsOn(true);
+
+    // Turning the music back on carries on with the song it stopped on, instead of a new one.
+    const audio = audioRef.current;
+    if (audio && track && audio.src && !audio.ended) {
+      setIsPaused(false);
+      play(audio);
+      return;
+    }
     playNext();
   }
 

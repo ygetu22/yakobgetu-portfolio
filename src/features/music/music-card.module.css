@@ -1,14 +1,8 @@
 .card { display: grid; gap: 8px; }
 
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .title { font-size: 22px; }
 
-.close { display: none; }
+.stop { display: none; }
 
 .about {
   color: var(--text);
@@ -142,38 +136,47 @@
 
 .note { font-size: 11px; }
 
-/* Phones: the card is a panel across the bottom of the screen (see side-controls.module.css),
-   so the controls get bigger for a thumb and the photo has more room. */
+/* Phones: the card fills a sheet (see phone-sheet.tsx), so the controls get bigger for a thumb,
+   the photo has more room, and a Stop button replaces "click the note again". */
 @media (max-width: 800px) {
-  .close {
-    display: grid;
-    place-items: center;
-    width: 36px;
-    height: 36px;
-    margin: -6px -6px 0 0;
-    border-radius: 50%;
+  .desktopOnly { display: none; }
+
+  .title { font-size: 28px; font-weight: 700; }
+
+  .about { font-size: 15px; line-height: 1.45; }
+
+  .story { padding-top: 110px; }
+
+  .photo { width: 200px; height: 200px; opacity: 0.6; }
+
+  .songTitle { font-size: 22px; font-weight: 600; }
+
+  .storyText { font-size: 14px; line-height: 1.5; }
+
+  .controls { gap: 12px; }
+
+  .control { width: 52px; height: 52px; }
+
+  .control svg { width: 18px; height: 18px; }
+
+  .slider { height: 28px; }
+
+  .time { font-size: 13px; }
+
+  .links { font-size: 15px; }
+
+  .note { font-size: 13px; }
+
+  .stop {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 13px;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--foreground) 7%, transparent);
+    font-size: 16px;
+    font-weight: 600;
+    color: #d0453a;
     cursor: pointer;
   }
-
-  .close svg { width: 16px; height: 16px; }
-
-  .title { font-size: 26px; }
-
-  .story { padding-top: 90px; }
-
-  .photo { width: 180px; height: 180px; }
-
-  .storyText { font-size: 13px; }
-
-  .controls { gap: 10px; }
-
-  .control { width: 48px; height: 48px; }
-
-  .control svg { width: 16px; height: 16px; }
-
-  .slider { height: 24px; }
-
-  .time { font-size: 12px; }
-
-  .note { font-size: 12px; }
 }
