@@ -3,6 +3,7 @@ import ReadAlong from "@/components/motion/read-along";
 import Reveal from "@/components/motion/reveal";
 import SectionHeading from "@/components/ui/section-heading";
 import ContactSection from "@/features/contact/contact-section";
+import PostList from "@/features/posts/post-list";
 import ProjectCards from "@/features/projects/project-cards";
 import ProjectIndex from "@/features/projects/project-index";
 import { FEATURED_PROJECT_COUNT, projects } from "@/features/projects/projects";
@@ -85,10 +86,7 @@ export default function Home() {
       <section id="posts" className="section" aria-labelledby="posts-title">
         <SectionHeading eyebrow="Writing" title="Posts" titleId="posts-title" />
         <Reveal>
-          <p className={styles.postsEmpty}>
-            Notes, updates, and writeups will live here.
-            <span className={styles.caret} aria-hidden="true" />
-          </p>
+          <PostList />
         </Reveal>
       </section>
 
