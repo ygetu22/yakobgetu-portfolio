@@ -3,6 +3,7 @@ import ReadAlong from "@/components/motion/read-along";
 import Reveal from "@/components/motion/reveal";
 import SectionHeading from "@/components/ui/section-heading";
 import ContactSection from "@/features/contact/contact-section";
+import GeezNameCard from "@/features/geez-name/geez-name-card";
 import PostList from "@/features/posts/post-list";
 import ProjectCards from "@/features/projects/project-cards";
 import ProjectIndex from "@/features/projects/project-index";
@@ -81,6 +82,13 @@ export default function Home() {
             </SiteLink>
           </p>
         </Reveal>
+      </section>
+
+      {/* Phones only for now; desktop keeps its current layout. */}
+      <section id="your-name" className="section phone-only" aria-labelledby="your-name-title">
+        <SectionHeading eyebrow="Try it" title="Your name in Ge'ez" titleId="your-name-title" />
+        <p className={styles.nameIntro}>Type your name and see it written the way Amharic writes it.</p>
+        <GeezNameCard />
       </section>
 
       <section id="posts" className="section" aria-labelledby="posts-title">

@@ -30,6 +30,11 @@
   font-size: 13px;
 }
 
+.nameIntro {
+  margin-bottom: 18px;
+  color: var(--text);
+}
+
 @media (hover: none) {
   .fadedNames { padding-left: 48px; }
 }
