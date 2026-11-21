@@ -56,6 +56,10 @@ Where things live in this repository and where a new change should go.
   (#f5f0e6) with a slow soft glow; dark mode is a warm near-black. The layout stays plain; the character comes from
   small interactions (letters that react to the pointer, Ge'ez letters in the background, hover cards
   that teach a little Amharic and history, a curtain between pages).
+- **Phones (800 px and narrower) get their own layout.** The top and bottom of the screen fade
+  so text never runs under the fixed buttons, the menu covers the whole screen, the theme,
+  letters and music buttons share one pill at the bottom, and their cards open as a panel across
+  the bottom instead of beside the button. Desktop is unaffected. Hover cards also open on tap.
 - **Motion is optional.** Every effect checks `prefersReducedMotion()` and the site works without it.
 - **Music** plays Spotify's 30-second preview clips with its own player instead of an embed: no
   Spotify login, no third-party scripts. Full songs are one click away on Spotify.
