@@ -234,6 +234,140 @@
   }
 }
 
+/* The skill group tabs exist only on phones. */
+.groupTabs { display: none; }
+
+/* Phones: education, jobs and roles sit on rounded panels like iOS grouped lists, the rows open
+   with a chevron, and skills show one group at a time as tiles picked from a row of tabs. */
+@media (max-width: 800px) {
+  .block { margin-top: 36px; }
+
+  .blockTitle {
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+
+  .blockTitle :global(.display-heading) { font-size: 22px; }
+
+  .education,
+  .entries {
+    padding: 0 16px;
+    border-radius: 16px;
+    background: var(--surface);
+  }
+
+  .education { padding-block: 14px; }
+
+  .school {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .honors { margin-top: 12px; }
+
+  .timeline { padding-left: 0; }
+
+  .timeline::before,
+  .timelineFill,
+  .timeline .entryHead::before { display: none; }
+
+  .entry:last-child { border-bottom: 0; }
+
+  .entries:hover .entry:not(:hover) { opacity: 1; }
+
+  .entryHead {
+    gap: 4px 12px;
+    padding: 14px 0;
+  }
+
+  .entryName {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .entryHead:hover .entryName { transform: none; }
+
+  .entryRole,
+  .entryWhen { font-size: 14px; }
+
+  .entrySign {
+    font-size: 0;
+    transition: none;
+  }
+
+  .entrySign::before {
+    content: "›";
+    display: inline-block;
+    font-size: 24px;
+    transition: rotate 0.3s var(--ease-out);
+  }
+
+  .open .entrySign { transform: none; }
+  .open .entrySign::before { rotate: 90deg; }
+
+  .entryStack { font-size: 13px; }
+
+  .entryBullets {
+    font-size: 15px;
+    padding-bottom: 16px;
+  }
+
+  .groupTabs {
+    display: flex;
+    gap: 8px;
+    margin: 0 -24px 12px;
+    padding: 2px 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .groupTabs::-webkit-scrollbar { display: none; }
+
+  .groupTabs button {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--foreground) 7%, transparent);
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--text);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .groupTabs [aria-selected="true"] {
+    background: var(--foreground);
+    color: var(--background);
+  }
+
+  .skillCaption {
+    min-height: 22px;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  .skillGroup:not([data-shown="true"]) { display: none; }
+
+  .skillGroup dt { display: none; }
+
+  .skillGroup dd {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .skillGroup dd > * {
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--surface);
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .linkedSkill:hover { transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .entryBody, .entrySign, .entryName, .linkedSkill { transition: none; }
 }
