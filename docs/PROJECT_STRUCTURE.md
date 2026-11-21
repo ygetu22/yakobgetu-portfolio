@@ -66,8 +66,9 @@ Where things live in this repository and where a new change should go.
   - The music note opens the player instead of stopping the song, and a "now playing" bar
     shows while music is on (`mini-player.tsx`).
   - "Your name in Ge'ez" (`src/features/geez-name`, phones only for now, right after About):
-    the server asks Google's Amharic keyboard for spellings and Google Translate's voice for the
-    sound (`google-spelling.ts`). Those are free but unofficial endpoints that can change, so the
+    the server asks Google Translate for the spelling (and Google's Amharic keyboard for the
+    Ethiopian names Translate leaves in English letters), and Translate's voice for the sound,
+    alternating normal and slow (`google-spelling.ts`). Those are free but unofficial endpoints that can change, so the
     site's own rules (`transliterate.ts`, tested) are always offered too and take over if Google
     fails. Names are passed through, never stored; only a count is kept (`/api/geez-names`).
     The share picture is drawn in the visitor's browser (`share-card.ts`).
