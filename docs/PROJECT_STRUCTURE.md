@@ -56,10 +56,29 @@ Where things live in this repository and where a new change should go.
   (#f5f0e6) with a slow soft glow; dark mode is a warm near-black. The layout stays plain; the character comes from
   small interactions (letters that react to the pointer, Ge'ez letters in the background, hover cards
   that teach a little Amharic and history, a curtain between pages).
+- **Phones (800 px and narrower) get their own iOS-style layout.** Desktop is unaffected.
+  - Apple's system font, large bold titles, and content on rounded panels (`--surface`), like
+    iOS grouped lists ("Phone look" in `site.css`, plus a phone block in each feature's CSS).
+  - Projects are cards with a small looping animation each (`project-cards.tsx`,
+    `project-scenes.tsx`), drawn in HTML and CSS rather than GIFs.
+  - The menu is frosted glass over the page. Theme, letters and music share one pill at the
+    bottom; the letters and music open as sheets from the bottom (`phone-sheet.tsx`).
+  - The music note opens the player instead of stopping the song, and a "now playing" bar
+    shows while music is on (`mini-player.tsx`).
+  - "Your name in Ge'ez" (`src/features/geez-name`, phones only for now, right after About):
+    the server asks Google Translate for the spelling (and Google's Amharic keyboard for the
+    Ethiopian names Translate leaves in English letters), and Translate's voice for the sound,
+    alternating normal and slow (`google-spelling.ts`). Those are free but unofficial endpoints that can change, so the
+    site's own rules (`transliterate.ts`, tested) are always offered too and take over if Google
+    fails. Names are passed through, never stored; only a count is kept (`/api/geez-names`).
+    The share picture is drawn in the visitor's browser (`share-card.ts`).
+  - `.phone-only` / `.desktop-only` in `site.css` switch between the two layouts, and
+    `useIsPhone()` does the same in components.
 - **Motion is optional.** Every effect checks `prefersReducedMotion()` and the site works without it.
 - **Music** plays Spotify's 30-second preview clips with its own player instead of an embed: no
   Spotify login, no third-party scripts. Full songs are one click away on Spotify.
-- **No database.** The contact form emails me. See [CONTACT_FORM.md](CONTACT_FORM.md).
+- **One small database.** Only post likes and comments are stored (Upstash Redis, free plan).
+  The contact form just emails me. See [POSTS.md](POSTS.md) and [CONTACT_FORM.md](CONTACT_FORM.md).
 - **Honest content.** Project pages describe what each project actually does, including what was
   not finished (Gradient). Song notes and artist links name their source.
 

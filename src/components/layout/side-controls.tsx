@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useId } from "react";
+import { useCallback, useId, useState } from "react";
 import { toggleGlyphs, useGlyphsVisible } from "@/components/culture/glyph-visibility";
 import { LessonContent } from "@/components/culture/learn";
 import { lessons } from "@/components/culture/lessons";
@@ -10,7 +10,10 @@ import { prefersReducedMotion } from "@/components/motion/scroll-frame";
 import { useInterfaceSound } from "@/components/providers/interface-sounds";
 import { useHoverCard } from "@/components/ui/hover-card";
 import cardStyles from "@/components/ui/hover-card.module.css";
+import PhoneSheet from "@/components/ui/phone-sheet";
+import { useIsPhone } from "@/components/ui/use-is-phone";
 import { useIsInBrowser } from "@/components/ui/use-is-in-browser";
+import MiniPlayer from "@/features/music/mini-player";
 import MusicCard from "@/features/music/music-card";
 import { useMusicPlayer } from "@/features/music/music-player";
 import styles from "./side-controls.module.css";
@@ -80,12 +83,20 @@ function ThemeButton() {
 
 // Clicking only switches the background letters on and off.
 // Pointing at the button (or focusing it) shows what the letters are.
+// On phones a tap opens a sheet with the same lesson and a switch for the letters.
 function FidelButton() {
   const buttonRef = useMagnetic<HTMLButtonElement>();
   const { isOpen, open, setAnchor, setCard, hoverProps } = useHoverCard("beside");
   const cardId = useId();
   const areVisible = useGlyphsVisible();
   const playSound = useInterfaceSound();
+  const isPhone = useIsPhone();
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const closeSheet = useCallback(() => setIsSheetOpen(false), []);
+
+  function switchLetters() {
+    playSound(toggleGlyphs() ? "background-on" : "background-off");
+  }
 
   return (
     <>
@@ -96,11 +107,11 @@ function FidelButton() {
           className="round-button"
           aria-pressed={areVisible}
           aria-label="Ge'ez letters in the background"
-          aria-describedby={cardId}
-          onClick={() => playSound(toggleGlyphs() ? "background-on" : "background-off")}
-          // Touch screens have no hover, so a tap also shows the card.
+          aria-describedby={isPhone ? undefined : cardId}
+          onClick={isPhone ? () => setIsSheetOpen(true) : switchLetters}
+          // Touch screens wider than a phone have no hover, so a tap also shows the card.
           onPointerUp={(event) => {
-            if (event.pointerType !== "mouse") open();
+            if (!isPhone && event.pointerType !== "mouse") open();
           }}
         >
           <span lang="am" aria-hidden="true">
@@ -108,29 +119,52 @@ function FidelButton() {
           </span>
         </button>
       </span>
-      <div
-        ref={setCard}
-        id={cardId}
-        className={cardStyles.card}
-        role="note"
-        hidden={!isOpen}
-        {...hoverProps}
-      >
-        <LessonContent lesson={lessons.fidel} />
-        <p className={`muted ${styles.cardHint}`}>
-          {areVisible ? "Click ሀ to hide the letters." : "Click ሀ to show the letters."}
-        </p>
-      </div>
+
+      {isPhone ? (
+        <PhoneSheet isOpen={isSheetOpen} onClose={closeSheet} label="Ge'ez letters">
+          <LessonContent lesson={lessons.fidel} />
+          <label className={styles.switchRow}>
+            Letters in the background
+            <input type="checkbox" role="switch" checked={areVisible} onChange={switchLetters} />
+          </label>
+        </PhoneSheet>
+      ) : (
+        <div
+          ref={setCard}
+          id={cardId}
+          className={cardStyles.card}
+          role="note"
+          hidden={!isOpen}
+          {...hoverProps}
+        >
+          <LessonContent lesson={lessons.fidel} />
+          <p className={`muted ${styles.cardHint}`}>
+            {areVisible ? "Click ሀ to hide the letters." : "Click ሀ to show the letters."}
+          </p>
+        </div>
+      )}
     </>
   );
 }
 
 // Clicking only starts and stops the music. Pointing at the button shows the player.
-function MusicButton() {
+// On phones a tap starts the music if it is off and opens the player as a sheet; it never
+// stops or skips the current song (the player has its own controls for that).
+function MusicButton({ onOpenSheet }: { onOpenSheet: () => void }) {
   const buttonRef = useMagnetic<HTMLButtonElement>();
   const { isOpen, open, close, setAnchor, setCard, hoverProps } = useHoverCard("beside");
   const cardId = useId();
   const music = useMusicPlayer();
+  const isPhone = useIsPhone();
+
+  function handleClick() {
+    if (!isPhone) {
+      music.toggle();
+      return;
+    }
+    if (!music.isOn) music.toggle();
+    onOpenSheet();
+  }
 
   return (
     <>
@@ -141,11 +175,11 @@ function MusicButton() {
           className="round-button"
           aria-pressed={music.isOn}
           aria-label="Music from my Ethiopian playlist"
-          aria-describedby={cardId}
-          onClick={music.toggle}
+          aria-describedby={isPhone ? undefined : cardId}
+          onClick={handleClick}
           onPointerUp={(event) => {
-            // On touch screens the player shows when the music starts and hides when it stops.
-            if (event.pointerType === "mouse") return;
+            // On touch screens wider than a phone, the player shows when the music starts and hides when it stops.
+            if (isPhone || event.pointerType === "mouse") return;
             if (music.isOn) close();
             else open();
           }}
@@ -165,28 +199,47 @@ function MusicButton() {
           </svg>
         </button>
       </span>
-      <div
-        ref={setCard}
-        id={cardId}
-        className={cardStyles.card}
-        role="group"
-        aria-label="Music player"
-        hidden={!isOpen}
-        {...hoverProps}
-      >
-        <MusicCard />
-      </div>
+      {!isPhone && (
+        <div
+          ref={setCard}
+          id={cardId}
+          className={cardStyles.card}
+          role="group"
+          aria-label="Music player"
+          hidden={!isOpen}
+          {...hoverProps}
+        >
+          <MusicCard />
+        </div>
+      )}
     </>
   );
 }
 
-// Theme, letters and music: a column on the left edge (a row at the bottom on phones).
+// Theme, letters and music: a column on the left edge (one pill at the bottom on phones).
+// On phones the music player also has a small "now playing" bar and opens as a sheet.
 export default function SideControls() {
+  const isPhone = useIsPhone();
+  const [isPlayerOpen, setIsPlayerOpen] = useState(false);
+  const openPlayer = useCallback(() => setIsPlayerOpen(true), []);
+  const closePlayer = useCallback(() => setIsPlayerOpen(false), []);
+
   return (
-    <div className={styles.controls} role="group" aria-label="Site settings">
-      <ThemeButton />
-      <FidelButton />
-      <MusicButton />
-    </div>
+    <>
+      <div className={styles.phoneBand} aria-hidden="true" />
+      <div className={styles.controls} role="group" aria-label="Site settings">
+        <ThemeButton />
+        <FidelButton />
+        <MusicButton onOpenSheet={openPlayer} />
+      </div>
+      {isPhone && (
+        <>
+          {!isPlayerOpen && <MiniPlayer onOpen={openPlayer} />}
+          <PhoneSheet isOpen={isPlayerOpen} onClose={closePlayer} label="Music player">
+            <MusicCard onStop={closePlayer} />
+          </PhoneSheet>
+        </>
+      )}
+    </>
   );
 }

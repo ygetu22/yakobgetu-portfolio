@@ -1,0 +1,77 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 0.32);
+  animation: fade-in 0.3s ease;
+}
+
+.panel {
+  position: absolute;
+  right: 8px;
+  bottom: calc(8px + env(safe-area-inset-bottom));
+  left: 8px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  max-height: calc(100dvh - 64px);
+  border-radius: 28px;
+  background: var(--surface);
+  box-shadow: 0 -10px 40px -12px rgb(0 0 0 / 0.35);
+  outline: none;
+  animation: slide-up 0.42s var(--ease-out);
+  transition: translate 0.25s var(--ease-out);
+}
+
+/* The grabber, with Done at the right. Dragging here pulls the sheet down. */
+.handleArea {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 16px 0;
+  touch-action: none;
+}
+
+.handle {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 38px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--edge);
+  translate: -50% 0;
+}
+
+.done {
+  padding: 8px 4px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 20px 22px;
+}
+
+/* Set on <html> while a sheet is open, so the page behind stays put. */
+.locked { overflow: hidden; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes slide-up {
+  from { translate: 0 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop, .panel { animation: none; }
+}

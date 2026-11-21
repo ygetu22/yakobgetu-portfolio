@@ -1,0 +1,109 @@
+.cards { display: grid; gap: 14px; }
+
+/* Home: one row of cards that snaps into place as it is swiped, running to the screen edges. */
+.row {
+  grid-auto-flow: column;
+  grid-auto-columns: 82%;
+  margin: 0 -24px;
+  padding: 4px 24px 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 24px;
+  scrollbar-width: none;
+}
+
+.row::-webkit-scrollbar { display: none; }
+
+.row li { scroll-snap-align: start; }
+
+.column { gap: 18px; }
+
+.card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: 0 12px 30px -22px rgb(0 0 0 / 0.45);
+  transition: scale 0.2s var(--ease-out);
+}
+
+/* Pressing a card sinks it slightly, like a button on iOS. */
+.card:active { scale: 0.98; }
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px 16px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.name {
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.year {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--soft);
+}
+
+.kind {
+  font-size: 13px;
+  color: var(--soft);
+}
+
+/* Three lines at most, so every card in the row is the same height. */
+.summary {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--text);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.stack span {
+  padding: 3px 8px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--foreground) 6%, transparent);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--soft);
+}
+
+.open {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.open span { margin-left: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+}

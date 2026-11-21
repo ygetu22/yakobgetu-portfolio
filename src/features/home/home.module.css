@@ -30,28 +30,20 @@
   font-size: 13px;
 }
 
-/* ---------- Posts ---------- */
-
-.postsEmpty { color: var(--text); }
-
-.caret {
-  display: inline-block;
-  width: 8px;
-  height: 1.1em;
-  margin-left: 6px;
-  vertical-align: text-bottom;
-  background: var(--foreground);
-  animation: blink 1.1s steps(1) infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
 @media (hover: none) {
   .fadedNames { padding-left: 48px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .caret { animation: none; }
+/* Phones show the project cards instead, so the faded names go and the button sits under the cards. */
+@media (max-width: 800px) {
+  .about { gap: 18px; }
+
+  .fadedNames { display: none; }
+
+  .moreProjects { padding-top: 0; }
+
+  .moreProjects :global(.pill) {
+    margin-top: 0;
+    font-size: 15px;
+  }
 }

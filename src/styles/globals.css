@@ -11,12 +11,15 @@
   --glow-warm: #fbf8f1;
   --glow-deep: #ebe1cf;
   --soft-strength: 62%;
+  /* Raised panels on phones (cards, grouped lists, sheets). */
+  --surface: #fffdf8;
 }
 
 .dark {
   --background: #1b1813;
   --foreground: #e8e0d1;
   --soft-strength: 50%;
+  --surface: #27231d;
 }
 
 :root {

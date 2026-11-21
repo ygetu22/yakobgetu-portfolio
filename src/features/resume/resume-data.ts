@@ -28,9 +28,9 @@ export const experience: TimelineEntry[] = [
     date: "Jun 2026 – Aug 2026",
     stack: ["Playwright", "Gherkin", "BDD", "CI/CD"],
     bullets: [
-      "Authored 200+ Playwright regression scenarios for the first 2 of 12 planned core user flows.",
-      "Wrote the scenarios in Gherkin BDD so QA and product partners could review the expected behavior.",
-      "Submitted the scenarios through pull requests and prepared the suite for CI/CD pipeline integration.",
+      "Wrote 200+ Playwright regression scenarios covering the first 2 of 12 planned core user flows.",
+      "Wrote them in Gherkin (BDD) so QA and product partners could read and review the expected behavior.",
+      "Opened pull requests for team review and helped get the suite ready to run in the CI/CD pipeline.",
     ],
   },
   {
@@ -42,9 +42,9 @@ export const experience: TimelineEntry[] = [
     date: "Jun 2025 – Aug 2025",
     stack: ["React", "TypeScript", "Spring Boot", "Java", "JUnit", "Jest"],
     bullets: [
-      "Rebuilt the internal employee directory in React and TypeScript, splitting the interface into reusable components.",
-      "Built Java/Spring Boot REST endpoints for phonebook search and profile updates, wiring them into React.",
-      "Added loading and error handling and wrote JUnit and Jest tests for the new endpoints and components.",
+      "Worked on the existing internal employee directory, adding features and design updates in React and TypeScript.",
+      "Added Java/Spring Boot endpoints for phonebook search and profile updates and connected them to React.",
+      "Added loading and error states, and wrote JUnit and Jest tests for the code I worked on.",
     ],
   },
   {
@@ -56,11 +56,11 @@ export const experience: TimelineEntry[] = [
     date: "May 2024 – Aug 2024",
     stack: ["Java", "AWS", "CDK", "Brazil", "CI/CD", "Microservices"],
     bullets: [
-      "Helped migrate the Devices Sales Page's post-purchase carousel to a microservice architecture.",
-      "Built 3 core service packages in Java on AWS powering customer-facing post-purchase features.",
-      "Set up an independent AWS CDK deployment pipeline for the new services, enabling zero-downtime releases.",
-      "Added CloudWatch dashboards and alerts on latency and error rates, cutting time spent triaging issues.",
-      "Guarded new services behind runtime flags with fallbacks, so releases rolled back without a redeploy.",
+      "Helped move the Devices Sales Page's post-purchase carousel to a microservice architecture.",
+      "Worked on 3 Java service packages on AWS behind customer-facing post-purchase features.",
+      "Set up an AWS CDK pipeline so the new services could deploy on their own.",
+      "Added CloudWatch dashboards and alarms for latency and errors to make problems easier to spot.",
+      "Put new features behind runtime flags with fallbacks so they could be switched off without a redeploy.",
     ],
   },
 ];
@@ -81,6 +81,10 @@ export const otherSkillUses = [
   { label: "Fruitful", stack: ["SQL", "Git", "Claude Code", "Codex"] },
   { label: "Trace", stack: ["Git", "Claude Code", "Codex"] },
   { label: "Gradient", stack: ["JavaScript", "HTML/CSS", "Git"] },
+  // My resume itself is written in LaTeX.
+  { label: "My resume", stack: ["LaTeX"] },
+  // Used in school and my own work, but not in anything shown on this site.
+  { label: "Work outside this site", stack: ["Bash", "LLM APIs"] },
 ];
 
 export const leadership: TimelineEntry[] = [
@@ -91,8 +95,7 @@ export const leadership: TimelineEntry[] = [
     location: "Remote",
     date: "Feb 2025 – Present",
     bullets: [
-      "Selected for a competitive national course focused on Python-based technical interviews.",
-      "Solve data structures and algorithms problems weekly, sharpening debugging and peer review skills.",
+      "Practicing data structures and algorithms in Python each week through CodePath's interview prep course, and reviewing other students' solutions.",
     ],
   },
   {
@@ -102,8 +105,7 @@ export const leadership: TimelineEntry[] = [
     location: "Washington, DC",
     date: "Nov 2024 – Present",
     bullets: [
-      "Selected from thousands for an 18-month program led by Deloitte, LinkedIn, and Bloomberg.",
-      "Completed business case studies and cohort projects strengthening leadership and communication.",
+      "Part of MLT Career Prep, an 18-month program with coaching, business case studies and cohort projects.",
     ],
   },
   {
@@ -113,9 +115,8 @@ export const leadership: TimelineEntry[] = [
     location: "Columbus, OH",
     date: "Aug 2023 – May 2024",
     bullets: [
-      "Led a team of 6 engineers and designers building software for the Ohio State community.",
-      "Ran sprint planning and translated the roadmap into two-week cycles with clear owners and deadlines.",
-      "Scoped requirements with club stakeholders and demoed working builds at the end of each cycle.",
+      "Managed a team of 6 student engineers and designers building software for Ohio State clubs.",
+      "Ran two-week sprints, kept track of who owned what, and demoed progress to the clubs at the end of each cycle.",
     ],
   },
   {
@@ -125,7 +126,7 @@ export const leadership: TimelineEntry[] = [
     location: "Columbus, OH",
     date: "Sep 2023 – Mar 2024",
     bullets: [
-      "Taught hands-on science lessons to 15+ elementary students through OSU's Honors & Scholars outreach program.",
+      "Helped run hands-on science activities for elementary students through OSU's Honors & Scholars outreach.",
     ],
   },
 ];

@@ -84,3 +84,60 @@
 @media (hover: none) {
   .shortcutHint { display: none; }
 }
+
+/* Phones: a large bold name, and the three facts on one rounded panel like an iOS settings group. */
+@media (max-width: 800px) {
+  .hero {
+    gap: 28px;
+    min-height: auto;
+    padding: 104px 24px 32px;
+  }
+
+  .fidelName {
+    font-size: 17px;
+    color: var(--soft);
+  }
+
+  .name {
+    margin-top: 2px;
+    font-size: 46px;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+
+  .facts {
+    max-width: none;
+    margin-top: 22px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 16px;
+    background: var(--surface);
+  }
+
+  .facts div {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 16px;
+    padding: 13px 0;
+  }
+
+  .facts div:last-child { border-bottom: 0; }
+
+  .facts dt {
+    font-size: 16px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--foreground);
+  }
+
+  .facts dd {
+    text-align: right;
+    color: var(--soft);
+  }
+
+  .hint {
+    margin-top: 18px;
+    font-size: 14px;
+  }
+
+  .portrait { border-radius: 28px; }
+}

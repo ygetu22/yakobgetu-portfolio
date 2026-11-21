@@ -1,7 +1,8 @@
 # Contact form
 
 `POST /api/contact` emails me when someone sends the contact form, with Reply going to their
-address. There is no database.
+address. Messages are not stored anywhere. The same email setup also tells me about new post
+comments (see [POSTS.md](POSTS.md)).
 
 (The old photo journal also emailed me likes and comments. It is being reworked and is saved on
 the local branch `elsewhere-journal-v1`.)

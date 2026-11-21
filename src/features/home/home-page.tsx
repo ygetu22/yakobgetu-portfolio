@@ -3,6 +3,9 @@ import ReadAlong from "@/components/motion/read-along";
 import Reveal from "@/components/motion/reveal";
 import SectionHeading from "@/components/ui/section-heading";
 import ContactSection from "@/features/contact/contact-section";
+import GeezNameCard from "@/features/geez-name/geez-name-card";
+import PostList from "@/features/posts/post-list";
+import ProjectCards from "@/features/projects/project-cards";
 import ProjectIndex from "@/features/projects/project-index";
 import { FEATURED_PROJECT_COUNT, projects } from "@/features/projects/projects";
 import ResumeBlocks, { DownloadResumeLink } from "@/features/resume/resume-blocks";
@@ -13,8 +16,8 @@ import lifeStyles from "./life.module.css";
 import styles from "./home.module.css";
 
 const aboutParagraphs = [
-  "I'm a Computer Science and Engineering student at Ohio State, graduating in May 2027. I've completed three software engineering internships, and I'm looking for a spring 2027 co-op and new-grad roles.",
-  "On my own time I like building things. A few of them are further down this page.",
+  "I'm Yakob. I study computer science at Ohio State and live in Columbus.",
+  "Outside of class I'm usually building something, taking pictures on my Fujifilm, or listening to Ethiopian music. I travel when I can, and most of what I make ends up on this page.",
 ];
 
 const featuredProjects = projects.slice(0, FEATURED_PROJECT_COUNT);
@@ -34,6 +37,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Right after About, so visitors meet it early. Phones only for now; desktop keeps its layout. */}
+      <section id="your-name" className="section phone-only" aria-labelledby="your-name-title">
+        <Reveal>
+          <GeezNameCard />
+        </Reveal>
+      </section>
+
       <section id="resume" className="section" aria-labelledby="resume-title">
         <SectionHeading
           eyebrow="Experience"
@@ -46,9 +56,12 @@ export default function Home() {
 
       <section id="projects" className="section" aria-labelledby="projects-title">
         <SectionHeading eyebrow="Work" title="Projects" titleId="projects-title" />
-        <Reveal>
+        <Reveal className="desktop-only">
           <ProjectIndex projects={featuredProjects} />
         </Reveal>
+        <div className="phone-only">
+          <ProjectCards projects={featuredProjects} layout="row" />
+        </div>
 
         {/* The remaining projects are only hinted at here; the Projects page lists every one. */}
         <Reveal className={styles.moreProjects}>
@@ -67,7 +80,7 @@ export default function Home() {
 
       <section id="life" className="section" aria-labelledby="life-title">
         <SectionHeading eyebrow="Outside of work" title="Life" titleId="life-title" />
-        <ReadAlong text="Travel, memories, and everyday life. I take a camera with me most places." />
+        <ReadAlong text="Places I've been and everyday moments, some shot on my Fujifilm X-M5." />
         <Reveal>
           <LifeStrip photos={lifePhotos} />
           <p className={`muted ${lifeStyles.note}`}>
@@ -81,10 +94,7 @@ export default function Home() {
       <section id="posts" className="section" aria-labelledby="posts-title">
         <SectionHeading eyebrow="Writing" title="Posts" titleId="posts-title" />
         <Reveal>
-          <p className={styles.postsEmpty}>
-            Notes, updates, and writeups will live here.
-            <span className={styles.caret} aria-hidden="true" />
-          </p>
+          <PostList />
         </Reveal>
       </section>
 

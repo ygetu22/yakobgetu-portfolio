@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SiteLink } from "@/components/layout/page-curtain";
 import Reveal from "@/components/motion/reveal";
 import WeightLetters from "@/components/motion/weight-letters";
+import ProjectCards from "@/features/projects/project-cards";
 import ProjectIndex from "@/features/projects/project-index";
 import { projects } from "@/features/projects/projects";
 
@@ -22,9 +23,12 @@ export default function ProjectsPage() {
       <p className="muted" style={{ margin: "24px 0 40px" }}>
         {projects.length} projects so far.
       </p>
-      <Reveal>
+      <Reveal className="desktop-only">
         <ProjectIndex projects={projects} />
       </Reveal>
+      <div className="phone-only">
+        <ProjectCards projects={projects} layout="column" />
+      </div>
     </section>
   );
 }

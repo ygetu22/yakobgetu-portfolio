@@ -8,6 +8,7 @@ import WeightLetters from "@/components/motion/weight-letters";
 import SectionHeading from "@/components/ui/section-heading";
 import ProjectSteps from "./project-steps";
 import { projects, type Project } from "./projects";
+import ProjectScene from "./project-scenes";
 import styles from "./project-page.module.css";
 
 function Fact({ label, children }: { label: string; children: ReactNode }) {
@@ -76,7 +77,7 @@ export default function ProjectPage({ project, children }: ProjectPageProps) {
 
         <Reveal>
           {/* Decorative: a picture of the project's card. Everything it shows is in the text beside it. */}
-          <Tilt className={styles.artwork}>
+          <Tilt className={`desktop-only ${styles.artwork}`}>
             <Image
               className={styles.lightArt}
               src={`/projects/${project.id}/preview-light.png`}
@@ -94,6 +95,10 @@ export default function ProjectPage({ project, children }: ProjectPageProps) {
               sizes="(max-width: 800px) 100vw, 560px"
             />
           </Tilt>
+          {/* Phones show the project's looping animation instead (the same one as on its card). */}
+          <div className={`phone-only ${styles.phoneScene}`} aria-hidden="true">
+            <ProjectScene projectId={project.id} />
+          </div>
         </Reveal>
       </section>
 

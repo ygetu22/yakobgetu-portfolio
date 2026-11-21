@@ -42,8 +42,37 @@
   font-size: 12px;
 }
 
+/* Phones: every photo is the same size and the captions stay on one line, so the gaps between
+   photos are even. The row snaps to a photo after each swipe and runs to the screen edges. */
 @media (max-width: 800px) {
-  .photo img { height: 240px; }
+  .window {
+    margin: 24px -24px 0;
+    padding: 0 24px 4px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 24px;
+  }
+
+  .strip { gap: 12px; }
+
+  .strip li { scroll-snap-align: start; }
+
+  .photo { width: 64vw; }
+
+  .photo img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 20px;
+  }
+
+  .photo figcaption {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 13px;
+    letter-spacing: 0;
+  }
 }
 
 /* No pointer-driven sliding here, so the row scrolls by hand and the photos keep their colour. */

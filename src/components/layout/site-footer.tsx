@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Learn from "@/components/culture/learn";
 import { tibebBand } from "@/components/culture/tibeb";
 import Reveal from "@/components/motion/reveal";
@@ -13,13 +13,37 @@ const bandStyle = {
   "--tibeb-height": `${tibebBand.height}px`,
 } as CSSProperties;
 
+const COLUMBUS_TIME_ZONE = "America/New_York";
+
 // Today's month and year in the Western calendar, for Columbus.
-function columbusDate(): string {
-  return new Date().toLocaleDateString("en-US", {
-    timeZone: "America/New_York",
-    month: "long",
-    year: "numeric",
-  });
+function columbusDate(now: Date): string {
+  return now.toLocaleDateString("en-US", { timeZone: COLUMBUS_TIME_ZONE, month: "long", year: "numeric" });
+}
+
+function clockTime(now: Date, timeZone?: string): string {
+  return now.toLocaleTimeString("en-US", { timeZone, hour: "numeric", minute: "2-digit" });
+}
+
+// The visitor's own time, or null when they are in Columbus's time zone anyway.
+function visitorTime(now: Date): string | null {
+  const theirs = clockTime(now);
+  return theirs === clockTime(now, COLUMBUS_TIME_ZONE) ? null : theirs;
+}
+
+// The current minute, refreshed every 20 seconds so the clocks stay right.
+function useNow(isInBrowser: boolean): Date | null {
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => {
+    if (!isInBrowser) return;
+    const tick = () => setNow(new Date());
+    const timer = window.setInterval(tick, 20_000);
+    const first = window.setTimeout(tick, 0);
+    return () => {
+      window.clearInterval(timer);
+      window.clearTimeout(first);
+    };
+  }, [isInBrowser]);
+  return now;
 }
 
 // The same day in the Ethiopian calendar, written in Amharic. Null if the browser lacks that calendar.
@@ -41,8 +65,9 @@ function ethiopianDate(): string | null {
 export default function SiteFooter() {
   // Dates depend on the visitor's clock, so they are filled in once the page runs in the browser.
   const isInBrowser = useIsInBrowser();
-  const westernDate = isInBrowser ? columbusDate() : null;
+  const now = useNow(isInBrowser);
   const amharicDate = isInBrowser ? ethiopianDate() : null;
+  const theirTime = now ? visitorTime(now) : null;
 
   return (
     <footer className={styles.footer}>
@@ -53,9 +78,12 @@ export default function SiteFooter() {
       </Reveal>
 
       <div className={styles.meta}>
-        <p>
-          <span className="muted">Columbus</span> {westernDate}
-        </p>
+        {now && (
+          <p>
+            <span className="muted">Columbus</span> {clockTime(now, COLUMBUS_TIME_ZONE)} · {columbusDate(now)}
+            {theirTime && <span className="muted"> · {theirTime} where you are</span>}
+          </p>
+        )}
         {amharicDate && (
           <Learn lesson="calendar" as="p">
             <span className="muted" lang="am">
