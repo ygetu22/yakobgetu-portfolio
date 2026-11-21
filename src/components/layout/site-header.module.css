@@ -141,18 +141,64 @@
 
 .links .current { border-bottom-color: var(--foreground); }
 
-@media (max-width: 800px) {
-  .wordmark { left: 24px; }
-  .nav { right: 24px; }
+/* Phones: page text scrolls under the wordmark and menu, so the top of the screen gets a soft
+   frosted band, and the menu opens over the whole screen with large links. */
+.phoneBand { display: none; }
 
-  /* On a narrow screen the open menu sits over the page, so it gets its own backing. */
-  .links ul {
-    margin-top: 8px;
-    padding: 0 14px 12px;
-    border-radius: 16px;
-    background: color-mix(in srgb, var(--background) 92%, transparent);
-    backdrop-filter: blur(8px);
+@media (max-width: 800px) {
+  .wordmark { top: 30px; left: 20px; }
+  .nav { top: 22px; right: 16px; }
+
+  .phoneBand {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 4;
+    display: block;
+    height: 92px;
+    background: linear-gradient(var(--background) 45%, transparent);
+    pointer-events: none;
   }
+
+  /* Above the full-screen menu, so the button that closes it stays in place. */
+  .bar {
+    position: relative;
+    z-index: 1;
+  }
+
+  .barButton { height: 38px; min-width: 38px; }
+
+  .links {
+    position: fixed;
+    inset: 0;
+    grid-template-rows: 1fr;
+    padding: 110px 28px 40px;
+    background: var(--background);
+    opacity: 0;
+    transition: opacity 0.35s ease, visibility 0s 0.35s;
+  }
+
+  .open .links { opacity: 1; }
+
+  .links ul {
+    align-content: start;
+    justify-items: start;
+    gap: 4px;
+  }
+
+  .links li:first-child { margin-top: 0; }
+
+  .links a {
+    display: block;
+    padding: 8px 0;
+    font-family: var(--font-display), sans-serif;
+    font-size: 34px;
+    letter-spacing: -0.01em;
+  }
+
+  .links .current { border-bottom-color: transparent; }
+
+  /* The page behind the open menu stays still. */
+  :global(html):has(.open) { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
