@@ -132,3 +132,87 @@
 
   .fact { grid-template-columns: 90px minmax(0, 1fr); }
 }
+
+/* Phones: the animation comes first, then the facts and the "what it does" list on rounded
+   panels like iOS grouped lists, and the next project as a card. */
+@media (max-width: 800px) {
+  .overview { gap: 20px; }
+
+  .overview > :last-child { order: -1; }
+
+  .phoneScene {
+    overflow: hidden;
+    border-radius: 22px;
+  }
+
+  .overview dl {
+    padding: 0 16px;
+    border-radius: 16px;
+    background: var(--surface);
+  }
+
+  .fact {
+    gap: 12px;
+    padding: 13px 0;
+  }
+
+  .fact:first-child { border-top: 0; }
+  .fact:last-child { border-bottom: 0; }
+
+  .fact dt {
+    padding-top: 0;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--soft);
+  }
+
+  .fact dd { font-size: 15px; }
+
+  .highlights {
+    padding: 0 16px;
+    border-radius: 16px;
+    background: var(--surface);
+  }
+
+  .highlights li {
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 10px;
+    padding: 14px 0;
+  }
+
+  .highlights li:last-child { border-bottom: 0; }
+
+  .highlights:hover li:not(:hover) { opacity: 1; }
+
+  .highlights :global(.display-heading) {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .highlights li:hover :global(.display-heading) { transform: none; }
+
+  .next {
+    padding: 20px;
+    border: 0;
+    border-radius: 22px;
+    background: var(--surface);
+  }
+
+  .nextName {
+    font-size: 40px;
+    font-variation-settings: normal;
+  }
+
+  .next:hover .nextName {
+    font-style: normal;
+    transform: none;
+  }
+
+  .nextKind {
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}

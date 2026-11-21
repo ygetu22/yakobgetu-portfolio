@@ -52,6 +52,18 @@
   .fadedNames { padding-left: 48px; }
 }
 
+/* Phones show the project cards instead, so the faded names go and the button sits under the cards. */
+@media (max-width: 800px) {
+  .fadedNames { display: none; }
+
+  .moreProjects { padding-top: 0; }
+
+  .moreProjects :global(.pill) {
+    margin-top: 0;
+    font-size: 15px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .caret { animation: none; }
 }

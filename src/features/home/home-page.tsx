@@ -3,6 +3,7 @@ import ReadAlong from "@/components/motion/read-along";
 import Reveal from "@/components/motion/reveal";
 import SectionHeading from "@/components/ui/section-heading";
 import ContactSection from "@/features/contact/contact-section";
+import ProjectCards from "@/features/projects/project-cards";
 import ProjectIndex from "@/features/projects/project-index";
 import { FEATURED_PROJECT_COUNT, projects } from "@/features/projects/projects";
 import ResumeBlocks, { DownloadResumeLink } from "@/features/resume/resume-blocks";
@@ -46,9 +47,12 @@ export default function Home() {
 
       <section id="projects" className="section" aria-labelledby="projects-title">
         <SectionHeading eyebrow="Work" title="Projects" titleId="projects-title" />
-        <Reveal>
+        <Reveal className="desktop-only">
           <ProjectIndex projects={featuredProjects} />
         </Reveal>
+        <div className="phone-only">
+          <ProjectCards projects={featuredProjects} layout="row" />
+        </div>
 
         {/* The remaining projects are only hinted at here; the Projects page lists every one. */}
         <Reveal className={styles.moreProjects}>
