@@ -70,7 +70,8 @@ Where things live in this repository and where a new change should go.
 - **Motion is optional.** Every effect checks `prefersReducedMotion()` and the site works without it.
 - **Music** plays Spotify's 30-second preview clips with its own player instead of an embed: no
   Spotify login, no third-party scripts. Full songs are one click away on Spotify.
-- **No database.** The contact form emails me. See [CONTACT_FORM.md](CONTACT_FORM.md).
+- **One small database.** Only post likes and comments are stored (Upstash Redis, free plan).
+  The contact form just emails me. See [POSTS.md](POSTS.md) and [CONTACT_FORM.md](CONTACT_FORM.md).
 - **Honest content.** Project pages describe what each project actually does, including what was
   not finished (Gradient). Song notes and artist links name their source.
 

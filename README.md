@@ -29,6 +29,12 @@ The contact form emails me through [Resend](https://resend.com).
 Copy `.env.example` to `.env.local` and add a key to switch it on. Without a key the site still
 runs and the form asks visitors to email instead. Details: [docs/CONTACT_FORM.md](docs/CONTACT_FORM.md).
 
+## Likes and comments on posts (optional)
+
+They are stored in a free Upstash Redis database connected through Vercel. Run
+`vercel env pull .env.local` to use it locally. Without it, posts still show and the buttons
+say they're off. Details: [docs/POSTS.md](docs/POSTS.md).
+
 ## What's where
 
 ```text
@@ -39,6 +45,8 @@ src/
     resume/             Resume content (resume-data.ts) and how it is shown
     contact/            Contact form, its rules, and the /api/contact handler
     music/              The background music player (30-second Spotify clips)
+    posts/              Posts (posts.ts), their pages, likes and comments
+    storage/            The Upstash Redis calls behind likes and comments
     notifications/      Emailing me: Resend call, request checks, rate limit
     projects/
       projects.ts       The list of projects shown on Home and /projects
@@ -64,6 +72,7 @@ docs/                   Longer notes, listed below
 
 - [Project structure](docs/PROJECT_STRUCTURE.md): where each kind of change goes, and how to add a project.
 - [Contact form](docs/CONTACT_FORM.md): setup, protections, known limits.
+- [Posts](docs/POSTS.md): adding a post, the database, deleting a comment.
 - [Zempled listening](docs/ZEMPLED_LISTENING.md): how previews and song links work, and how pairs are sourced.
 
 ## Good to know
