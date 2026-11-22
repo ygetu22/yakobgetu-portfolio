@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
+import Learn from "@/components/culture/learn";
 import { tibebBand } from "@/components/culture/tibeb";
 import { showToast } from "@/components/ui/toast";
 import { drawNameCard } from "./share-card";
@@ -8,6 +9,7 @@ import { lettersOf, transliterateName, type GeezLetter } from "./transliterate";
 import styles from "./geez-name.module.css";
 
 const NAME_MAX = 40;
+const TIBEB_LABEL = "A woven tibeb band in green, gold and red";
 const bandStyle = { "--band": tibebBand.url, "--band-height": `${tibebBand.height}px` } as CSSProperties;
 
 // Shown one after another until the visitor types their own name.
@@ -179,9 +181,15 @@ export default function GeezNameCard() {
 
   return (
     <div className={styles.panel} style={bandStyle}>
+      {/* Tapping a band or the word Ge'ez explains it, like the tibeb band in the footer. */}
+      <Learn lesson="tibeb" as="div" className={`${styles.band} ${styles.bandTop}`} label={TIBEB_LABEL} />
       <p className={styles.kicker}>Try it</p>
       <h2 id="your-name-title" className={styles.headline}>
-        What&apos;s your name in Ge&apos;ez?
+        What&apos;s your name in{" "}
+        <Learn lesson="geez" className={styles.term}>
+          Ge&apos;ez
+        </Learn>
+        ?
       </h2>
 
       {hasName ? (
@@ -303,6 +311,7 @@ export default function GeezNameCard() {
         )}
         Spelling and voice by Google
       </p>
+      <Learn lesson="tibeb" as="div" className={`${styles.band} ${styles.bandBottom}`} label={TIBEB_LABEL} />
     </div>
   );
 }

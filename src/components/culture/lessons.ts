@@ -18,6 +18,11 @@ export const lessons = {
     exampleSound: "ha · hu · hi · hā · he · hə · ho",
     source: { label: "Omniglot: the Ge'ez script", url: "https://www.omniglot.com/writing/ethiopic.htm" },
   },
+  geez: {
+    title: "ግዕዝ · Ge'ez",
+    text: "The script Ethiopia uses to write Amharic and other languages, in use for well over 1,500 years. Each letter is a whole syllable: a consonant and a vowel together.",
+    source: { label: "Omniglot: the Ge'ez script", url: "https://www.omniglot.com/writing/ethiopic.htm" },
+  },
   tibeb: {
     title: "ጥበብ · Tibeb",
     text: "The woven pattern on the edge of Ethiopian clothes such as the netela and the habesha kemis. Weavers make it by hand, one thread at a time. This band is drawn the same way: one small square per thread.",

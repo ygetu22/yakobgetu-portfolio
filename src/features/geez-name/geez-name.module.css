@@ -6,12 +6,29 @@
   display: grid;
   justify-items: center;
   gap: 16px;
+  position: relative;
   margin-inline: -24px;
   padding: calc(var(--band-height) + 36px) 24px calc(var(--band-height) + 28px);
-  background:
-    var(--band) repeat-x left top,
-    var(--band) repeat-x left bottom;
   text-align: center;
+}
+
+/* The tibeb bands along the top and bottom edges; each one explains itself when tapped. */
+.band {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: var(--band-height);
+  background: var(--band) repeat-x left center;
+}
+
+.bandTop { top: 0; }
+.bandBottom { bottom: 0; }
+
+/* A dotted underline marks the word as something to tap for an explanation. */
+.term {
+  text-decoration: underline dotted;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
 }
 
 .kicker {
